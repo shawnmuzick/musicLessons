@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import MainMenu from "./mainMenu/MainMenu";
+import DailyView from "./views/dailyView/DailyView";
+import FacultyView from "./views/facultyView/FacultyView";
 function App() {
+  const [view, setView] = useState("Today");
+  useEffect(() => {}, [view]);
+  const date = new Date();
+  const viewHandler = menuButton => {
+    setView(menuButton);
+  };
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Music Lessons</h1>
       </header>
+      <main className="main">
+        <MainMenu setView={viewHandler} />
+        {view === "Today" ? <DailyView /> : <FacultyView />}
+      </main>
+      <footer className="App-header">&#169; {date.getFullYear()}</footer>
     </div>
   );
 }
