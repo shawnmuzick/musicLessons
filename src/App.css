@@ -57,6 +57,14 @@
   font-weight: bold;
   padding: 10px;
   border-bottom: solid 1px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-content: center;
+}
+.Available-List p{
+  margin: 0;
+  padding-left: 10px;;
 }
 #dateControl{
   display: flex;

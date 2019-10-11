@@ -83,10 +83,26 @@ export default function DailyView() {
         ],
         null,
         null,
-        null
+        ["1:00pm", "1:30pm","2:00pm","2:30pm"]
       ]
     }
   ];
+  let students = [
+    {
+      id:1,
+      name: 'Matthew',
+      teacher: 'Shawn',
+      lessonDay: 6,
+      lessonTime:"2:30pm"
+    },
+    {
+      id:2,
+      name:'Molly',
+      teacher:'Brian',
+      lessonDay: 6,
+      lessonTime:"1:00pm"
+    }
+  ]
   return (
     <div id="DailyView" className={"view"}>
       <div id="dateControl">
@@ -101,6 +117,7 @@ export default function DailyView() {
 
       {faculty.map(teacher => (
         <List
+          students={students}
           key={teacher.id}
           date={date}
           name={teacher.name}
