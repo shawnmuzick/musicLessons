@@ -74,3 +74,11 @@
 #dateControl h2{
   width: 100%;
 }
+/* Dashboard View */
+.metrics{
+  text-align: left;
+}
+/* Faculty View */
+#employees{
+  text-align: left;
+}

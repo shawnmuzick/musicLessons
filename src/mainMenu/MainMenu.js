@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './components/Button';
 export default function MainMenu(props) {
-    const menuItems = ['Today','Faculty']
+    const menuItems = ['Today','Faculty', 'Dashboard']
 
     const clickHandler = (e) =>{
        props.setView(e.target.value)

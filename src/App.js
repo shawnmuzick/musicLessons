@@ -3,12 +3,28 @@ import "./App.css";
 import MainMenu from "./mainMenu/MainMenu";
 import DailyView from "./views/dailyView/DailyView";
 import FacultyView from "./views/facultyView/FacultyView";
+import DashboardView from "./views/dashboardView/DashboardView";
 function App() {
-  const [view, setView] = useState("Today");
+  const [view, setView] = useState(<DailyView />);
   useEffect(() => {}, [view]);
   const date = new Date();
   const viewHandler = menuButton => {
-    setView(menuButton);
+    let newView;
+    switch(menuButton){
+      case 'Today':
+      newView = <DailyView />
+      break;
+      case 'Faculty':
+        newView = <FacultyView />
+        break;
+        case 'Dashboard':
+          newView = <DashboardView />
+          break;
+          default : 
+          newView = <DailyView />
+    }
+    setView(newView);
+
   };
   return (
     <div className="App">
@@ -17,7 +33,7 @@ function App() {
       </header>
       <main className="main">
         <MainMenu setView={viewHandler} />
-        {view === "Today" ? <DailyView /> : <FacultyView />}
+        {view}
       </main>
       <footer className="App-header">&#169; {date.getFullYear()}</footer>
     </div>
