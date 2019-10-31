@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import List from "./List";
+
 export default function DailyView() {
   const [date, setDate] = useState(new Date());
   useEffect(() => {}, [date]);
@@ -83,34 +84,34 @@ export default function DailyView() {
         ],
         null,
         null,
-        ["1:00pm", "1:30pm","2:00pm","2:30pm"]
+        ["1:00pm", "1:30pm", "2:00pm", "2:30pm"]
       ]
     }
   ];
   let students = [
     {
-      id:1,
-      name: 'Matthew',
-      teacher: 'Shawn',
+      id: 1,
+      name: "Matthew",
+      teacher: "Shawn",
       lessonDay: 6,
-      lessonTime:"2:30pm"
+      lessonTime: "2:30pm"
     },
     {
-      id:2,
-      name:'Molly',
-      teacher:'Brian',
+      id: 2,
+      name: "Molly",
+      teacher: "Brian",
       lessonDay: 6,
-      lessonTime:"1:00pm"
+      lessonTime: "1:00pm"
     }
-  ]
+  ];
   return (
     <div id="DailyView" className={"view"}>
       <div id="dateControl">
-        <button onClick={dateControl} value={"-"}>
+        <button id="dateButton" onClick={dateControl} value={"-"}>
           -
         </button>
         <h2>Today: {date.toDateString()}</h2>
-        <button onClick={dateControl} value={"+"}>
+        <button id="dateButton" onClick={dateControl} value={"+"}>
           +
         </button>
       </div>
@@ -124,6 +125,7 @@ export default function DailyView() {
           availability={teacher.available}
         />
       ))}
+
     </div>
   );
 }

@@ -42,13 +42,17 @@
   width:200px;
 }
 .view{
-  background-color: #09d3ac;
+  background-color: #eee;
   flex-grow: 8;
+  max-width: 75vw;
 }
 .MainMenu-button{
   border-radius: 10px;
+  margin: 10px;
   padding: 1rem 0rem 1rem 0rem;
-  background-color: aquamarine;
+  background-color: steelblue;
+  border: 0px;
+  font-weight: bold;
 }
 /* Daily View */
 .Available-List{
@@ -73,6 +77,14 @@
 }
 #dateControl h2{
   width: 100%;
+}
+#dateButton {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border: none;
+  background-color: steelblue;
 }
 /* Dashboard View */
 .metrics{
