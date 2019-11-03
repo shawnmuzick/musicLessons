@@ -8,8 +8,20 @@ import CalendarView from "./views/calendarView/CalendarView";
 
 function App() {
   const [view, setView] = useState(<DailyView />);
+  const [menuState, setMenuState] = useState("-");
   useEffect(() => {}, [view]);
   const date = new Date();
+  const menuExpand = e => {
+    let newState;
+    switch (e.target.value) {
+      case "+":
+        newState = "-";
+        break;
+      default:
+        newState = "+";
+    }
+    setMenuState(newState);
+  };
   const viewHandler = menuButton => {
     let newView;
     switch (menuButton) {
@@ -33,13 +45,23 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Music Lessons</h1>
+        <h1>
+          <button value={menuState} onClick={menuExpand}>
+            {menuState}
+          </button>
+          Music Lessons
+        </h1>
       </header>
       <main className="main">
-        <MainMenu setView={viewHandler} />
-        {view}
+        {menuState === "-" ? (
+            <MainMenu setView={viewHandler} />
+        ) : null}
+
+        <div className="inner">
+          {view}
+          <footer className="App-header">&#169; {date.getFullYear()}</footer>
+        </div>
       </main>
-      <footer className="App-header">&#169; {date.getFullYear()}</footer>
     </div>
   );
 }
