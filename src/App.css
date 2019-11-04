@@ -1,11 +1,10 @@
-
 .App {
   text-align: center;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-.inner{
+.inner {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -16,58 +15,78 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0px; 
-  padding: .5rem;
+  margin: 0px;
+  padding: 0.5rem;
   border: solid 1px;
   border-left: none;
   border-right: none;
 }
-.App-header h1{
+.App-header h1 {
   margin: 0px;
 }
-#App-header-wrapper{
+#App-header-wrapper {
   display: flex;
   flex-direction: row;
 }
-.App-link {
-  color: #09d3ac;
-}
-.main{
+.main {
   display: flex;
   flex-direction: row;
   height: inherit;
-min-height: inherit;
+  min-height: inherit;
 }
 /* Main Menu */
-#MainMenu{
-  display:flex;
+#MainMenu {
+  display: flex;
   flex-direction: column;
   padding: 1rem;
-}
-#MainMenu{
   background-color: aliceblue;
   min-width: 15vw;
 }
-.view{
-  background-color:#eee;
-  flex-grow: 8;
-  padding: 1rem;
+#MainMenuIconWrapper {
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+  border: none;
+  background-color: aliceblue;
+  border-radius: 50%;
+  outline: none;
 }
-.wrapper{
-  flex-grow: 8;
-  height: 100%;
-  min-height: inherit;
+#MainMenuIconWrapper:hover {
+  background-color: #3788d852;
 }
-.MainMenu-button{
+#MainMenuIconWrapper:focus{
+  box-shadow: 0 0 3px 2px #3788d852;
+}
+#MainMenuIcon{
+  outline: none;
+}
+.MainMenu-button {
   border-radius: 10px;
   margin: 10px;
   padding: 1rem 0rem 1rem 0rem;
   background-color: #3788d8;
   border: 0px;
   font-weight: bold;
+  outline: none;
+}
+.MainMenu-button:hover {
+  background-color: #3788d852;
+}
+.MainMenu-button:focus{
+  box-shadow: 0 0 3px 2px #3788d852;
+}
+/* Views */
+.view {
+  background-color: #eee;
+  flex-grow: 8;
+  padding: 1rem;
+}
+.wrapper {
+  flex-grow: 8;
+  height: 100%;
+  min-height: inherit;
 }
 /* Daily View */
-.Available-List{
+.Available-List {
   text-align: left;
   list-style: none;
   font-weight: bold;
@@ -78,11 +97,11 @@ min-height: inherit;
   justify-content: left;
   align-content: center;
 }
-.Available-List p{
+.Available-List p {
   margin: 0;
-  padding-left: 10px;;
+  padding-left: 10px;
 }
-#dateControl{
+#dateControl {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -94,18 +113,25 @@ min-height: inherit;
   border-radius: 50%;
   border: none;
   background-color: #3788d8;
+  outline: none;
+}
+#dateButton:hover {
+  background-color: #3788d852;
+}
+#dateButton:focus{
+  box-shadow: 0 0 3px 2px #3788d852;
 }
 /* Dashboard View */
-.metrics{
+.metrics {
   text-align: left;
 }
 /* Faculty View */
-#employees{
+#employees {
   text-align: left;
 }
 /* Media Queries */
-@media screen and (max-width:1200px){
-  #MainMenu{
+@media screen and (max-width: 1200px) {
+  #MainMenu {
     min-width: 20vh;
   }
 }

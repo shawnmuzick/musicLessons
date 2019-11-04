@@ -12,7 +12,7 @@ export default function Main(props) {
     };
     return (
         <main className="main">
-        {props.menuState === "-" ? <MainMenu setView={viewHandler} /> : null}
+        {props.menuState === true ? <MainMenu setView={viewHandler} /> : null}
         <div className="inner">
           {view}
           <Footer />

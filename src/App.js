@@ -1,24 +1,16 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Main from "./components/Main";
 function App() {
-  const [menuState, setMenuState] = useState("-");
-  const menuExpand = e => {
-    let newState;
-    switch (e.target.value) {
-      case "+":
-        newState = "-";
-        break;
-      default:
-        newState = "+";
-    }
-    setMenuState(newState);
+  const [menuOpen, setMenuState] = useState(true);
+  const menuExpand = () => {
+    setMenuState(!menuOpen);
   };
   return (
     <div className="App">
-      <Header menuState={menuState} menuExpand={menuExpand} />
-      <Main menuState={menuState} />
+      <Header menuState={menuOpen} menuExpand={menuExpand} />
+      <Main menuState={menuOpen} />
     </div>
   );
 }
