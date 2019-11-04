@@ -22,9 +22,7 @@ export default function CalendarView() {
   const handleClick = args => {
     let title = window.prompt('Name this event: ')
     const newEvent = { title: title, start: args.dateStr };
-    console.log(newEvent);
     setEvents([...events, newEvent]);
-    console.log(events);
   };
   const header = {
     left: "prev,next today",
@@ -33,7 +31,7 @@ export default function CalendarView() {
     height: "parent"
   };
   return (
-    <div className={"view"}>
+    <div className="view">
       <div className="wrapper">
         <FullCalendar
           header={header}

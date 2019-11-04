@@ -25,6 +25,10 @@
 .App-header h1{
   margin: 0px;
 }
+#App-header-wrapper{
+  display: flex;
+  flex-direction: row;
+}
 .App-link {
   color: #09d3ac;
 }
