@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import InteractionPlugin from "@fullcalendar/interaction";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
+import {
+  FullCalendar,
+  dayGridPlugin,
+  InteractionPlugin,
+  timeGridPlugin
+} from "./plugins";
+import { header, footer } from "./options";
+import "./calendar.css";
 export default function CalendarView() {
+  const [teacher, setTeacher] = useState("Brian");
   const [events, setEvents] = useState([
     {
       groupId: "001",
@@ -18,22 +20,74 @@ export default function CalendarView() {
     }
   ]);
   useEffect(() => {}, [events]);
+  useEffect(() => {}, [teacher]);
 
   const handleClick = args => {
-    let title = window.prompt('Name this event: ')
+    let title = window.prompt("Name this event: ");
+    if (title === null) {
+      return;
+    }
     const newEvent = { title: title, start: args.dateStr };
     setEvents([...events, newEvent]);
   };
-  const header = {
-    left: "prev,next today",
-    center: "title",
-    right: "dayGridMonth,timeGridWeek,timeGridDay",
-    height: "parent"
+
+  const teacherSelect = (name, events) => {
+    setTeacher(name);
+    setEvents(events);
   };
+  const customButtons = {
+    Brian: {
+      text: "Brian",
+      click: function() {
+        let lessons = [
+          {
+            groupId: "001",
+            daysOfWeek: [6],
+            startRecur: "2019-11-02",
+            title: "Trumpet Lesson",
+            start: "2019-11-02 10:30:00",
+            end: "2019-11-02 11:30:00"
+          }
+        ];
+        teacherSelect("Brian", lessons);
+      }
+    },
+    Chrystal: {
+      text: "Chrystal",
+      click: function() {
+        let lessons = [
+          {
+            groupId: "001",
+            daysOfWeek: [1],
+            startRecur: "2019-11-04",
+            title: "Piano Lesson",
+            start: "2019-11-04 10:30:00",
+            end: "2019-11-04 11:30:00"
+          }
+        ];
+        teacherSelect("Chrystal", lessons);
+      }
+    },
+    Jeff: {
+      text: "Jeff",
+      click: function() {
+        teacherSelect("Jeff");
+      }
+    },
+    Shawn: {
+      text: "Shawn",
+      click: function() {
+        teacherSelect("Shawn");
+      }
+    }
+  };
+
   return (
     <div className="view">
       <div className="wrapper">
         <FullCalendar
+          customButtons={customButtons}
+          footer={footer}
           header={header}
           selectable={true}
           editable={true}

@@ -1,13 +1,10 @@
 import React from "react";
 import Button from "./components/Button";
-import DailyView from "../views/dailyView/DailyView";
-import FacultyView from "../views/facultyView/FacultyView";
-import DashboardView from "../views/dashboardView/DashboardView";
-import CalendarView from "../views/calendarView/CalendarView";
+import {DailyView, FacultyView, DashboardView, CalendarView} from "../views/views.js";
 
 export default function MainMenu(props) {
   const menuItems = ["Today", "Faculty", "Dashboard", "Calendar"];
-
+  const setView = props.setView;
   const clickHandler = e => {
     let newView;
     switch (e.target.value) {
@@ -26,7 +23,7 @@ export default function MainMenu(props) {
       default:
         newView = <DailyView />;
     }
-    props.setView(newView);
+    setView(newView);
   };
   return (
     <div id="MainMenu">
