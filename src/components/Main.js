@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import MainMenu from "../mainMenu/MainMenu";
 import Footer from "../components/Footer";
-import { DailyView } from "../views/views.js";
+import { CalendarView } from "../views/views.js";
 
 export default function Main(props) {
-  const [view, setView] = useState(<DailyView />);
+  const [view, setView] = useState(<CalendarView />);
   useEffect(() => {}, [view]);
 
   const viewHandler = view => {
