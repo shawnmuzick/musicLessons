@@ -1,78 +1,49 @@
 import React, { useEffect, useState } from "react";
-import {
-  FullCalendar,
-  dayGridPlugin,
-  InteractionPlugin,
-  timeGridPlugin
-} from "./plugins";
-import { header, footer } from "./options";
-
+import { FullCalendar, plugins } from "./plugins";
+import { header, footer, eSrc } from "./options";
+import { handler, selector } from "./functions";
 import "./calendar.css";
+
 export default function CalendarView() {
   const calendarRef = React.createRef();
-  const [teacher, setTeacher] = useState("Brian");
+  const [teacher, setTeacher] = useState();
   const [events, setEvents] = useState([{}]);
   useEffect(() => {}, [events]);
   useEffect(() => {}, [teacher]);
+
   const handleClick = args => {
-    let api = calendarRef.current.getApi();
-    api.changeView("timeGridDay", args.dateStr);
-
-    let title = window.prompt("Name this event: ");
-    if (title === null) {
-      return;
-    }
-    const newEvent = { title: title, start: args.dateStr };
-    setEvents([...events, newEvent]);
+    handler(args, events, setEvents, calendarRef);
   };
-
   const teacherSelect = (name, events) => {
-    setTeacher(name);
-    setEvents(events);
+    selector(name, events, setTeacher, setEvents);
   };
   const customButtons = {
     Brian: {
       text: "Brian",
       click: function() {
-        let lessons = [
-          {
-            groupId: "001",
-            title: "Trumpet Lesson",
-            daysOfWeek: [6],
-            startRecur: "2019-11-02",
-            startTime: '04:30:00',
-            endTime: '05:00:00'
-          }
-        ];
+        let lessons = eSrc.Brian.lessons;
         teacherSelect("Brian", lessons);
       }
     },
     Chrystal: {
       text: "Chrystal",
       click: function() {
-        let lessons = [
-          {
-            groupId: "001",
-            daysOfWeek: [1],
-            startRecur: "2019-11-04",
-            title: "Piano Lesson",
-            startTime: '04:30:00',
-            endTime: '05:00:00'
-          }
-        ];
+        let lessons = eSrc.Chrystal.lessons;
         teacherSelect("Chrystal", lessons);
       }
     },
     Jeff: {
       text: "Jeff",
       click: function() {
-        teacherSelect("Jeff", []);
+        let lessons = eSrc.Jeff.lessons;
+        teacherSelect("Jeff", lessons);
       }
     },
     Shawn: {
       text: "Shawn",
       click: function() {
-        teacherSelect("Shawn", []);
+        let lessons = eSrc.Shawn.lessons;
+        teacherSelect("Shawn", lessons);
       }
     }
   };
@@ -82,7 +53,6 @@ export default function CalendarView() {
       <div className="wrapper">
         <FullCalendar
           ref={calendarRef}
-          timeZone={'local'}
           customButtons={customButtons}
           navLinks={true}
           footer={footer}
@@ -91,7 +61,7 @@ export default function CalendarView() {
           editable={true}
           dateClick={handleClick}
           changeView={handleClick}
-          plugins={[dayGridPlugin, InteractionPlugin, timeGridPlugin]}
+          plugins={plugins}
           events={events}
           eventLimit={3}
           eventDurationEditable={true}
