@@ -3,13 +3,13 @@ import { FullCalendar, plugins } from "./plugins";
 import { header, footer, eSrc } from "./options";
 import { handler, selector } from "./functions";
 import "./calendar.css";
-
 export default function CalendarView() {
   const calendarRef = React.createRef();
-  const [teacher, setTeacher] = useState();
+  const [teacher, setTeacher] = useState('');
   const [events, setEvents] = useState([{}]);
-  useEffect(() => {}, [events]);
-  useEffect(() => {}, [teacher]);
+  useEffect(() => {
+    footer.left = "";
+  }, [events, teacher]);
 
   const handleClick = args => {
     handler(args, events, setEvents, calendarRef);
@@ -17,39 +17,19 @@ export default function CalendarView() {
   const teacherSelect = (name, events) => {
     selector(name, events, setTeacher, setEvents);
   };
-  const customButtons = {
-    Brian: {
-      text: "Brian",
-      click: function() {
-        let lessons = eSrc.Brian.lessons;
-        teacherSelect("Brian", lessons);
-      }
-    },
-    Chrystal: {
-      text: "Chrystal",
-      click: function() {
-        let lessons = eSrc.Chrystal.lessons;
-        teacherSelect("Chrystal", lessons);
-      }
-    },
-    Jeff: {
-      text: "Jeff",
-      click: function() {
-        let lessons = eSrc.Jeff.lessons;
-        teacherSelect("Jeff", lessons);
-      }
-    },
-    Shawn: {
-      text: "Shawn",
-      click: function() {
-        let lessons = eSrc.Shawn.lessons;
-        teacherSelect("Shawn", lessons);
-      }
+  for (let i in eSrc) {
+    if (eSrc.hasOwnProperty(i)) {
+      eSrc[i].text = i.toString();
+      eSrc[i].click = function() {
+        teacherSelect(eSrc[i].text, eSrc[i].lessons);
+      };
+      footer.left += "," + eSrc[i].text + " ";
     }
-  };
-
+  }
+  const customButtons = eSrc;
   return (
     <div className="view">
+      <h1>{teacher? teacher : (<br />)}</h1>
       <div className="wrapper">
         <FullCalendar
           ref={calendarRef}

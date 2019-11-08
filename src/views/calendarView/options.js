@@ -4,7 +4,7 @@ const header = {
   right: "dayGridMonth,timeGridWeek,timeGridDay"
 };
 const footer = {
-  left: "Brian, Chrystal, Jeff, Shawn"
+  left: ""
 };
 const eSrc = {
   Brian: {
