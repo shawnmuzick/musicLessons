@@ -10,7 +10,6 @@ export default function CalendarView() {
   useEffect(() => {
     footer.left = "";
   }, [events, teacher]);
-
   const handleClick = args => {
     handler(args, events, setEvents, calendarRef);
   };

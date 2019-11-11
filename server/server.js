@@ -10,4 +10,4 @@ app.use(express.urlencoded({extended:true}));
 
 app.use('/',router)
 app.use('/', staticFolder);
-app.listen(5000, ()=>{console.log('Listening on Port 5000')});
+app.listen(5001, ()=>{console.log('Listening on Port 5001')});
