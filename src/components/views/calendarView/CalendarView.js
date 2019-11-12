@@ -1,50 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
-import { header, footer, eSrc } from "./options";
+import { header, footer } from "./options";
 import { handler, selector } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
-  const [teacher, setTeacher] = useState('');
+  const [teacher, setTeacher] = useState("");
   const [events, setEvents] = useState([{}]);
   const [SRC, setSRC] = useState([]);
   useEffect(() => {
+    fetch("/api/teachers")
+    .then(res => res.json())
+    .then(data=>{setSRC(data)})
+    .catch(err => console.log(err))
+  }, [teacher, events]);
+  useEffect(() => {
     footer.left = "";
-      fetch("http://localhost:5001/api/teachers")
-      .then(res => res.json())
-      .then(data=>{console.log(data); setSRC(data)})
-  }, [events, teacher]);
+  });
   const handleClick = args => {
     handler(args, events, setEvents, calendarRef);
   };
-  const teacherSelect = (name, events) => {
-    selector(name, events, setTeacher, setEvents);
-  };
 
-// const newButtons = SRC.map(item => {
-//   let {name, lessons} = item
-//   newButtons.name = name;
-//   newButtons.text = name;
-//   newButtons.click = function(){
-//     teacherSelect(name,lessons)
-//   }
-//   // footer.left += "," + text + " ";
-// })
-// console.log(newButtons)
-console.log(SRC)
-  for (let i in eSrc) {
-    if (eSrc.hasOwnProperty(i)) {
-      eSrc[i].text = i.toString();
-      eSrc[i].click = function() {
-        teacherSelect(eSrc[i].text, eSrc[i].lessons);
+  const arraytoobject = array =>
+    array.reduce((obj, item) => {
+      obj[item.name] = item;
+      item.text = item.name;
+      item.click = function() {
+        selector(item.text, item.lessons, setTeacher, setEvents);
       };
-      footer.left += "," + eSrc[i].text + " ";
-    }
-  }
-  const customButtons = eSrc;
+      footer.left += "," + item.text + " ";
+      return obj;
+    }, {});
+
+  const customButtons = arraytoobject(SRC);
   return (
     <div className="view">
-      <h1>{teacher? teacher : (<br />)}</h1>
+      <h1>{teacher ? teacher : <br />}</h1>
       <div className="wrapper">
         <FullCalendar
           ref={calendarRef}

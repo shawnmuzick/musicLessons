@@ -4,7 +4,7 @@ export default function FacultyView() {
 const [teachers, setTeachers] = useState([]);
 
 useEffect(() => {
-  fetch("http://localhost:5001/api/teachers")
+  fetch("/api/teachers")
   .then(res => res.json())
   .then(data=>{console.log(data); setTeachers(data)})
   }, [])

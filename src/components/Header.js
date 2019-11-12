@@ -1,5 +1,5 @@
 import React from "react";
-import icon from "../icons/menu-24px.svg";
+import icon from "./icons/menu-24px.svg";
 export default function Header(props) {
   const { menuExpand, menuState } = props;
   return (

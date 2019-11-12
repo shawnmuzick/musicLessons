@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import MainMenu from "../mainMenu/MainMenu";
+import MainMenu from "./mainMenu/MainMenu";
 import Footer from "../components/Footer";
-import { CalendarView } from "../views/views.js";
+import { CalendarView } from "./views/views.js";
 
 export default function Main(props) {
   const [view, setView] = useState(<CalendarView />);

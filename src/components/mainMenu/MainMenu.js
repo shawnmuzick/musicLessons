@@ -24,7 +24,7 @@ export default function MainMenu(props) {
         newView = <DailyView />;
     }
     setView(newView);
-  };
+  }; 
   return (
     <div id="MainMenu">
       <h2>Main Menu</h2>
