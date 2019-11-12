@@ -7,8 +7,12 @@ export default function CalendarView() {
   const calendarRef = React.createRef();
   const [teacher, setTeacher] = useState('');
   const [events, setEvents] = useState([{}]);
+  const [SRC, setSRC] = useState([]);
   useEffect(() => {
     footer.left = "";
+      fetch("http://localhost:5001/api/teachers")
+      .then(res => res.json())
+      .then(data=>{console.log(data); setSRC(data)})
   }, [events, teacher]);
   const handleClick = args => {
     handler(args, events, setEvents, calendarRef);
@@ -16,6 +20,18 @@ export default function CalendarView() {
   const teacherSelect = (name, events) => {
     selector(name, events, setTeacher, setEvents);
   };
+
+// const newButtons = SRC.map(item => {
+//   let {name, lessons} = item
+//   newButtons.name = name;
+//   newButtons.text = name;
+//   newButtons.click = function(){
+//     teacherSelect(name,lessons)
+//   }
+//   // footer.left += "," + text + " ";
+// })
+// console.log(newButtons)
+console.log(SRC)
   for (let i in eSrc) {
     if (eSrc.hasOwnProperty(i)) {
       eSrc[i].text = i.toString();
