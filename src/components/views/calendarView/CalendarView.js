@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import { header, footer } from "./options";
-import { handler, selector } from "./functions";
+import { handler, selector, arraytoobject } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
@@ -9,30 +9,19 @@ export default function CalendarView() {
   const [events, setEvents] = useState([{}]);
   const [SRC, setSRC] = useState([]);
   useEffect(() => {
-    fetch("/api/teachers")
+    fetch(`/api/teachers`)
     .then(res => res.json())
     .then(data=>{setSRC(data)})
-    .catch(err => console.log(err))
-  }, [teacher, events]);
+    .catch(err => console.log('load' + err))
+  },[events]);
   useEffect(() => {
     footer.left = "";
   });
   const handleClick = args => {
-    handler(args, events, setEvents, calendarRef);
+    handler(args, events, setEvents, calendarRef, teacher);
   };
 
-  const arraytoobject = array =>
-    array.reduce((obj, item) => {
-      obj[item.name] = item;
-      item.text = item.name;
-      item.click = function() {
-        selector(item.text, item.lessons, setTeacher, setEvents);
-      };
-      footer.left += "," + item.text + " ";
-      return obj;
-    }, {});
-
-  const customButtons = arraytoobject(SRC);
+  const customButtons = arraytoobject(SRC,setTeacher, setEvents, selector,footer);
   return (
     <div className="view">
       <h1>{teacher ? teacher : <br />}</h1>

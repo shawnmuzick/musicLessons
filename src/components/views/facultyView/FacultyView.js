@@ -7,6 +7,7 @@ useEffect(() => {
   fetch("/api/teachers")
   .then(res => res.json())
   .then(data=>{console.log(data); setTeachers(data)})
+  .catch(err => console.log(err))
   }, [])
 
   return (
