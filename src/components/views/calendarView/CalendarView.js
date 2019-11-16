@@ -21,7 +21,7 @@ export default function CalendarView() {
     handler(args, events, setEvents, calendarRef, teacher);
   };
   const eventDrop = edit =>{
-    drop(edit, events, setEvents, teacher)
+    drop(edit, events, setEvents)
   }
 
   const customButtons = arraytoobject(SRC,setTeacher, setEvents, selector,footer);

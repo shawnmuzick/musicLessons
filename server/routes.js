@@ -28,8 +28,34 @@ router.post("/api/teachers/:id", (req, res) => {
   teacherModel
     .updateOne({ name: teacher }, { $set: { lessons: lessons } })
     .exec((err, data) => {
-      if(err) throw err;
+      if (err) throw err;
       res.send(data);
+    });
+});
+router.put("/api/update/:id", (req, res) => {
+  const reqid = req.params.id;
+  const update = req.body.update;
+  teacherModel
+    .findOne({ lessons: { $elemMatch: { id: reqid } } })
+    .exec((err, data) => {
+      if (err) throw err;
+      const newlessons = data.lessons.map(item => {
+        if (item.id === reqid) {
+          item.start = update.range.start;
+          item.end = update.range.end;
+          item.id = reqid;
+          return item;
+        } else {
+          return item;
+        }
+      });
+      console.log(newlessons)
+      teacherModel
+        .updateOne({ name: data.name }, { $set: { lessons: newlessons } })
+        .exec((err, success) => {
+          if (err) throw err;
+          console.log(success);
+        });
     });
 });
 export default router;
