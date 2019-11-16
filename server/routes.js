@@ -1,6 +1,6 @@
 import express from "express";
 import teacherModel from "./TeacherModel.js";
-
+import uuidv4 from "uuid";
 const router = express.Router();
 
 router.get("/api", (req, res) => {
@@ -22,10 +22,11 @@ router.get("/api/teachers/:id", (req, res) => {
 });
 router.post("/api/teachers/:id", (req, res) => {
   const { teacher, lessons, newEvent } = req.body;
+  newEvent.id = uuidv4.v4();
   lessons.push(newEvent);
 
   teacherModel
-    .update({ name: teacher }, { $set: { lessons: lessons } })
+    .updateOne({ name: teacher }, { $set: { lessons: lessons } })
     .exec((err, data) => {
       if(err) throw err;
       res.send(data);

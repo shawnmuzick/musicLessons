@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import { header, footer } from "./options";
-import { handler, selector, arraytoobject } from "./functions";
+import { handler, selector, arraytoobject, drop } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
@@ -20,6 +20,9 @@ export default function CalendarView() {
   const handleClick = args => {
     handler(args, events, setEvents, calendarRef, teacher);
   };
+  const eventDrop = edit =>{
+    drop(edit, events, setEvents, teacher)
+  }
 
   const customButtons = arraytoobject(SRC,setTeacher, setEvents, selector,footer);
   return (
@@ -38,6 +41,7 @@ export default function CalendarView() {
           changeView={handleClick}
           plugins={plugins}
           events={events}
+          eventDrop={eventDrop}
           eventLimit={3}
           eventDurationEditable={true}
           eventStartEditable={true}
