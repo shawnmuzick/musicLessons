@@ -11,7 +11,7 @@ export const handler = (args, events, setEvents, calendarRef, teacher) => {
     }
     const newEvent = { title: title, start: args.dateStr };
     axios
-      .post(`/api/teachers/${teacher}`, {
+      .post(`/api/newLesson/${teacher}`, {
         lessons: events,
         newEvent: newEvent,
         teacher: teacher
@@ -26,15 +26,15 @@ export const handler = (args, events, setEvents, calendarRef, teacher) => {
     api.changeView("timeGridDay", args.dateStr);
   }
 };
-export const selector = (name, events, setTeacher, setEvents) => {
+export const selector = (name, events, setTeacher, setEvents, teacher) => {
+  if (name === teacher) {
+    return;
+  }
   setTeacher(name);
   setEvents(events);
 };
-export const drop = (edit, events, setEvents) => {
-const id = edit.event.id;
-console.log(id)
-console.log(edit.event)
-console.log(edit.event._instance)//path to times and such
+export const drop = edit => {
+  const id = edit.event.id;
   axios
     .put(`/api/update/${id}`, {
       update: edit.event._instance
@@ -42,13 +42,39 @@ console.log(edit.event._instance)//path to times and such
     .then(res => console.log(res))
     .catch(err => console.log(err));
 };
-export const arraytoobject = (array, setTeacher, setEvents, selector, footer) =>
-  array.reduce((obj, item) => {
+export const arraytoobject = (
+  array,
+  setTeacher,
+  setEvents,
+  footer,
+  teacher
+) => {
+  let obj = array.reduce((obj, item) => {
     obj[item.name] = item;
     item.text = item.name;
     item.click = function() {
-      selector(item.text, item.lessons, setTeacher, setEvents);
+      selector(item.text, item.lessons, setTeacher, setEvents, teacher);
     };
     footer.left += "," + item.text + " ";
     return obj;
   }, {});
+  obj.New = {};
+  obj.New.text = "Add New";
+  obj.New.click = function() {
+    AddNewTeacher(setEvents);
+  };
+  footer.left += "," + obj.New.text;
+  return obj;
+};
+
+export const AddNewTeacher = setEvents => {
+  let name = window.prompt("Enter a name: ");
+  let phone = window.prompt("Enter a phone number: ");
+  axios
+    .post(`/api/teachers`, { name, phone })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => console.log(err));
+  setEvents({});
+};

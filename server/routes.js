@@ -3,10 +3,6 @@ import teacherModel from "./TeacherModel.js";
 import uuidv4 from "uuid";
 const router = express.Router();
 
-router.get("/api", (req, res) => {
-  console.log("get api test");
-  res.send("test");
-});
 router.get("/api/teachers", (req, res) => {
   teacherModel.find().exec((err, data) => {
     if (err) throw err;
@@ -20,7 +16,20 @@ router.get("/api/teachers/:id", (req, res) => {
     res.json([data]);
   });
 });
-router.post("/api/teachers/:id", (req, res) => {
+router.post("/api/teachers", (req, res) => {
+  const { name, phone } = req.body;
+  const newTeacher = new teacherModel({
+    name: name,
+    phone: phone,
+    lessons: []
+  });
+  newTeacher.save((err, success) => {
+    if (err) throw err;
+    console.log(success);
+    res.json(success);
+  });
+});
+router.post("/api/newLesson/:id", (req, res) => {
   const { teacher, lessons, newEvent } = req.body;
   newEvent.id = uuidv4.v4();
   lessons.push(newEvent);
@@ -49,12 +58,12 @@ router.put("/api/update/:id", (req, res) => {
           return item;
         }
       });
-      console.log(newlessons)
       teacherModel
         .updateOne({ name: data.name }, { $set: { lessons: newlessons } })
         .exec((err, success) => {
           if (err) throw err;
           console.log(success);
+          res.json(success);
         });
     });
 });
