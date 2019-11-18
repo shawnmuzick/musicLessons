@@ -1,6 +1,8 @@
 import express from "express";
 import teacherModel from "./TeacherModel.js";
 import uuidv4 from "uuid";
+import fs from "fs";
+
 const router = express.Router();
 
 router.get("/api/teachers", (req, res) => {
@@ -25,7 +27,17 @@ router.post("/api/teachers", (req, res) => {
   });
   newTeacher.save((err, success) => {
     if (err) throw err;
-    console.log(success);
+    fs.appendFile(
+      "./server/logs/newTeacherLog.txt",
+      "Added Teacher: " +
+        JSON.stringify(name) +
+        "\t" +
+        JSON.stringify(success) +
+        "\n",
+      err => {
+        if (err) throw err;
+      }
+    );
     res.json(success);
   });
 });
@@ -38,6 +50,13 @@ router.post("/api/newLesson/:id", (req, res) => {
     .updateOne({ name: teacher }, { $set: { lessons: lessons } })
     .exec((err, data) => {
       if (err) throw err;
+      fs.appendFile(
+        "./server/logs/newLessonLog.txt",
+        "Added ID: " + JSON.stringify(newEvent.id) + "\n",
+        err => {
+          if (err) throw err;
+        }
+      );
       res.send(data);
     });
 });
@@ -62,7 +81,17 @@ router.put("/api/update/:id", (req, res) => {
         .updateOne({ name: data.name }, { $set: { lessons: newlessons } })
         .exec((err, success) => {
           if (err) throw err;
-          console.log(success);
+          fs.appendFile(
+            "./server/logs/updateLog.txt",
+            " Updated ID: " +
+              JSON.stringify(reqid) +
+              "\t" +
+              JSON.stringify(success) +
+              "\n",
+            err => {
+              if (err) throw err;
+            }
+          );
           res.json(success);
         });
     });

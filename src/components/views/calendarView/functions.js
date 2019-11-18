@@ -76,5 +76,5 @@ export const AddNewTeacher = setEvents => {
       console.log(response);
     })
     .catch(err => console.log(err));
-  setEvents({});
+  setEvents('rerender');
 };
