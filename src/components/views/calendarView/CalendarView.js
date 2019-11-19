@@ -15,7 +15,7 @@ export default function CalendarView() {
         setSRC(data);
       })
       .catch(err => console.log("load" + err));
-  }, [events]);
+  }, [setEvents,events]);
   useEffect(() => {
     footer.left = "";
   });

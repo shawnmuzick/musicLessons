@@ -1,13 +1,14 @@
 import React from "react";
 
 export default function Button(props) {
+  const {clickHandler, item} = props;
   return (
     <button
       className={"MainMenu-button"}
-      onClick={props.clickHandler}
-      value={props.item}
+      onClick={clickHandler}
+      value={item}
     >
-      {props.item}
+      {item}
     </button>
   );
 }

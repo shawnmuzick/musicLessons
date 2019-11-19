@@ -6,7 +6,7 @@ const [teachers, setTeachers] = useState([]);
 useEffect(() => {
   fetch("/api/teachers")
   .then(res => res.json())
-  .then(data=>{console.log(data); setTeachers(data)})
+  .then(data=>setTeachers(data))
   .catch(err => console.log(err))
   }, [])
 
