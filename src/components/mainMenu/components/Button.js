@@ -1,14 +1,9 @@
 import React from "react";
 
-export default function Button(props) {
-  const {clickHandler, item} = props;
+export default function Button({ setView, name }) {
   return (
-    <button
-      className={"MainMenu-button"}
-      onClick={clickHandler}
-      value={item}
-    >
-      {item}
+    <button className={"MainMenu-button"} onClick={() => setView(name)}>
+      {name}
     </button>
   );
 }

@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MainMenu from "./mainMenu/MainMenu";
 import Footer from "../components/Footer";
-import { CalendarView } from "./views/views.js";
-
-export default function Main(props) {
-  const [view, setView] = useState(<CalendarView />);
-  useEffect(() => {}, [view]);
-
-  const viewHandler = view => {
-    setView(view);
-  };
+import { CalendarView, FacultyView, DashboardView, VIEW } from "./views/views.js";
+export default function Main({ menuState }) {
+  const [view, setView] = useState("Calendar");
+  const menuItems = [
+    { name: "Calendar", component: <CalendarView /> },
+    { name: "Dashboard", component: <DashboardView /> },
+    { name: "Faculty", component: <FacultyView /> }
+  ];
   return (
     <main className="main">
-      {props.menuState === true ? (
-        <MainMenu view={view} setView={viewHandler} />
-      ) : null}
+        <MainMenu view={view} setView={setView} menuItems={menuItems} menuState={menuState}/>
       <div className="inner">
-        {view}
+        {menuItems.map(item => (
+          <VIEW name={item.name} view={view}>
+            <>{item.component}</>
+          </VIEW>
+        ))}
         <Footer />
       </div>
     </main>

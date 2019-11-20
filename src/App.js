@@ -3,14 +3,11 @@ import "./App.css";
 import { Header, Main } from "./components/components";
 
 export default function App() {
-  const [menuOpen, setMenuState] = useState(true);
-  const menuExpand = () => {
-    setMenuState(!menuOpen);
-  };
+  const [menuState, setMenu] = useState(true);
   return (
     <div className="App">
-      <Header menuState={menuOpen} menuExpand={menuExpand} />
-        <Main menuState={menuOpen} />
+      <Header menuState={menuState} setMenu={setMenu}/>
+        <Main menuState={menuState} />
     </div>
   );
 }

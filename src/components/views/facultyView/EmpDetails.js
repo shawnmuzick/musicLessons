@@ -1,7 +1,6 @@
 import React from "react";
 
-export default function EmpDetails(props) {
-  const { name, phone } = props.teacher;
+export default function EmpDetails({ name, phone }) {
   return (
     <div id="employees">
       <details>

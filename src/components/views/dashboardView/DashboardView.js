@@ -5,9 +5,7 @@ export default function DashboardView() {
   useEffect(() => {
     fetch("/api/teachers")
       .then(res => res.json())
-      .then(data => {
-        setSRC(data);
-      })
+      .then(data => setSRC(data))
       .catch(err => console.log(err));
   }, []);
   let totalLessons = 0;
@@ -17,7 +15,9 @@ export default function DashboardView() {
   SRC.map(item => {
     item.lessons.map(lesson => {
       sum();
+      return null;
     });
+    return null;
   });
   return (
     <div id="DashboardView" className={"view"}>

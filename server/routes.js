@@ -57,7 +57,7 @@ router.post("/api/newLesson/:id", (req, res) => {
           if (err) throw err;
         }
       );
-      res.send(data);
+      res.send({data:data, id:newEvent.id});
     });
 });
 router.put("/api/update/:id", (req, res) => {

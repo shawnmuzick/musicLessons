@@ -1,55 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import { header, footer } from "./options";
-import { handler, arraytoobject, drop } from "./functions";
+import { handler, makeButtons, drop } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
-  const [teacher, setTeacher] = useState("");
-  const [events, setEvents] = useState([]);
+  const [params, setParams] = useState({ teacher: "", events: [] });
   const [SRC, setSRC] = useState([]);
   useEffect(() => {
     fetch(`/api/teachers`)
       .then(res => res.json())
       .then(data => {
         setSRC(data);
+        console.log("retrieved");
       })
       .catch(err => console.log("load" + err));
-  }, [setEvents,events]);
+  }, [setParams, params]);
   useEffect(() => {
     footer.left = "";
   });
-  const handleClick = args => {
-    handler(args, events, setEvents, calendarRef, teacher);
-  };
-  const eventDrop = edit => {
-    drop(edit, events, setEvents);
-  };
 
-  const customButtons = arraytoobject(
-    SRC,
-    setTeacher,
-    setEvents,
-    footer,
-    teacher
-  );
   return (
     <div className="view">
-      <h1>{teacher ? teacher : <br />}</h1>
+      <h1>{params.teacher || <br />}</h1>
       <div className="wrapper">
         <FullCalendar
           ref={calendarRef}
-          customButtons={customButtons}
+          customButtons={makeButtons(SRC, footer, params, setParams)}
           navLinks={true}
           footer={footer}
           header={header}
           selectable={true}
           editable={true}
-          dateClick={handleClick}
-          changeView={handleClick}
+          dateClick={args => handler(args, calendarRef, params, setParams)}
+          changeView={args => handler(args, calendarRef, params, setParams)}
           plugins={plugins}
-          events={events}
-          eventDrop={eventDrop}
+          events={params.events}
+          eventDrop={edit => drop(edit, params, setParams)}
           eventLimit={3}
           eventDurationEditable={true}
           eventStartEditable={true}
