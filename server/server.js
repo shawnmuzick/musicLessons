@@ -1,5 +1,4 @@
 import express from "express";
-import teacherModel from './TeacherModel.js';
 import router from './routes.js'
 const app = express();
 const staticFolder = express.static('build');

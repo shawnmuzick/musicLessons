@@ -26,6 +26,7 @@ export default function CalendarView() {
       <div className="wrapper">
         <FullCalendar
           ref={calendarRef}
+          timeZone={'UTC'}
           customButtons={makeButtons(SRC, footer, params, setParams)}
           navLinks={true}
           footer={footer}

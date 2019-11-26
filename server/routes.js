@@ -19,11 +19,11 @@ router.get("/api/teachers/:id", (req, res) => {
   });
 });
 router.post("/api/teachers", (req, res) => {
-  const { name, phone } = req.body;
+  const { name, phone, lessons = [] } = req.body;
   const newTeacher = new teacherModel({
-    name: name,
-    phone: phone,
-    lessons: []
+    name,
+    phone,
+    lessons
   });
   newTeacher.save((err, success) => {
     if (err) throw err;
@@ -42,12 +42,11 @@ router.post("/api/teachers", (req, res) => {
   });
 });
 router.post("/api/newLesson/:id", (req, res) => {
-  const { teacher, lessons, newEvent } = req.body;
+  const { teacher, newEvent } = req.body;
   newEvent.id = uuidv4.v4();
-  lessons.push(newEvent);
 
   teacherModel
-    .updateOne({ name: teacher }, { $set: { lessons: lessons } })
+    .updateOne({ name: teacher }, { $push: { lessons: newEvent } })
     .exec((err, data) => {
       if (err) throw err;
       fs.appendFile(
@@ -57,43 +56,33 @@ router.post("/api/newLesson/:id", (req, res) => {
           if (err) throw err;
         }
       );
-      res.send({data:data, id:newEvent.id});
+      res.send({ data: data, id: newEvent.id });
     });
 });
-router.put("/api/update/:id", (req, res) => {
-  const reqid = req.params.id;
-  const update = req.body.update;
+router.put("/api/update/", (req, res) => {
+  const { update, name, id} = req.body;
+  const { start, end } = update.range;
   teacherModel
-    .findOne({ lessons: { $elemMatch: { id: reqid } } })
-    .exec((err, data) => {
+    .updateOne(
+      //find where name = name, and lessons's child that matches id
+      { name: name, lessons: { $elemMatch: { id: id } } },
+      //set the first child of lessons that matches id, to {stuff in here}
+      { $set: { "lessons.$": { id: id, start, end } } }
+    )
+    .exec((err, success) => {
       if (err) throw err;
-      const newlessons = data.lessons.map(item => {
-        if (item.id === reqid) {
-          item.start = update.range.start;
-          item.end = update.range.end;
-          item.id = reqid;
-          return item;
-        } else {
-          return item;
-        }
-      });
-      teacherModel
-        .updateOne({ name: data.name }, { $set: { lessons: newlessons } })
-        .exec((err, success) => {
+      fs.appendFile(
+        "./server/logs/updateLog.txt",
+        " Updated ID: " +
+          JSON.stringify(id) +
+          "\t" +
+          JSON.stringify(success) +
+          "\n",
+        err => {
           if (err) throw err;
-          fs.appendFile(
-            "./server/logs/updateLog.txt",
-            " Updated ID: " +
-              JSON.stringify(reqid) +
-              "\t" +
-              JSON.stringify(success) +
-              "\n",
-            err => {
-              if (err) throw err;
-            }
-          );
-          res.json(success);
-        });
+        }
+      );
+      res.json(success);
     });
 });
 export default router;

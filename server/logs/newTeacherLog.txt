@@ -1,2 +1,0 @@
-Added Teacher: "Bill"	{"lessons":[],"_id":"5dd21a84c8356704cccef3d7","name":"Bill","phone":"555-555-5555","__v":0}
-Added Teacher: "Donny"	{"lessons":[],"_id":"5dd21aeebba7720870b8a875","name":"Donny","phone":"555-555-5555","__v":0}

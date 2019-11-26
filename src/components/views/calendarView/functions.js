@@ -12,18 +12,16 @@ export const handler = (args, calendarRef, params, setParams) => {
     const newEvent = { title: title, start: args.dateStr };
     axios
       .post(`/api/newLesson/${params.teacher}`, {
-        lessons: params.events,
-        newEvent: newEvent,
-        teacher: params.teacher
+        teacher: params.teacher,
+        newEvent: newEvent
       })
       .then(response => {
         newEvent.id = response.data.id;
       })
       .catch(error => console.log("load" + error));
-    const events = [newEvent, ...params.events];
     setParams({
       teacher: params.teacher,
-      events: events
+      events: [...params.events, newEvent]
     });
   } else {
     api.changeView("timeGridDay", args.dateStr);
@@ -37,11 +35,11 @@ export const selector = (name, events, params, setParams) => {
 };
 export const drop = (edit, params, setParams) => {
   const id = edit.event.id;
-  console.log(edit.event);
-  console.log(id);
   axios
-    .put(`/api/update/${id}`, {
-      update: edit.event._instance
+    .put(`/api/update/`, {
+      id: id,
+      update: edit.event._instance,
+      name:params.teacher
     })
     .then(res => console.log(res))
     .catch(err => console.log(err));
