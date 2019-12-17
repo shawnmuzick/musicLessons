@@ -12,14 +12,13 @@ export default function CalendarView() {
       .then(res => res.json())
       .then(data => {
         setSRC(data);
-        console.log("retrieved");
+        console.log(data);
       })
       .catch(err => console.log("load" + err));
   }, [setParams, params]);
   useEffect(() => {
     footer.left = "";
   });
-
   return (
     <div className="view">
       <h1>{params.teacher || <br />}</h1>
@@ -38,6 +37,7 @@ export default function CalendarView() {
           plugins={plugins}
           events={params.events}
           eventDrop={edit => drop(edit, params, setParams)}
+          eventResize={edit => drop(edit, params, setParams )}
           eventLimit={3}
           eventDurationEditable={true}
           eventStartEditable={true}

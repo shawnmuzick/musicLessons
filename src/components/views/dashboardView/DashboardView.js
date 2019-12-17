@@ -12,16 +12,10 @@ export default function DashboardView() {
 
   let totalLessons = 0;
 
-  const sum = () => {
-    totalLessons++;
-  };
-
-  SRC.map(item => {
-    item.lessons.map(lesson => {
-      sum();
-      return null;
-    });
-    return null;
+  SRC.forEach(item => {
+    item.lessons.forEach(() => {
+      totalLessons++;
+    })
   });
 
   return (

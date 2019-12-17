@@ -15,14 +15,14 @@ export const handler = (args, calendarRef, params, setParams) => {
         teacher: params.teacher,
         newEvent: newEvent
       })
-      .then(response => {
-        newEvent.id = response.data.id;
-      })
       .catch(error => console.log("load" + error));
-    setParams({
-      teacher: params.teacher,
-      events: [...params.events, newEvent]
-    });
+      axios.get(`/api/teachers/${params.teacher}`).then(res=>{
+        setParams({
+          teacher: res.data.name,
+          events:res.data.lessons
+        })
+      }).catch(error => console.log("load" + error));
+    api.changeView("dayGridMonth");
   } else {
     api.changeView("timeGridDay", args.dateStr);
   }
@@ -39,7 +39,7 @@ export const drop = (edit, params, setParams) => {
     .put(`/api/update/`, {
       id: id,
       update: edit.event._instance,
-      name:params.teacher
+      name: params.teacher
     })
     .then(res => console.log(res))
     .catch(err => console.log(err));

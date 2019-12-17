@@ -15,7 +15,7 @@ router.get("/api/teachers/:id", (req, res) => {
   const name = req.params.id;
   teacherModel.findOne({ name: name }).exec((err, data) => {
     if (err) throw err;
-    res.json([data]);
+    res.json(data);
   });
 });
 router.post("/api/teachers", (req, res) => {
