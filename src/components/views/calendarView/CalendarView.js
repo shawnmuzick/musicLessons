@@ -17,7 +17,7 @@ export default function CalendarView() {
       .catch(err => console.log("load" + err));
   }, [setParams, params]);
   useEffect(() => {
-    footer.left = "";
+    footer.center = "";
   });
   return (
     <div className="view">

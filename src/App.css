@@ -59,7 +59,9 @@
 #MainMenuIcon{
   outline: none;
 }
-.MainMenu-button {
+/*Button Styling*/
+.MainMenu-button, .fc-footer-toolbar button, .fc-header-toolbar button {
+  color: black;
   border-radius: 10px;
   margin: 10px;
   padding: 1rem 0rem 1rem 0rem;
@@ -68,8 +70,10 @@
   font-weight: bold;
   outline: none;
 }
-.MainMenu-button:hover {
+.MainMenu-button:hover, .fc-footer-toolbar button:hover, .fc-header-toolbar button:hover {
+  color: black;
   background-color: #3788d852;
+  border-color: #3788d8;
 }
 .MainMenu-button:focus{
   box-shadow: 0 0 3px 2px #3788d852;
@@ -119,6 +123,21 @@
 }
 #dateButton:focus{
   box-shadow: 0 0 3px 2px #3788d852;
+}
+.fc-footer-toolbar button{
+  padding: 10px;
+  margin: 0px !important;
+  border-radius: 0px;;
+}
+.fc-header-toolbar button{
+  margin: 0px;
+  padding: 10px;
+}
+.fc-footer-toolbar button:first-child{
+  border-radius: 10px 0px 0px 10px;
+}
+.fc-footer-toolbar button:last-child{
+  border-radius: 0px 10px 10px 0px;
 }
 /* Dashboard View */
 .metrics {

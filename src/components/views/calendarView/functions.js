@@ -53,7 +53,7 @@ export const makeButtons = (SRC, footer, params, setParams) => {
     item.click = function() {
       selector(item.text, item.lessons, params, setParams);
     };
-    footer.left += "," + item.text + " ";
+    footer.center += "," + item.text + " ";
     return obj;
   }, {});
   obj.New = {};
@@ -61,7 +61,7 @@ export const makeButtons = (SRC, footer, params, setParams) => {
   obj.New.click = function() {
     AddNewTeacher(setParams);
   };
-  footer.left += "," + obj.New.text;
+  footer.center += "," + obj.New.text;
   return obj;
 };
 

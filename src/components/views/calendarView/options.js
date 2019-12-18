@@ -4,6 +4,6 @@ const header = {
   right: "dayGridMonth,timeGridWeek,timeGridDay"
 };
 const footer = {
-  left: ""
+  center: ""
 };
 export { header, footer};
