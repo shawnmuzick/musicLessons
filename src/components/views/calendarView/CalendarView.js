@@ -12,7 +12,6 @@ export default function CalendarView() {
       .then(res => res.json())
       .then(data => {
         setSRC(data);
-        console.log(data);
       })
       .catch(err => console.log("load" + err));
   }, [setParams, params]);

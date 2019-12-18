@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import MainMenu from "./mainMenu/MainMenu";
 import Footer from "../components/Footer";
-import {
-  CalendarView,
-  FacultyView,
-  DashboardView,
-  VIEW
-} from "./views/views.js";
+import { CalendarView, DashboardView, VIEW } from "./views/views.js";
 export default function Main({ menuState }) {
   const [view, setView] = useState("Calendar");
 
   const menuItems = [
     { name: "Calendar", component: <CalendarView /> },
-
-    { name: "Dashboard", component: <DashboardView /> },
-
-    { name: "Faculty", component: <FacultyView /> }
+    { name: "Dashboard", component: <DashboardView /> }
   ];
 
   return (

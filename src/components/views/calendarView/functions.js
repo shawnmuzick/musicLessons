@@ -34,10 +34,9 @@ export const selector = (name, events, params, setParams) => {
   setParams({ teacher: name, events: events });
 };
 export const drop = (edit, params, setParams) => {
-  const id = edit.event.id;
   axios
     .put(`/api/update/`, {
-      id: id,
+      id: edit.event.id,
       update: edit.event._instance,
       name: params.teacher
     })
@@ -67,7 +66,13 @@ export const makeButtons = (SRC, footer, params, setParams) => {
 
 export const AddNewTeacher = setParams => {
   let name = window.prompt("Enter a name: ");
+  if(name === null){
+    return;
+  }
   let phone = window.prompt("Enter a phone number: ");
+  if(phone === null){
+    return;
+  }
   axios
     .post(`/api/teachers`, { name, phone })
     .then(response => {

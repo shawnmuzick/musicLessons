@@ -3,7 +3,6 @@ import router from './routes.js'
 const app = express();
 const staticFolder = express.static('build');
 
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
