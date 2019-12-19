@@ -139,6 +139,9 @@
 .fc-footer-toolbar button:last-child{
   border-radius: 0px 10px 10px 0px;
 }
+.fc-nonbusiness.fc-bgevent{
+  background: red;
+}
 /* Dashboard View */
 .metrics {
   text-align: left;

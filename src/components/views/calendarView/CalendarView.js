@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
-import { header, footer } from "./options";
+import { header, footer, businessHours } from "./options";
 import { handler, makeButtons, drop } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
@@ -24,7 +24,7 @@ export default function CalendarView() {
       <div className="wrapper">
         <FullCalendar
           ref={calendarRef}
-          timeZone={'UTC'}
+          timeZone={"UTC"}
           customButtons={makeButtons(SRC, footer, params, setParams)}
           navLinks={true}
           footer={footer}
@@ -36,7 +36,8 @@ export default function CalendarView() {
           plugins={plugins}
           events={params.events}
           eventDrop={edit => drop(edit, params, setParams)}
-          eventResize={edit => drop(edit, params, setParams )}
+          eventResize={edit => drop(edit, params, setParams)}
+          businessHours={businessHours}
           eventLimit={3}
           eventDurationEditable={true}
           eventStartEditable={true}
