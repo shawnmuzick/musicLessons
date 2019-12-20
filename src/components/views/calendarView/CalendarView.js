@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
-import { header, footer, businessHours } from "./options";
+import { header, footer } from "./options";
 import { handler, makeButtons, drop } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
-  const [params, setParams] = useState({ teacher: "", events: [] });
+  const [params, setParams] = useState({ teacher: "", events: [], hours:[] });
   const [SRC, setSRC] = useState([]);
   useEffect(() => {
     fetch(`/api/teachers`)
@@ -37,7 +37,7 @@ export default function CalendarView() {
           events={params.events}
           eventDrop={edit => drop(edit, params, setParams)}
           eventResize={edit => drop(edit, params, setParams)}
-          businessHours={businessHours}
+          businessHours={params.hours}
           eventLimit={3}
           eventDurationEditable={true}
           eventStartEditable={true}
