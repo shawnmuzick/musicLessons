@@ -8,6 +8,32 @@ const addZero = i => {
 const timeFormat = eventObject => {
   return eventObject.getUTCHours() + ":" + addZero(eventObject.getUTCMinutes());
 };
+export const dayFormat = (i) =>{
+  switch (i) {
+    case 0:
+      i = "Sun";
+      break;
+    case 1:
+      i = "Mon";
+      break;
+    case 2:
+      i = "Tue";
+      break;
+    case 3:
+      i = "Wed";
+      break;
+    case 4:
+      i = "Thr";
+      break;
+    case 5:
+      i = "Fri";
+      break;
+    case 6:
+      i = "Sat";
+      break;
+  }
+  return i;
+}
 const checkAvailability = (compare, day, time) => {
   let isAvailable = false;
   compare.forEach(item => {
@@ -34,7 +60,7 @@ const extractEventDetails = dateObj => {
 };
 const postEvent = (newEvent, params, setParams) => {
   axios
-    .post(`/api/newLesson/${params.teacher}`, {
+    .post(`/api/newLesson`, {
       teacher: params.teacher,
       newEvent: newEvent
     })
@@ -52,7 +78,7 @@ const postEvent = (newEvent, params, setParams) => {
 };
 const editEvent = (id, update, params, setParams) => {
   axios
-    .put(`/api/update/`, {
+    .put(`/api/update/lesson`, {
       id: id,
       update: update,
       name: params.teacher

@@ -32,6 +32,7 @@ export default function DashboardView() {
           key={teacher._id}
           name={teacher.name}
           phone={teacher.phone}
+          hours = {teacher.hours}
         />
       ))}
     </div>
