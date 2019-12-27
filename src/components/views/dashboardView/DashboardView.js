@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EmpDetails from "./EmpDetails";
-import EmpForm from './EmpForm';
+
 
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
@@ -36,7 +36,6 @@ export default function DashboardView() {
           hours = {teacher.hours}
         />
       ))}
-      <EmpForm />
     </div>
   );
 }

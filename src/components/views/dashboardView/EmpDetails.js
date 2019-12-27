@@ -1,5 +1,6 @@
 import React from "react";
 import {dayFormat} from '../calendarView/functions'
+import EmpForm from './EmpForm';
 export default function EmpDetails({ name, phone, hours }) {
   if (hours) {
     hours.forEach(i => {
@@ -12,10 +13,10 @@ export default function EmpDetails({ name, phone, hours }) {
   return (
     <div id="employees">
       <details>
-        <summary>{name}</summary>
+        <summary><h4>{name}</h4></summary>
         <p>Phone: {phone}</p>
         <p>
-          Hours:{" "}
+          Current Hours:{" "}
           {hours === undefined
             ? ""
             : hours.map(item => (
@@ -27,6 +28,7 @@ export default function EmpDetails({ name, phone, hours }) {
                 </li>
               ))}
         </p>
+        <EmpForm />
       </details>
     </div>
   );

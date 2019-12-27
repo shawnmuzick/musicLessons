@@ -1,16 +1,96 @@
-import React from 'react'
-
+import React, { useState } from "react";
+import { editTeacher } from "../calendarView/functions";
+const initialState = {
+  Sun: "",
+  Mon: "",
+  Tue: "",
+  Wed: "",
+  Thr: "",
+  Fri: "",
+  Sat: ""
+};
 export default function EmpForm() {
-    return (
-        <form id ="EmpForm">
-            <label><input type="checkbox" value='1'id='dayCheckbox'/>Monday</label><br/>
-            <label><input type="checkbox" value='2'id='dayCheckbox'/>Tuesday</label><br/>
-            <label><input type="checkbox" value='3'id='dayCheckbox'/>Wednesday</label><br/>
-            <label><input type="checkbox" value='4'id='dayCheckbox'/>Thursday</label><br/>
-            <label><input type="checkbox" value='5'id='dayCheckbox'/>Friday</label><br/>
-            <label><input type="checkbox" value='6'id='dayCheckbox'/>Saturday</label><br/>
-            <label><input type="checkbox" value='0'id='dayCheckbox'/>Sunday</label><br/>
-            <input type="submit"/>
-        </form>
-    )
+  const [submission, setSubmission] = useState(initialState);
+  const changeHandler = e => {
+    const { name, value } = e.target;
+    const update = submission;
+    update[name] = value;
+    setSubmission(update);
+  };
+  return (
+    <form id="EmpForm" onSubmit={editTeacher}>
+      <h4>Edit Hours</h4>
+      <div className="formGroup">
+        <label>Sun</label>
+        <input
+          type="time"
+          name="Sun"
+          onChange={changeHandler}
+          value={submission["Sun"].value}
+        />
+      </div>
+
+      <div className="formGroup">
+        <label>Mon</label>
+        <input
+          type="time"
+          name="Mon"
+          onChange={changeHandler}
+          value={submission["Mon"].value}
+        />
+      </div>
+
+      <div className="formGroup">
+        <label>Tue</label>
+        <input
+          type="time"
+          name="Tue"
+          onChange={changeHandler}
+          value={submission["Tue"].value}
+        />
+      </div>
+
+      <div className="formGroup">
+        <label>Wed</label>
+        <input
+          type="time"
+          name="Wed"
+          onChange={changeHandler}
+          value={submission["Wed"].value}
+        />
+      </div>
+
+      <div className="formGroup">
+        <label>Thr</label>
+        <input
+          type="time"
+          name="Thr"
+          onChange={changeHandler}
+          value={submission["Thr"].value}
+        />
+      </div>
+
+      <div className="formGroup">
+        <label>Fri</label>
+        <input
+          type="time"
+          name="Fri"
+          onChange={changeHandler}
+          value={submission["Fri"].value}
+        />
+      </div>
+
+      <div className="formGroup">
+        <label>Sat</label>
+        <input
+          type="time"
+          name="Sat"
+          onChange={changeHandler}
+          value={submission["Sat"].value}
+        />
+      </div>
+
+      <input type="submit" value="submit" />
+    </form>
+  );
 }

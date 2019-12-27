@@ -103,6 +103,11 @@ const createTeacher = () => {
   }
   return { name, phone };
 };
+export const editTeacher = (e) =>{
+  e.preventDefault();
+  console.log(e)
+
+}
 export const handler = (args, calendarRef, params, setParams) => {
   //ENABLE THIS TO NAVIGATE ON DAY CLICK
   const api = calendarRef.current.getApi();
