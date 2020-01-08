@@ -60,14 +60,24 @@ router.post("/api/newLesson", (req, res) => {
     });
 });
 router.put("/api/update/lesson", (req, res) => {
-  const { update, name, id} = req.body;
+  const { update, name, id } = req.body;
   const { start, end } = update.range;
   teacherModel
     .updateOne(
       //find where name = name, and lessons's child element that matches id
       { name: name, lessons: { $elemMatch: { id: id } } },
       //set the first child of lessons that matches id, to {stuff in here}
-      { $set: { "lessons.$": { id: id, start, end } } }
+      {
+        $set: {
+          "lessons.$": {
+            id: id,
+            start,
+            end,
+            backgroundColor: update.backgroundColor,
+            borderColor: update.borderColor
+          }
+        }
+      }
     )
     .exec((err, success) => {
       if (err) throw err;
@@ -85,8 +95,11 @@ router.put("/api/update/lesson", (req, res) => {
       res.json(success);
     });
 });
-router.put("/api/update/teacher", (req,res) =>{
-  const {name, phone, hours} = req.body
-  teacherModel.updateOne({name:name}, {$set: {phone:phone, hours:hours}})
-})
+router.put("/api/update/teacher", (req, res) => {
+  const { name, phone, hours } = req.body;
+  teacherModel.updateOne(
+    { name: name },
+    { $set: { phone: phone, hours: hours } }
+  );
+});
 export default router;

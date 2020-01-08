@@ -157,11 +157,20 @@ summary h4{
 }
 .formGroup{
   display: flex;
+  text-align: left;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   align-content: center;
   width: 40vw;
+}
+.formGroup label{
+  width: 50px;
+}
+.formGroup input{
+  flex-grow: 1;
+  padding: 5px;
+  margin: 5px;
 }
 .container {
   display: block;

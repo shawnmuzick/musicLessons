@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import { header, footer } from "./options";
-import { handler, makeButtons, drop } from "./functions";
+import { handler, makeButtons, eventDrop, eventClick } from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
@@ -23,26 +23,27 @@ export default function CalendarView() {
       <h1>{params.teacher || <br />}</h1>
       <div className="wrapper">
         <FullCalendar
-          ref={calendarRef}
-          timeZone={"UTC"}
           customButtons={makeButtons(SRC, footer, params, setParams)}
-          navLinks={true}
+          dateClick={args => handler(args, calendarRef, params, setParams)}
+          eventClick = {e => eventClick(e, params, setParams)}
+          changeView={args => handler(args, calendarRef, params, setParams)}
+          eventDrop={edit => eventDrop(edit, params, setParams)}
+          eventResize={edit => eventDrop(edit, params, setParams)}
+          ref={calendarRef}
           footer={footer}
           header={header}
-          selectable={true}
-          editable={true}
-          dateClick={args => handler(args, calendarRef, params, setParams)}
-          changeView={args => handler(args, calendarRef, params, setParams)}
           plugins={plugins}
           events={params.events}
-          eventDrop={edit => drop(edit, params, setParams)}
-          eventResize={edit => drop(edit, params, setParams)}
           businessHours={params.hours}
           eventLimit={3}
+          navLinks={true}
           eventDurationEditable={true}
           eventStartEditable={true}
-          height={"parent"}
+          selectable={true}
+          editable={true}
           allDayDefault={false}
+          height={"parent"}
+          timeZone={"UTC"}
         />
       </div>
     </div>

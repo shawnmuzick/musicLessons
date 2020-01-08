@@ -20,7 +20,7 @@ export default function Main({ menuState }) {
       />
       <div className="inner">
         {menuItems.map(item => (
-          <VIEW name={item.name} view={view}>
+          <VIEW name={item.name} view={view} key={item.name}>
             <>{item.component}</>
           </VIEW>
         ))}

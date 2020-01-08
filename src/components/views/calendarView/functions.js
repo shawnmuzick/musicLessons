@@ -31,12 +31,15 @@ export const dayFormat = (i) =>{
     case 6:
       i = "Sat";
       break;
+      default:
+        i = "Sun";
+        break;
   }
   return i;
 }
-const checkAvailability = (compare, day, time) => {
+const checkAvailability = (businessHours, day, time) => {
   let isAvailable = false;
-  compare.forEach(item => {
+  businessHours.forEach(item => {
     item.daysOfWeek.forEach(d => {
       if (d === day) {
         if (time >= item.startTime && time < item.endTime) {
@@ -52,11 +55,12 @@ const checkAvailability = (compare, day, time) => {
 const nameEvent = () => {
   return window.prompt("Name this event: ");
 };
-const extractEventDetails = dateObj => {
-  const eventDate = new Date(dateObj);
+const extractEventDetails = eventObject => {
+  const eventDate = new Date(eventObject.dateStr || eventObject.event._instance.range.start);
   const day = eventDate.getDay();
   const time = timeFormat(eventDate);
-  return { day, time };
+  const businessHours = eventObject.view.context.options.businessHours;
+  return { day, time, businessHours };
 };
 const postEvent = (newEvent, params, setParams) => {
   axios
@@ -83,39 +87,64 @@ const editEvent = (id, update, params, setParams) => {
       update: update,
       name: params.teacher
     })
-    .then(res => console.log(res))
     .catch(err => console.log(err));
+    axios
+    .get(`/api/teachers/${params.teacher}`)
+    .then(res => {
+      setParams({
+        teacher: res.data.name,
+        events: res.data.lessons,
+        hours: res.data.hours || []
+      });
+    })
+    .catch(error => console.log("load" + error));
+};
+const editEventColor = (e) => {
+  return e !== 'red' ? 'red' : '';
+}
+export const eventClick = (e, params, setParams) =>{
+  const id = e.event.id;
+  const update = e.event._instance;
+  let style = e.el.style;
+  let color = style.backgroundColor;
+  style.backgroundColor = style.borderColor = update.backgroundColor = update.borderColor = editEventColor(color);
 
-  setParams({
-    teacher: params.teacher,
-    events: params.events,
-    hours: params.hours
-  });
+editEvent(id, update, params, setParams)
+}
+export const AddNewTeacher = setParams => {
+  const { name, phone } = createTeacher();
+  if(name === null || phone === null){
+    return;
+  }
+  axios
+    .post(`/api/teachers`, { name, phone })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => console.log(err));
+  setParams({ teacher: "", events: [], hours: [] });
 };
 const createTeacher = () => {
   let name = window.prompt("Enter a name: ");
   if (name === null) {
-    return;
+    return {name};
   }
   let phone = window.prompt("Enter a phone number: ");
   if (phone === null) {
-    return;
+    return {name, phone};
   }
   return { name, phone };
 };
-export const editTeacher = (e) =>{
-  e.preventDefault();
+export const editTeacherHours = (e) =>{
   console.log(e)
 
 }
 export const handler = (args, calendarRef, params, setParams) => {
   //ENABLE THIS TO NAVIGATE ON DAY CLICK
   const api = calendarRef.current.getApi();
-  const compare = args.view.context.options.businessHours;
-  const { day, time } = extractEventDetails(args.dateStr);
-
+  const { day, time, businessHours } = extractEventDetails(args);
   if (api.view.type === "timeGridDay") {
-    const isAvailable = checkAvailability(compare, day, time);
+    const isAvailable = checkAvailability(businessHours, day, time);
     if (isAvailable === false) {
       window.alert(
         "The time you have selected is outside of this instructor's hours!"
@@ -140,11 +169,10 @@ export const selector = (name, events, params, setParams, hours) => {
   }
   setParams({ teacher: name, events: events, hours: hours });
 };
-export const drop = (edit, params, setParams) => {
-  const compare = edit.view.context.options.businessHours;
-  const { day, time } = extractEventDetails(edit.event._instance.range.start);
+export const eventDrop = (edit, params, setParams) => {
+  const { day, time, businessHours } = extractEventDetails(edit);
 
-  const isAvailable = checkAvailability(compare, day, time);
+  const isAvailable = checkAvailability(businessHours, day, time);
   if (isAvailable === false) {
     window.alert(
       "The time you have selected is outside of this instructor's hours!"
@@ -173,13 +201,3 @@ export const makeButtons = (SRC, footer, params, setParams) => {
   return obj;
 };
 
-export const AddNewTeacher = setParams => {
-  const { name, phone } = createTeacher();
-  axios
-    .post(`/api/teachers`, { name, phone })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => console.log(err));
-  setParams({ teacher: "", events: [], hours: [] });
-};
