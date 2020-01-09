@@ -8,7 +8,6 @@ export default function EmpDetails({ name, phone, hours }) {
         return i = dayFormat(i)
       });
     });
-    console.log(hours);
   }
   return (
     <div id="employees">
@@ -28,7 +27,7 @@ export default function EmpDetails({ name, phone, hours }) {
                 </li>
               ))}
         </p>
-        <EmpForm />
+        <EmpForm name = {name} phone = {phone}/>
       </details>
     </div>
   );

@@ -9,33 +9,8 @@ const timeFormat = eventObject => {
   return eventObject.getUTCHours() + ":" + addZero(eventObject.getUTCMinutes());
 };
 export const dayFormat = (i) =>{
-  switch (i) {
-    case 0:
-      i = "Sun";
-      break;
-    case 1:
-      i = "Mon";
-      break;
-    case 2:
-      i = "Tue";
-      break;
-    case 3:
-      i = "Wed";
-      break;
-    case 4:
-      i = "Thr";
-      break;
-    case 5:
-      i = "Fri";
-      break;
-    case 6:
-      i = "Sat";
-      break;
-      default:
-        i = "Sun";
-        break;
-  }
-  return i;
+  var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
+  return a[i]
 }
 const checkAvailability = (businessHours, day, time) => {
   let isAvailable = false;
@@ -135,9 +110,20 @@ const createTeacher = () => {
   }
   return { name, phone };
 };
-export const editTeacherHours = (e) =>{
-  console.log(e)
+const editTeacher = (name, phone, hours) =>{
+  console.log('test')
+  axios.put(`/api/update/teacher`, {name, phone, hours}).then(res=>console.log(res)).catch(err => console.log(err));
+}
+export const editTeacherHours = (name, phone, hours) =>{
+  const makeDay = (d) =>{
+    var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
+    return a.indexOf(d)
+  }
+  let arr = Object.keys(hours).map((key)=>{
+    return {daysOfWeek:[makeDay(key)], startTime:hours[key].startTime, endTime:hours[key].endTime}
+  });
 
+  editTeacher(name, phone, arr);
 }
 export const handler = (args, calendarRef, params, setParams) => {
   //ENABLE THIS TO NAVIGATE ON DAY CLICK

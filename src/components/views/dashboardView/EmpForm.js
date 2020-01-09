@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { editTeacherHours } from "../calendarView/functions";
 
-export default function EmpForm() {
+export default function EmpForm({name, phone}) {
   const [hours, setHours] = useState({});
   const days = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
   const changeStart = e => {
@@ -18,7 +18,7 @@ export default function EmpForm() {
   };
   const subnmitHandler = (e) =>{
     e.preventDefault();
-    editTeacherHours(hours)
+    editTeacherHours(name, phone, hours)
   }
   return (
     <form id="EmpForm" onSubmit={subnmitHandler}>

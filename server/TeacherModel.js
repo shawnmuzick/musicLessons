@@ -9,7 +9,8 @@ const teacherSchema = new Schema({
     name: String,
     id: String,
     phone: String,
-    lessons: []
+    lessons: [],
+    hours:[]
 },{collection:'teachers'})
 const teacherModel = mongoose.model('teacherModel',teacherSchema);
 export default teacherModel;

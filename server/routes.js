@@ -97,9 +97,20 @@ router.put("/api/update/lesson", (req, res) => {
 });
 router.put("/api/update/teacher", (req, res) => {
   const { name, phone, hours } = req.body;
-  teacherModel.updateOne(
-    { name: name },
-    { $set: { phone: phone, hours: hours } }
-  );
+  console.log(hours)
+  teacherModel
+    .updateOne(
+      { name: name },
+      {
+        $set: {
+          "phone": phone,
+          "hours": hours
+        }
+      }
+    )
+    .exec((err, success) => {
+      if (err) throw err;
+       res.json(success);
+    });
 });
 export default router;
