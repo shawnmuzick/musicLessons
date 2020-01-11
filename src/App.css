@@ -39,7 +39,10 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background-color: aliceblue;
+  background: #7F7FD5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
   min-width: 15vw;
 }
 #MainMenuIconWrapper {
@@ -80,7 +83,9 @@
 }
 /* Views */
 .view {
-  background-color: #eee;
+  background: #FFEFBA;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   flex-grow: 8;
   padding: 1rem;
 }

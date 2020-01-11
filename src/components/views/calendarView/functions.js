@@ -1,4 +1,11 @@
 import axios from "axios";
+function Teacher({_id, name, lessons, hours}){
+  this._id = _id;
+  this.name = name;
+  this.text = name;
+  this.lessons = lessons;
+  this.hours = hours;
+}
 const addZero = i => {
   if (i < 10) {
     i = "0" + i;
@@ -11,6 +18,10 @@ const timeFormat = eventObject => {
 export const dayFormat = (i) =>{
   var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
   return a[i]
+}
+const _getIndexOfDay = (d) =>{
+  var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
+  return a.indexOf(d)
 }
 const checkAvailability = (businessHours, day, time) => {
   let isAvailable = false;
@@ -83,8 +94,7 @@ export const eventClick = (e, params, setParams) =>{
   let style = e.el.style;
   let color = style.backgroundColor;
   style.backgroundColor = style.borderColor = update.backgroundColor = update.borderColor = editEventColor(color);
-
-editEvent(id, update, params, setParams)
+  editEvent(id, update, params, setParams);
 }
 export const AddNewTeacher = setParams => {
   const { name, phone } = createTeacher();
@@ -93,9 +103,6 @@ export const AddNewTeacher = setParams => {
   }
   axios
     .post(`/api/teachers`, { name, phone })
-    .then(response => {
-      console.log(response);
-    })
     .catch(err => console.log(err));
   setParams({ teacher: "", events: [], hours: [] });
 };
@@ -111,16 +118,11 @@ const createTeacher = () => {
   return { name, phone };
 };
 const editTeacher = (name, phone, hours) =>{
-  console.log('test')
   axios.put(`/api/update/teacher`, {name, phone, hours}).then(res=>console.log(res)).catch(err => console.log(err));
 }
 export const editTeacherHours = (name, phone, hours) =>{
-  const makeDay = (d) =>{
-    var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
-    return a.indexOf(d)
-  }
   let arr = Object.keys(hours).map((key)=>{
-    return {daysOfWeek:[makeDay(key)], startTime:hours[key].startTime, endTime:hours[key].endTime}
+    return {daysOfWeek:[_getIndexOfDay(key)], startTime:hours[key].startTime, endTime:hours[key].endTime}
   });
 
   editTeacher(name, phone, arr);
@@ -170,12 +172,12 @@ export const eventDrop = (edit, params, setParams) => {
 };
 export const makeButtons = (SRC, footer, params, setParams) => {
   let obj = SRC.reduce((obj, item) => {
-    obj[item.name] = item;
-    item.text = item.name;
-    item.click = function() {
-      selector(item.text, item.lessons, params, setParams, item.hours);
+    const test = new Teacher(item);
+    obj[test.name] = test;
+    test.click = function() {
+      selector(test.text, test.lessons, params, setParams, test.hours);
     };
-    footer.center += "," + item.text + " ";
+    footer.center += "," + test.text + " ";
     return obj;
   }, {});
   obj.New = {};
