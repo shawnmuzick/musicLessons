@@ -1,10 +1,21 @@
 import axios from "axios";
-function Teacher({_id, name, lessons, hours}){
+function Teacher({_id, name, lname, lessons, hours}){
   this._id = _id;
   this.name = name;
+  this.lname = lname
   this.text = name;
   this.lessons = lessons;
   this.hours = hours;
+}
+//note: you apparently can't use arrow syntax with this, not sure why
+Teacher.prototype.getFullName = function(){
+  return this.name + ' ' + this.lname;
+}
+function Event(title, start){
+  this.title = title;
+  this.start = start;
+  this.end = '';
+  this.id = '';
 }
 const addZero = i => {
   if (i < 10) {
@@ -143,8 +154,8 @@ export const handler = (args, calendarRef, params, setParams) => {
       if (title === null) {
         return;
       }
-      const newEvent = { title: title, start: args.dateStr };
-      postEvent(newEvent, params, setParams);
+      const e = new Event(title, args.dateStr);
+      postEvent(e, params, setParams);
       api.changeView("dayGridMonth");
     }
   } else {

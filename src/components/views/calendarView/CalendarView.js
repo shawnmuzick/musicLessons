@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
-import { header, footer } from "./options";
 import { handler, makeButtons, eventDrop, eventClick} from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
   const [params, setParams] = useState({ teacher: "", events: [], hours:[] });
   const [SRC, setSRC] = useState([]);
+
+  const header = {
+    left: "prev,next, today",
+    center: "title",
+    right: "dayGridMonth,timeGridWeek,timeGridDay"
+  };
+  const footer = {
+    center: ""
+  };
+
   useEffect(() => {
     fetch(`/api/teachers`)
       .then(res => res.json())
@@ -18,7 +27,6 @@ export default function CalendarView() {
   useEffect(() => {
     footer.center = "";
   });
-
   return (
     <div className="view">
       <h1>{params.teacher || <br />}</h1>
