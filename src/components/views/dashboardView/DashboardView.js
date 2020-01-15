@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EmpDetails from "./EmpDetails";
-import { PieChart, Pie, Legend, Cell, Label } from "recharts";
+import { PieChart, Pie, Legend, Cell } from "recharts";
 
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
@@ -24,6 +24,7 @@ export default function DashboardView() {
     item.value = current;
     current = 0;
   });
+
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   return (
     <div id="DashboardView" className={"view"}>
@@ -36,10 +37,10 @@ export default function DashboardView() {
           <PieChart width={400} height={400} data={teachers}>
             <Pie data={teachers} label={true} >
               {teachers.map((entry, index) => (
-                <Cell fill={COLORS[index % COLORS.length]} />
+                <Cell fill={COLORS[index % COLORS.length]} key ={entry}/>
               ))}
             </Pie>
-            <Legend />
+            <Legend layout={'vertical'} align={'right'} verticalAlign={'middle'}/>
           </PieChart>
         </div>
         <h3>Distribution by Instrument:</h3>

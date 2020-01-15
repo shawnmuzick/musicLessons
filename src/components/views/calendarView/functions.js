@@ -1,5 +1,5 @@
 import axios from "axios";
-function Teacher({_id, name, lname, lessons, hours}){
+function Teacher({_id = '', name = '', lname = '', lessons = [], hours = []}){
   this._id = _id;
   this.name = name;
   this.lname = lname
@@ -59,55 +59,49 @@ const extractEventDetails = eventObject => {
   const businessHours = eventObject.view.context.options.businessHours;
   return { day, time, businessHours };
 };
-const postEvent = (newEvent, params, setParams) => {
+const postEvent = (newEvent, teacher, setTeacher) => {
   axios
     .post(`/api/newLesson`, {
-      teacher: params.teacher,
+      teacher: teacher.name,
       newEvent: newEvent
     })
     .catch(error => console.log("load" + error));
   axios
-    .get(`/api/teachers/${params.teacher}`)
+    .get(`/api/teachers/${teacher.name}`)
     .then(res => {
-      setParams({
-        teacher: res.data.name,
-        events: res.data.lessons,
-        hours: res.data.hours || []
-      });
+      const edit = new Teacher(res.data)
+      setTeacher(edit);
     })
     .catch(error => console.log("load" + error));
 };
-const editEvent = (id, update, params, setParams) => {
+const editEvent = (id, update, teacher, setTeacher) => {
   axios
     .put(`/api/update/lesson`, {
       id: id,
       update: update,
-      name: params.teacher
+      name: teacher.name
     })
     .catch(err => console.log(err));
     axios
-    .get(`/api/teachers/${params.teacher}`)
+    .get(`/api/teachers/${teacher.name}`)
     .then(res => {
-      setParams({
-        teacher: res.data.name,
-        events: res.data.lessons,
-        hours: res.data.hours || []
-      });
+      const edit = new Teacher(res.data);
+      setTeacher(edit);
     })
     .catch(error => console.log("load" + error));
 };
 const editEventColor = (e) => {
   return e !== 'red' ? 'red' : '';
 }
-export const eventClick = (e, params, setParams) =>{
+export const eventClick = (e, teacher, setTeacher) =>{
   const id = e.event.id;
   const update = e.event._instance;
   let style = e.el.style;
   let color = style.backgroundColor;
   style.backgroundColor = style.borderColor = update.backgroundColor = update.borderColor = editEventColor(color);
-  editEvent(id, update, params, setParams);
+  editEvent(id, update, teacher, setTeacher);
 }
-export const AddNewTeacher = setParams => {
+export const AddNewTeacher = setTeacher => {
   const { name, phone } = createTeacher();
   if(name === null || phone === null){
     return;
@@ -115,7 +109,7 @@ export const AddNewTeacher = setParams => {
   axios
     .post(`/api/teachers`, { name, phone })
     .catch(err => console.log(err));
-  setParams({ teacher: "", events: [], hours: [] });
+  setTeacher({});
 };
 const createTeacher = () => {
   let name = window.prompt("Enter a name: ");
@@ -138,7 +132,7 @@ export const editTeacherHours = (name, phone, hours) =>{
 
   editTeacher(name, phone, arr);
 }
-export const handler = (args, calendarRef, params, setParams) => {
+export const handler = (args, calendarRef, teacher, setTeacher) => {
   //ENABLE THIS TO NAVIGATE ON DAY CLICK
   const api = calendarRef.current.getApi();
   const { day, time, businessHours } = extractEventDetails(args);
@@ -155,20 +149,20 @@ export const handler = (args, calendarRef, params, setParams) => {
         return;
       }
       const e = new Event(title, args.dateStr);
-      postEvent(e, params, setParams);
+      postEvent(e, teacher, setTeacher);
       api.changeView("dayGridMonth");
     }
   } else {
     api.changeView("timeGridDay", args.dateStr);
   }
 };
-export const selector = (name, events, params, setParams, hours) => {
-  if (name === params.teacher) {
+export const selector = (next, current, setTeacher) => {
+  if (next.name === current.name) {
     return;
   }
-  setParams({ teacher: name, events: events, hours: hours });
+  setTeacher(next);
 };
-export const eventDrop = (edit, params, setParams) => {
+export const eventDrop = (edit, teacher, setTeacher) => {
   const { day, time, businessHours } = extractEventDetails(edit);
 
   const isAvailable = checkAvailability(businessHours, day, time);
@@ -178,15 +172,15 @@ export const eventDrop = (edit, params, setParams) => {
     );
     return;
   } else {
-    editEvent(edit.event.id, edit.event._instance, params, setParams);
+    editEvent(edit.event.id, edit.event._instance, teacher, setTeacher);
   }
 };
-export const makeButtons = (SRC, footer, params, setParams) => {
+export const makeButtons = (SRC, footer, teacher, setTeacher) => {
   let obj = SRC.reduce((obj, item) => {
     const test = new Teacher(item);
     obj[test.name] = test;
     test.click = function() {
-      selector(test.text, test.lessons, params, setParams, test.hours);
+      selector(test, teacher, setTeacher);
     };
     footer.center += "," + test.text + " ";
     return obj;
@@ -194,7 +188,7 @@ export const makeButtons = (SRC, footer, params, setParams) => {
   obj.New = {};
   obj.New.text = "Add New";
   obj.New.click = function() {
-    AddNewTeacher(setParams);
+    AddNewTeacher(setTeacher);
   };
   footer.center += "," + obj.New.text;
   return obj;

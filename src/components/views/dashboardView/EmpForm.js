@@ -21,11 +21,11 @@ export default function EmpForm({name, phone}) {
     editTeacherHours(name, phone, hours)
   }
   return (
-    <form id="EmpForm" onSubmit={subnmitHandler}>
+    <form id="EmpForm" onSubmit={subnmitHandler} key ={name}>
       <h4>Edit Hours</h4>
       {days.map(day =>
          (
-          <div className="formGroup">
+          <div className="formGroup" key ={day}>
           <label>{day}</label>
           <input
             type="time"

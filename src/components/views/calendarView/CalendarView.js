@@ -4,7 +4,8 @@ import { handler, makeButtons, eventDrop, eventClick} from "./functions";
 import "./calendar.css";
 export default function CalendarView() {
   const calendarRef = React.createRef();
-  const [params, setParams] = useState({ teacher: "", events: [], hours:[] });
+  // const [params, setParams] = useState({ teacher: "", events: [], hours:[] });
+  const [teacher, setTeacher] = useState({});
   const [SRC, setSRC] = useState([]);
 
   const header = {
@@ -23,27 +24,27 @@ export default function CalendarView() {
         setSRC(data);
       })
       .catch(err => console.log("load" + err));
-  }, [setParams, params]);
+}, [setTeacher, teacher]);
   useEffect(() => {
     footer.center = "";
   });
   return (
     <div className="view">
-      <h1>{params.teacher || <br />}</h1>
+        <h1>{teacher.name|| <br />}</h1>
       <div className="wrapper">
         <FullCalendar
-          customButtons={makeButtons(SRC, footer, params, setParams)}
-          dateClick={args => handler(args, calendarRef, params, setParams)}
-          eventClick = {e => eventClick(e, params, setParams)}
-          changeView={args => handler(args, calendarRef, params, setParams)}
-          eventDrop={edit => eventDrop(edit, params, setParams)}
-          eventResize={edit => eventDrop(edit, params, setParams)}
+          customButtons={makeButtons(SRC, footer, teacher, setTeacher)}
+          dateClick={args => handler(args, calendarRef, teacher, setTeacher)}
+          eventClick = {e => eventClick(e, teacher, setTeacher)}
+          changeView={args => handler(args, calendarRef, teacher, setTeacher)}
+          eventDrop={edit => eventDrop(edit, teacher, setTeacher)}
+          eventResize={edit => eventDrop(edit, teacher, setTeacher)}
           ref={calendarRef}
           footer={footer}
           header={header}
           plugins={plugins}
-          events={params.events}
-          businessHours={params.hours}
+          events={teacher.lessons}
+          businessHours={teacher.hours}
           eventLimit={3}
           navLinks={true}
           eventDurationEditable={true}
