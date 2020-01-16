@@ -1,15 +1,29 @@
 import axios from "axios";
-function Teacher({_id = '', name = '', lname = '', lessons = [], hours = []}){
-  this._id = _id;
-  this.name = name;
-  this.lname = lname
-  this.text = name;
-  this.lessons = lessons;
-  this.hours = hours;
-}
-//note: you apparently can't use arrow syntax with this, not sure why
-Teacher.prototype.getFullName = function(){
-  return this.name + ' ' + this.lname;
+export const Teacher = {
+  _id : 'DEFAULT',
+  name : 'DEFAULT',
+  lname : 'DEFAULT',
+  text : 'DEFAULT',
+  lessons : [],
+  hours : [],
+  create: function({_id = '', name = '', lname = '', lessons = [], hours = []}){
+    let teacher = Object.create(this);
+    teacher._id = _id;
+    teacher.name = name;
+    teacher.lname = lname
+    teacher.text = name;
+    teacher.lessons = lessons;
+    teacher.hours = hours;
+    return teacher;
+  },
+  lessonsPerMonth: function(){
+    let arr = [0,0,0,0,0,0,0,0,0,0,0,0];
+    this.lessons.forEach((item)=>{
+      const d = new Date(item.start);
+      arr[d.getUTCMonth()]++;
+    });
+    return arr;
+  }
 }
 function Event(title, start){
   this.title = title;
@@ -24,10 +38,14 @@ const addZero = i => {
   return i;
 };
 const timeFormat = eventObject => {
-  return eventObject.getUTCHours() + ":" + addZero(eventObject.getUTCMinutes());
+  return addZero(eventObject.getUTCHours()) + ":" + addZero(eventObject.getUTCMinutes());
 };
 export const dayFormat = (i) =>{
   var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
+  return a[i]
+}
+export const monthFormat = (i) =>{
+  var a = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec"]
   return a[i]
 }
 const _getIndexOfDay = (d) =>{
@@ -35,6 +53,7 @@ const _getIndexOfDay = (d) =>{
   return a.indexOf(d)
 }
 const checkAvailability = (businessHours, day, time) => {
+  console.log(businessHours)
   let isAvailable = false;
   businessHours.forEach(item => {
     item.daysOfWeek.forEach(d => {
@@ -57,6 +76,7 @@ const extractEventDetails = eventObject => {
   const day = eventDate.getDay();
   const time = timeFormat(eventDate);
   const businessHours = eventObject.view.context.options.businessHours;
+  console.log('extracted: ' + time);
   return { day, time, businessHours };
 };
 const postEvent = (newEvent, teacher, setTeacher) => {
@@ -176,12 +196,13 @@ export const eventDrop = (edit, teacher, setTeacher) => {
   }
 };
 export const makeButtons = (SRC, footer, teacher, setTeacher) => {
+
   let obj = SRC.reduce((obj, item) => {
-    const test = new Teacher(item);
+    const test = Teacher.create(item);
     obj[test.name] = test;
     test.click = function() {
       selector(test, teacher, setTeacher);
-    };
+    }
     footer.center += "," + test.text + " ";
     return obj;
   }, {});

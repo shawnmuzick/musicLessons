@@ -150,6 +150,8 @@
 /* Dashboard View */
 .metrics {
   text-align: left;
+  display: flex;
+  justify-content: space-evenly;
 }
 summary h4{
   margin: 0px;
@@ -188,6 +190,10 @@ summary h4{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.chartWrapper{
+  display: flex;
+  flex-direction: column;
 }
 
 /* Hide the browser's default checkbox */
