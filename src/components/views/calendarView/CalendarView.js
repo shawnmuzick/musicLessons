@@ -49,6 +49,7 @@ export default function CalendarView() {
           navLinks={true}
           eventDurationEditable={true}
           eventStartEditable={true}
+          eventOverlap={false}
           selectable={true}
           editable={true}
           allDayDefault={false}

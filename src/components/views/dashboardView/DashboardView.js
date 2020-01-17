@@ -18,7 +18,10 @@ export default function DashboardView() {
     fetch("/api/teachers")
       .then(res => res.json())
       .then(data => {
-        setTeachers(data);
+        const f = data.map(t => {
+          return Teacher.create(t);
+        });
+        setTeachers(f);
       })
       .catch(err => console.log(err));
   }, []);
@@ -29,30 +32,35 @@ export default function DashboardView() {
   for (let i = 0; i < arr.length; i++) {
     arr[i] = { name: monthFormat(i), value: 0 };
   }
-  teachers.forEach(item => {
-    const t = Teacher.create(item);
+  teachers.forEach(t => {
     let arr2 = t.lessonsPerMonth();
-
     for (let i = 0; i < arr.length; i++) {
       arr[i].value += arr2[i];
     }
-    console.log(arr);
     t.lessons.forEach(() => {
       totalLessons++;
       current++;
     });
-    item.value = current;
+    t.value = current;
     current = 0;
   });
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "purple", "darkblue", "green", "pink"];
+  const COLORS = [
+    "#0088FE",
+    "#00C49F",
+    "#FFBB28",
+    "#FF8042",
+    "red",
+    "purple",
+    "darkblue",
+    "green",
+    "pink"
+  ];
   return (
     <div id="DashboardView" className={"view"}>
       <h2>Dashboard</h2>
       <h3>Metrics</h3>
       <h3>Total Lessons: {totalLessons} </h3>
       <div className="metrics">
-
-
         <div className="chartWrapper">
           <h3>Distribution by Instructor:</h3>
           <PieChart width={400} height={400} data={teachers}>

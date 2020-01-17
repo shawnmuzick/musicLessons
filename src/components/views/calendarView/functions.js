@@ -89,7 +89,7 @@ const postEvent = (newEvent, teacher, setTeacher) => {
   axios
     .get(`/api/teachers/${teacher.name}`)
     .then(res => {
-      const edit = new Teacher(res.data)
+      const edit = Teacher.create(res.data)
       setTeacher(edit);
     })
     .catch(error => console.log("load" + error));
@@ -105,7 +105,7 @@ const editEvent = (id, update, teacher, setTeacher) => {
     axios
     .get(`/api/teachers/${teacher.name}`)
     .then(res => {
-      const edit = new Teacher(res.data);
+      const edit = Teacher.create(res.data);
       setTeacher(edit);
     })
     .catch(error => console.log("load" + error));

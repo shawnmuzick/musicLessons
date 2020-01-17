@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  height: 100vh;
+  height: 100%;
 }
 .inner {
   display: flex;
@@ -32,7 +32,8 @@
 .main {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  flex-grow: 1;
+  min-height: 100%;
 }
 /* Main Menu */
 #MainMenu {
@@ -44,6 +45,7 @@
   background: linear-gradient(to bottom, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   
   min-width: 15vw;
+  min-height: 100%;
 }
 #MainMenuIconWrapper {
   padding: 10px;
