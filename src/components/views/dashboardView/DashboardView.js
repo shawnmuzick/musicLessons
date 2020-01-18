@@ -11,7 +11,7 @@ import {
   Legend,
   Cell
 } from "recharts";
-import { Teacher, monthFormat } from "../calendarView/functions";
+import { Teacher, Event, monthFormat } from "../calendarView/functions";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function DashboardView() {
           <PieChart width={400} height={400} data={teachers}>
             <Pie data={teachers} label={true}>
               {teachers.map((entry, index) => (
-                <Cell fill={COLORS[index % COLORS.length]} key={entry} />
+                <Cell fill={COLORS[index % COLORS.length]} key={entry}/>
               ))}
             </Pie>
             <Legend

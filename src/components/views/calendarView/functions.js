@@ -3,15 +3,17 @@ export const Teacher = {
   _id : 'DEFAULT',
   name : 'DEFAULT',
   lname : 'DEFAULT',
+  phone: 'DEFAULT',
   text : 'DEFAULT',
   lessons : [],
   hours : [],
-  create: function({_id = '', name = '', lname = '', lessons = [], hours = []}){
+  create: function({_id, name, lname, phone, lessons = [], hours = []}){
     let teacher = Object.create(this);
-    teacher._id = _id;
-    teacher.name = name;
-    teacher.lname = lname
-    teacher.text = name;
+    teacher._id = _id || '';
+    teacher.name = name || window.prompt("Enter a first name: ");
+    teacher.lname = lname || window.prompt("Enter a last name: ")
+    teacher.phone = phone || window.prompt("Enter a phone number: ");
+    teacher.text = teacher.name;
     teacher.lessons = lessons;
     teacher.hours = hours;
     return teacher;
@@ -23,13 +25,32 @@ export const Teacher = {
       arr[d.getUTCMonth()]++;
     });
     return arr;
+  },
+  getFullName: function(){
+    return this.name + ' ' + this.lname;
   }
 }
-function Event(title, start){
-  this.title = title;
-  this.start = start;
-  this.end = '';
-  this.id = '';
+export const Event = {
+  title: 'DEFAULT',
+  start: '',
+  end: '',
+  id: '',
+  backgroundColor: '',
+  borderColor: '',
+  create: function Event(title,start,end,id, bkColor,bdColor){
+    let event = Object.create(this);
+    event.title = title;
+    event.start = start;
+    event.end = end;
+    event.id = id;
+    event.backgroundColor = bkColor;
+    event.borderColor = bdColor;
+    return event;
+  },
+  changeColor: function(){
+    this.backgroundColor = (this.backgroundColor !== 'red' ? 'red' : '');
+    this.borderColor = (this.borderColor !== 'red' ? 'red' : '');
+  }
 }
 const addZero = i => {
   if (i < 10) {
@@ -53,7 +74,6 @@ const _getIndexOfDay = (d) =>{
   return a.indexOf(d)
 }
 const checkAvailability = (businessHours, day, time) => {
-  console.log(businessHours)
   let isAvailable = false;
   businessHours.forEach(item => {
     item.daysOfWeek.forEach(d => {
@@ -94,11 +114,11 @@ const postEvent = (newEvent, teacher, setTeacher) => {
     })
     .catch(error => console.log("load" + error));
 };
-const editEvent = (id, update, teacher, setTeacher) => {
+const editEvent = (event, teacher, setTeacher) => {
   axios
     .put(`/api/update/lesson`, {
-      id: id,
-      update: update,
+      id: event.id,
+      event: event,
       name: teacher.name
     })
     .catch(err => console.log(err));
@@ -110,37 +130,22 @@ const editEvent = (id, update, teacher, setTeacher) => {
     })
     .catch(error => console.log("load" + error));
 };
-const editEventColor = (e) => {
-  return e !== 'red' ? 'red' : '';
-}
 export const eventClick = (e, teacher, setTeacher) =>{
-  const id = e.event.id;
-  const update = e.event._instance;
-  let style = e.el.style;
-  let color = style.backgroundColor;
-  style.backgroundColor = style.borderColor = update.backgroundColor = update.borderColor = editEventColor(color);
-  editEvent(id, update, teacher, setTeacher);
+  const {title, start, end, id, backgroundColor, borderColor} = e.event
+  const v = Event.create(title, start, end, id, backgroundColor, borderColor)
+  v.update = e.event._instance;
+  v.changeColor()
+  editEvent(v, teacher, setTeacher);
 }
 export const AddNewTeacher = setTeacher => {
-  const { name, phone } = createTeacher();
-  if(name === null || phone === null){
+  const t = Teacher.create({});
+  if(t.name === null || t.phone === null){
     return;
   }
   axios
-    .post(`/api/teachers`, { name, phone })
+    .post(`/api/teachers`, { name: t.name, lname: t.lname, phone:t.phone })
     .catch(err => console.log(err));
   setTeacher({});
-};
-const createTeacher = () => {
-  let name = window.prompt("Enter a name: ");
-  if (name === null) {
-    return {name};
-  }
-  let phone = window.prompt("Enter a phone number: ");
-  if (phone === null) {
-    return {name, phone};
-  }
-  return { name, phone };
 };
 const editTeacher = (name, phone, hours) =>{
   axios.put(`/api/update/teacher`, {name, phone, hours}).then(res=>console.log(res)).catch(err => console.log(err));
@@ -168,7 +173,7 @@ export const handler = (args, calendarRef, teacher, setTeacher) => {
       if (title === null) {
         return;
       }
-      const e = new Event(title, args.dateStr);
+      const e = Event.create(title, args.dateStr);
       postEvent(e, teacher, setTeacher);
       api.changeView("dayGridMonth");
     }

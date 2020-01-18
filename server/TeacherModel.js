@@ -7,6 +7,7 @@ db.once('open', () =>{console.log('Connected to MongoDB!')})
 const Schema = mongoose.Schema;
 const teacherSchema = new Schema({
     name: String,
+    lname: String,
     id: String,
     phone: String,
     lessons: [],

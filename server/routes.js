@@ -19,9 +19,10 @@ router.get("/api/teachers/:id", (req, res) => {
   });
 });
 router.post("/api/teachers", (req, res) => {
-  const { name, phone, lessons = [] } = req.body;
+  const { name, lname, phone, lessons = [] } = req.body;
   const newTeacher = new teacherModel({
     name,
+    lname,
     phone,
     lessons
   });
@@ -60,8 +61,8 @@ router.post("/api/newLesson", (req, res) => {
     });
 });
 router.put("/api/update/lesson", (req, res) => {
-  const { update, name, id } = req.body;
-  const { start, end } = update.range;
+  const { event, name, id } = req.body;
+  const { start, end } = event.update.range;
   teacherModel
     .updateOne(
       //find where name = name, and lessons's child element that matches id
@@ -73,8 +74,8 @@ router.put("/api/update/lesson", (req, res) => {
             id: id,
             start,
             end,
-            backgroundColor: update.backgroundColor,
-            borderColor: update.borderColor
+            backgroundColor: event.backgroundColor,
+            borderColor: event.borderColor
           }
         }
       }
