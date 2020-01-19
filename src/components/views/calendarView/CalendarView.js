@@ -55,6 +55,7 @@ export default function CalendarView() {
           allDayDefault={false}
           height={"parent"}
           timeZone={"UTC"}
+          defaultTimedEventDuration={{minutes:30}}
         />
       </div>
     </div>

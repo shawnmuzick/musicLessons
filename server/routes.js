@@ -1,5 +1,5 @@
 import express from "express";
-import teacherModel from "./TeacherModel.js";
+import {teacherModel, studentModel} from "./models.js";
 import uuidv4 from "uuid";
 import fs from "fs";
 

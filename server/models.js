@@ -13,5 +13,19 @@ const teacherSchema = new Schema({
     lessons: [],
     hours:[]
 },{collection:'teachers'})
-const teacherModel = mongoose.model('teacherModel',teacherSchema);
-export default teacherModel;
+const studentSchema = new Schema({
+    stID: String,
+    fname: String,
+    lname: String,
+    phone: String,
+    img: String,
+    trial:{
+        trDate: String,
+        trConv: Boolean,
+        trConvF: String
+    },
+    instrument: String,
+    teacher: String
+},{collection:'students'})
+export const teacherModel = mongoose.model('teacherModel',teacherSchema);
+export const studentModel = mongoose.model('studentModel', studentSchema)
