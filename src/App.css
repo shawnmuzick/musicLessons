@@ -1,16 +1,17 @@
 .App {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 50px 95fr;
   min-height: 100vh;
-  height: 100%;
+  max-height: 100vh;
 }
-.inner {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.App-header {
+.App-header, header, footer {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
   text-align: left;
   background-color: aliceblue;
   display: flex;
@@ -18,9 +19,38 @@
   justify-content: center;
   margin: 0px;
   padding: 0.5rem;
-  border: solid 1px;
-  border-left: none;
-  border-right: none;
+}
+.main {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+.inner {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 95fr 50px;
+  width: 100%;
+  background: #ffefba; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffefba
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffefba
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.view {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  padding: 1rem;
 }
 .App-header h1 {
   margin: 0px;
@@ -29,22 +59,32 @@
   display: flex;
   flex-direction: row;
 }
-.main {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  min-height: 100%;
-}
+
 /* Main Menu */
 #MainMenu {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background: #7F7FD5;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  min-width: 15vw;
+  background: #7f7fd5; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    rgb(16, 145, 136),
+    #86a8e7,
+    #7f7fd5
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #91eae4,
+    #86a8e7,
+    #7f7fd5
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  min-width: 200px;
+  max-width: 200px;
   min-height: 100%;
+  max-height: 100%;
 }
 #MainMenuIconWrapper {
   padding: 10px;
@@ -57,14 +97,16 @@
 #MainMenuIconWrapper:hover {
   background-color: #3788d852;
 }
-#MainMenuIconWrapper:focus{
+#MainMenuIconWrapper:focus {
   box-shadow: 0 0 3px 2px #3788d852;
 }
-#MainMenuIcon{
+#MainMenuIcon {
   outline: none;
 }
 /*Button Styling*/
-.MainMenu-button, .fc-footer-toolbar button, .fc-header-toolbar button {
+.MainMenu-button,
+.fc-footer-toolbar button,
+.fc-header-toolbar button {
   color: black;
   border-radius: 10px;
   margin: 10px;
@@ -73,99 +115,67 @@
   border: 0px;
   font-weight: bold;
   outline: none;
-}
-.MainMenu-button:hover, .fc-footer-toolbar button:hover, .fc-header-toolbar button:hover {
+}  max-height: 100vh;
+.MainMenu-button:hover,
+.fc-footer-toolbar button:hover,
+.fc-header-toolbar button:hover {
   color: black;
   background-color: #3788d852;
   border-color: #3788d8;
 }
-.MainMenu-button:focus{
+.MainMenu-button:focus {
   box-shadow: 0 0 3px 2px #3788d852;
 }
 /* Views */
-.view {
-  background: #FFEFBA;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  flex-grow: 8;
-  padding: 1rem;
 
-}
 .wrapper {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  width: 100%;
   flex-grow: 8;
-  height: 75%;
+  height: 80%;
 }
+
 /* Daily View */
-.Available-List {
-  text-align: left;
-  list-style: none;
-  font-weight: bold;
-  padding: 10px;
-  border-bottom: solid 1px;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-content: center;
-}
-.Available-List p {
-  margin: 0;
-  padding-left: 10px;
-}
-#dateControl {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-#dateButton {
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
-  border-radius: 50%;
-  border: none;
-  background-color: #3788d8;
-  outline: none;
-}
-#dateButton:hover {
-  background-color: #3788d852;
-}
-#dateButton:focus{
-  box-shadow: 0 0 3px 2px #3788d852;
-}
-.fc-footer-toolbar button{
+
+.fc-footer-toolbar button {
   padding: 10px;
   margin: 0px !important;
-  border-radius: 0px;;
+  border-radius: 0px;
 }
-.fc-header-toolbar button{
+.fc-header-toolbar button {
   margin: 0px;
   padding: 10px;
 }
-.fc-footer-toolbar button:first-child{
+.fc-footer-toolbar button:first-child {
   border-radius: 10px 0px 0px 10px;
 }
-.fc-footer-toolbar button:last-child{
+.fc-footer-toolbar button:last-child {
   border-radius: 0px 10px 10px 0px;
 }
-.fc-nonbusiness.fc-bgevent{
+.fc-nonbusiness.fc-bgevent {
   background: red;
 }
 /* Dashboard View */
 .metrics {
-  text-align: center;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+
 }
-summary h4{
+.chartWrap {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+summary h4 {
   margin: 0px;
   display: inline;
 }
-#EmpForm{
+#EmpForm {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.formGroup{
+.formGroup {
   display: flex;
   text-align: left;
   flex-direction: row;
@@ -174,10 +184,10 @@ summary h4{
   align-content: center;
   width: 40vw;
 }
-.formGroup label{
+.formGroup label {
   width: 50px;
 }
-.formGroup input{
+.formGroup input {
   flex-grow: 1;
   padding: 5px;
   margin: 5px;
@@ -193,10 +203,6 @@ summary h4{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-.chartWrapper{
-  display: flex;
-  flex-direction: column;
 }
 
 /* Hide the browser's default checkbox */
@@ -255,10 +261,4 @@ summary h4{
 /* Faculty View */
 #employees {
   text-align: left;
-}
-/* Media Queries */
-@media screen and (max-width: 1200px) {
-  #MainMenu {
-    min-width: 20vh;
-  }
 }

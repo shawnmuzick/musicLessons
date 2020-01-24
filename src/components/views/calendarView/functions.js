@@ -41,8 +41,12 @@ export const Student = {
     trConv: false,
     trConvF: ""
   },
+  lessons: [],
   instrument: "DEFAULT",
-  teacher: "DEFAULT",
+  teacher: {
+    name: "DEFAULT",
+    lname: "DEFUALT"
+  },
   create: function({
     stID,
     fname,
@@ -50,6 +54,7 @@ export const Student = {
     phone,
     img,
     trial,
+    lessons,
     instrument,
     teacher
   }) {
@@ -60,6 +65,7 @@ export const Student = {
     student.phone = phone || window.prompt("Enter a phone number: ");
     student.img = img;
     student.trial = trial;
+    student.lessons = lessons;
     student.instrument = instrument || window.prompt("Enter an instrument: ");
     student.teacher = teacher || window.prompt("Enter a teacher: ");
     return student;

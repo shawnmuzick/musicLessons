@@ -20,9 +20,9 @@ export default function EmpDetails({ name, phone, hours }) {
         {hours === undefined
           ? ""
           : hours.map(item => (
-              <div key={item.daysOfWeek}>
+              <div>
                 {item.daysOfWeek.map(i => (
-                  <p key ={i}>{i + ", "}{item.startTime} {item.endTime}</p>
+                  <p>{i + ", "}{item.startTime} {item.endTime}</p>
                 ))}{" "}
               </div>
             ))}

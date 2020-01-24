@@ -1,33 +1,41 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import EmpDetails from "./EmpDetails";
+import { Line } from "react-chartjs-2";
+import Les_Ins from "./charts/Les_Ins";
+import Les_Mon from "./charts/Les_Mon";
 import {
-  PieChart,
-  Pie,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Legend,
-  Cell
-} from "recharts";
-import { Teacher, Event, monthFormat } from "../calendarView/functions";
+  Teacher,
+  Student,
+  Event,
+  monthFormat
+} from "../calendarView/functions";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
+  const [students, setStudents] = useState([]);
   useEffect(() => {
-    fetch("/api/teachers")
-      .then(res => res.json())
-      .then(data => {
-        const f = data.map(t => {
+    axios
+      .get("/api/teachers")
+      .then(res => {
+        const a = res.data.map(t => {
           return Teacher.create(t);
         });
-        setTeachers(f);
+        setTeachers(a);
+      })
+      .catch(err => console.log(err));
+    axios
+      .get("/api/students")
+      .then(res => {
+        const b = res.data.map(s => {
+          return Student.create(s);
+        });
+        setStudents(b);
       })
       .catch(err => console.log(err));
   }, []);
 
   let totalLessons = 0;
-  let current = 0;
+  let totalStudents = students.length;
   let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (let i = 0; i < arr.length; i++) {
     arr[i] = { name: monthFormat(i), value: 0 };
@@ -37,55 +45,34 @@ export default function DashboardView() {
     for (let i = 0; i < arr.length; i++) {
       arr[i].value += arr2[i];
     }
-    t.lessons.forEach(() => {
-      totalLessons++;
-      current++;
-    });
-    t.value = current;
-    current = 0;
+    t.value = arr2.reduce((x, y) => x + y);
+    totalLessons += t.value;
   });
-  const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "red",
-    "purple",
-    "darkblue",
-    "green",
-    "pink"
-  ];
+  let data = {
+    labels: arr.map(m => {
+      return m.name;
+    }),
+    datasets: [
+      {
+        data: arr.map(m => {
+          return m.value;
+        })
+      }
+    ]
+  };
+  console.log(teachers);
   return (
-    <div id="DashboardView" className={"view"}>
+    <div className={"view"}>
       <h2>Dashboard</h2>
       <h3>Metrics</h3>
       <h3>Total Lessons: {totalLessons} </h3>
-      <div className="metrics">
-        <div className="chartWrapper">
-          <h3>Distribution by Instructor:</h3>
-          <PieChart width={400} height={400} data={teachers}>
-            <Pie data={teachers} label={true}>
-              {teachers.map((entry, index) => (
-                <Cell fill={COLORS[index % COLORS.length]} key={entry}/>
-              ))}
-            </Pie>
-            <Legend
-              layout={"vertical"}
-              align={"right"}
-              verticalAlign={"middle"}
-            />
-          </PieChart>
-        </div>
-
-        <div className="chartWrapper">
-          <h3>Lessons per Month:</h3>
-          <LineChart width={600} height={400} data={arr}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Legend />
-            <Line type="monotone" dataKey="value" stroke="#8884d8" />
-          </LineChart>
+      <h3>Total Students: {totalStudents} </h3>
+      <div className="wrapper">
+        <div className="metrics">
+          <div className={"chartWrap"}>{teachers && <Les_Mon arr={arr} />}</div>
+          <div className={"chartWrap"}>
+            {teachers && <Les_Ins teachers={teachers} />}
+          </div>
         </div>
       </div>
       <h3>Faculty</h3>

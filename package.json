@@ -8,13 +8,14 @@
     "@fullcalendar/interaction": "^4.3.0",
     "@fullcalendar/react": "^4.3.0",
     "@fullcalendar/timegrid": "^4.3.0",
-    "axios": "^0.19.1",
+    "axios": "^0.19.2",
+    "chart.js": "^2.9.3",
     "express": "^4.17.1",
-    "mongoose": "^5.8.7",
+    "mongoose": "^5.8.9",
     "react": "^16.12.0",
+    "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.12.0",
     "react-scripts": "^3.3.0",
-    "recharts": "^2.0.0-beta.1",
     "uuid": "^3.4.0"
   },
   "scripts": {

@@ -4,7 +4,7 @@ import uuidv4 from "uuid";
 import fs from "fs";
 
 const router = express.Router();
-
+//Teachers-----------------------------------------------------------------------------------------
 router.get("/api/teachers", (req, res) => {
   teacherModel.find().exec((err, data) => {
     if (err) throw err;
@@ -42,6 +42,32 @@ router.post("/api/teachers", (req, res) => {
     res.json(success);
   });
 });
+router.put("/api/update/teacher", (req, res) => {
+  const { name, phone, hours } = req.body;
+  console.log(hours)
+  teacherModel
+    .updateOne(
+      { name: name },
+      {
+        $set: {
+          "phone": phone,
+          "hours": hours
+        }
+      }
+    )
+    .exec((err, success) => {
+      if (err) throw err;
+       res.json(success);
+    });
+});
+//Students-------------------------------------------------------------------------------
+router.get("/api/students", (req, res) => {
+  studentModel.find().exec((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
+});
+//Lessons--------------------------------------------------------------------------------
 router.post("/api/newLesson", (req, res) => {
   const { teacher, newEvent } = req.body;
   newEvent.id = uuidv4.v4();
@@ -96,22 +122,5 @@ router.put("/api/update/lesson", (req, res) => {
       res.json(success);
     });
 });
-router.put("/api/update/teacher", (req, res) => {
-  const { name, phone, hours } = req.body;
-  console.log(hours)
-  teacherModel
-    .updateOne(
-      { name: name },
-      {
-        $set: {
-          "phone": phone,
-          "hours": hours
-        }
-      }
-    )
-    .exec((err, success) => {
-      if (err) throw err;
-       res.json(success);
-    });
-});
+
 export default router;

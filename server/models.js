@@ -24,8 +24,12 @@ const studentSchema = new Schema({
         trConv: Boolean,
         trConvF: String
     },
+    lessons: [],
     instrument: String,
-    teacher: String
+    teacher: {
+        name: String,
+        lname: String
+    }
 },{collection:'students'})
 export const teacherModel = mongoose.model('teacherModel',teacherSchema);
 export const studentModel = mongoose.model('studentModel', studentSchema)
