@@ -8,7 +8,9 @@
   min-height: 100vh;
   max-height: 100vh;
 }
-.App-header, header, footer {
+.App-header,
+header,
+footer {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box;
@@ -115,7 +117,8 @@
   border: 0px;
   font-weight: bold;
   outline: none;
-}  max-height: 100vh;
+  max-height: 100vh;
+}
 .MainMenu-button:hover,
 .fc-footer-toolbar button:hover,
 .fc-header-toolbar button:hover {
@@ -158,13 +161,38 @@
   background: red;
 }
 /* Dashboard View */
-.metrics {
-
+.metrics,.forms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  min-height: 300px;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
-.chartWrap {
+.formsWrap{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+.col {
+  flex: 0 0 25%;
+  width: 100%;
+}
+.colInn {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chartWrap {
+  display: block;
+  height: 100%;
+}
+canvas{
+  height: 100%;
 }
 summary h4 {
   margin: 0px;

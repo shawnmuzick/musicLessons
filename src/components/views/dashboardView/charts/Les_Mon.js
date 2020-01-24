@@ -16,12 +16,14 @@ export default function Les_Mon({ arr}) {
       };
   let options = {
     legend: {
-      position: "bottom"
+      position: "right"
     },
     title: {
       text: "Distribution of Lessons by Instructor",
       display: true
-    }
+    },
+    responsive:true,
+    maintainAspectRatio:false
   };
   return <Line data={data} options={options} />;
 }

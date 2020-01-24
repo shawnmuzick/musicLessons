@@ -68,22 +68,36 @@ export default function DashboardView() {
       <h3>Total Lessons: {totalLessons} </h3>
       <h3>Total Students: {totalStudents} </h3>
       <div className="wrapper">
-        <div className="metrics">
-          <div className={"chartWrap"}>{teachers && <Les_Mon arr={arr} />}</div>
-          <div className={"chartWrap"}>
-            {teachers && <Les_Ins teachers={teachers} />}
+          <div className="metrics">
+            <div className={"col"}>
+              <div className={"colInn"}>
+                <div className="chartWrap">
+                  <Les_Mon arr={arr} />
+                </div>
+              </div>
+            </div>
+            <div className={"col"}>
+              <div className={"colInn"}>
+                <div className="chartWrap">
+                  <Les_Ins teachers={teachers} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={"forms"}>
+            <h3>Faculty</h3>
+            <div className="formsWrap">
+              {teachers.map(teacher => (
+                <EmpDetails
+                  key={teacher._id}
+                  name={teacher.name}
+                  phone={teacher.phone}
+                  hours={teacher.hours}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <h3>Faculty</h3>
-      {teachers.map(teacher => (
-        <EmpDetails
-          key={teacher._id}
-          name={teacher.name}
-          phone={teacher.phone}
-          hours={teacher.hours}
-        />
-      ))}
-    </div>
   );
 }

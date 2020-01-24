@@ -16,12 +16,14 @@ export default function Les_Ins({ teachers}) {
   };
   let options = {
     legend: {
-      position: "bottom"
+      position: "right"
     },
     title: {
       text: "Distribution of Lessons by Instructor",
       display: true
-    }
+    },
+    responsive:true,
+    maintainAspectRatio:false
   };
   return <Pie data={data} options={options} />;
 }
