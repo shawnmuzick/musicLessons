@@ -1,6 +1,6 @@
 import React from "react";
-import { dayFormat } from "../calendarView/functions";
-import EmpForm from "./EmpForm";
+import { dayFormat } from "../calendar/functions";
+import EmpForm from "./forms/EmpForm";
 export default function EmpDetails({ name, phone, hours }) {
   if (hours) {
     hours.forEach(i => {

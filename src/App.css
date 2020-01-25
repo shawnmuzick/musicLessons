@@ -1,3 +1,4 @@
+/*Containers----------------------------------------------------------------------------------------------*/
 .App {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -21,6 +22,10 @@ footer {
   justify-content: center;
   margin: 0px;
   padding: 0.5rem;
+}
+#App-header-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 .main {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -54,15 +59,32 @@ footer {
   box-sizing: border-box;
   padding: 1rem;
 }
+.wrapper {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  width: 100%;
+  flex-grow: 8;
+  height: 80%;
+}
+.col {
+  flex: 0 0 25%;
+  width: 100%;
+  max-height: 300px;
+}
+.colInn {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 400px;
+}
 .App-header h1 {
   margin: 0px;
 }
-#App-header-wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
-/* Main Menu */
+/* Main Menu -----------------------------------------------------------------------------------------------------------*/
 #MainMenu {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -105,7 +127,7 @@ footer {
 #MainMenuIcon {
   outline: none;
 }
-/*Button Styling*/
+/*Buttons------------------------------------------------------------------------------------------------------------*/
 .MainMenu-button,
 .fc-footer-toolbar button,
 .fc-header-toolbar button {
@@ -129,19 +151,8 @@ footer {
 .MainMenu-button:focus {
   box-shadow: 0 0 3px 2px #3788d852;
 }
-/* Views */
 
-.wrapper {
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box;
-  width: 100%;
-  flex-grow: 8;
-  height: 80%;
-}
-
-/* Daily View */
-
+/* Calendar ---------------------------------------------------------------------------------------------------*/
 .fc-footer-toolbar button {
   padding: 10px;
   margin: 0px !important;
@@ -160,45 +171,32 @@ footer {
 .fc-nonbusiness.fc-bgevent {
   background: red;
 }
-/* Dashboard View */
-.metrics,.forms {
+/* Dashboard ------------------------------------------------------------------------------------------------- */
+.metrics,
+.forms {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  min-height: 300px;
+  min-height: 400px;
   flex-grow: 1;
   flex-shrink: 0;
 }
-.formsWrap{
+.chartWrap {
+  display: block;
+  height: 100%;
+  max-height: 400px;
+}
+.formsWrap {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
 }
-.col {
-  flex: 0 0 25%;
-  width: 100%;
-}
-.colInn {
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.chartWrap {
-  display: block;
-  height: 100%;
-}
-canvas{
-  height: 100%;
-}
 summary h4 {
   margin: 0px;
   display: inline;
 }
-#EmpForm {
+.EmpForm {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -285,8 +283,4 @@ summary h4 {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-}
-/* Faculty View */
-#employees {
-  text-align: left;
 }

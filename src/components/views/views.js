@@ -1,9 +1,9 @@
-import DashboardView from "./dashboardView/DashboardView";
-import CalendarView from "./calendarView/CalendarView";
+import Dashboard from "./dashboard/Dashboard";
+import Calendar from "./calendar/Calendar";
 import VIEW from './VIEW';
 
 export {
-    DashboardView,
-    CalendarView,
+    Dashboard,
+    Calendar,
     VIEW
 }

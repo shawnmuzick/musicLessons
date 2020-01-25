@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { editTeacherHours } from "../calendarView/functions";
+import { editTeacherHours } from "../../calendar/functions";
 
 export default function EmpForm({name, phone}) {
   const [hours, setHours] = useState({});
@@ -21,7 +21,7 @@ export default function EmpForm({name, phone}) {
     editTeacherHours(name, phone, hours)
   }
   return (
-    <form id="EmpForm" onSubmit={subnmitHandler} key ={name}>
+    <form className={"EmpForm"} onSubmit={subnmitHandler} key ={name}>
       <h4>Edit Hours</h4>
       {days.map(day =>
          (

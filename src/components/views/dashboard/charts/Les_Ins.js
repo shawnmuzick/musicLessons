@@ -1,10 +1,10 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 //Lessons by Instructor
-export default function Les_Ins({ teachers}) {
+export default function Les_Ins({ teachers }) {
   let data = {
     labels: teachers.map(t => {
-      return t.name || '';
+      return t.name || "";
     }),
     datasets: [
       {
@@ -16,14 +16,18 @@ export default function Les_Ins({ teachers}) {
   };
   let options = {
     legend: {
-      position: "right"
+      position: "bottom"
     },
     title: {
       text: "Distribution of Lessons by Instructor",
       display: true
     },
-    responsive:true,
-    maintainAspectRatio:false
+    responsive: true,
+    maintainAspectRatio: false
   };
-  return <Pie data={data} options={options} />;
+  return (
+    <div className="chartWrap">
+      <Pie data={data} options={options} />
+    </div>
+  );
 }

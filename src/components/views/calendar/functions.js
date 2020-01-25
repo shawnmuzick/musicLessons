@@ -7,7 +7,8 @@ export const Teacher = {
   text: "DEFAULT",
   lessons: [],
   hours: [],
-  create: function({ _id, name, lname, phone, lessons = [], hours = [] }) {
+  nStu:0,
+  create: function({ _id, name, lname, phone, lessons = [], hours = [], nStu = 0 }) {
     let teacher = Object.create(this);
     teacher._id = _id || "";
     teacher.name = name || window.prompt("Enter a first name: ");
@@ -16,6 +17,7 @@ export const Teacher = {
     teacher.text = teacher.name;
     teacher.lessons = lessons;
     teacher.hours = hours;
+    teacher.nStu = nStu;
     return teacher;
   },
   lessonsPerMonth: function() {

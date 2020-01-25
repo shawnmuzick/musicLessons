@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import { handler, makeButtons, eventDrop, eventClick} from "./functions";
 import "./calendar.css";
-export default function CalendarView() {
+export default function Calendar() {
   const calendarRef = React.createRef();
   // const [params, setParams] = useState({ teacher: "", events: [], hours:[] });
   const [teacher, setTeacher] = useState({});

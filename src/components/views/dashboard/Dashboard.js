@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EmpDetails from "./EmpDetails";
-import { Line } from "react-chartjs-2";
-import Les_Ins from "./charts/Les_Ins";
-import Les_Mon from "./charts/Les_Mon";
-import {
-  Teacher,
-  Student,
-  Event,
-  monthFormat
-} from "../calendarView/functions";
+import Metrics from './Metrics';
+import { Teacher, Student, monthFormat } from "../calendar/functions";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
@@ -48,19 +41,7 @@ export default function DashboardView() {
     t.value = arr2.reduce((x, y) => x + y);
     totalLessons += t.value;
   });
-  let data = {
-    labels: arr.map(m => {
-      return m.name;
-    }),
-    datasets: [
-      {
-        data: arr.map(m => {
-          return m.value;
-        })
-      }
-    ]
-  };
-  console.log(teachers);
+
   return (
     <div className={"view"}>
       <h2>Dashboard</h2>
@@ -68,36 +49,21 @@ export default function DashboardView() {
       <h3>Total Lessons: {totalLessons} </h3>
       <h3>Total Students: {totalStudents} </h3>
       <div className="wrapper">
-          <div className="metrics">
-            <div className={"col"}>
-              <div className={"colInn"}>
-                <div className="chartWrap">
-                  <Les_Mon arr={arr} />
-                </div>
-              </div>
-            </div>
-            <div className={"col"}>
-              <div className={"colInn"}>
-                <div className="chartWrap">
-                  <Les_Ins teachers={teachers} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={"forms"}>
-            <h3>Faculty</h3>
-            <div className="formsWrap">
-              {teachers.map(teacher => (
-                <EmpDetails
-                  key={teacher._id}
-                  name={teacher.name}
-                  phone={teacher.phone}
-                  hours={teacher.hours}
-                />
-              ))}
-            </div>
+        <Metrics arr={arr} teachers={teachers} students={students} />
+        <div className={"forms"}>
+          <h3>Faculty</h3>
+          <div className="formsWrap">
+            {teachers.map(teacher => (
+              <EmpDetails
+                key={teacher._id}
+                name={teacher.name}
+                phone={teacher.phone}
+                hours={teacher.hours}
+              />
+            ))}
           </div>
         </div>
       </div>
+    </div>
   );
 }
