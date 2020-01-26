@@ -1,15 +1,15 @@
 import React from "react";
-import { Pie } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 //Lessons by Instructor
-export default function Les_Ins({ teachers }) {
+export default function LesMon({ arr }) {
   let data = {
-    labels: teachers.map(t => {
-      return t.name || "";
+    labels: arr.map(m => {
+      return m.name;
     }),
     datasets: [
       {
-        data: teachers.map(t => {
-          return t.value || 0;
+        data: arr.map(m => {
+          return m.value;
         })
       }
     ]
@@ -19,7 +19,7 @@ export default function Les_Ins({ teachers }) {
       position: "bottom"
     },
     title: {
-      text: "Distribution of Lessons by Instructor",
+      text: "Lessons per Month",
       display: true
     },
     responsive: true,
@@ -27,7 +27,7 @@ export default function Les_Ins({ teachers }) {
   };
   return (
     <div className="chartWrap">
-      <Pie data={data} options={options} />
+      <Line data={data} options={options} />
     </div>
   );
 }

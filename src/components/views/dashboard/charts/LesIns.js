@@ -1,23 +1,16 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 //Lessons by Instructor
-export default function Stu_Ins({ students, teachers }) {
-    students.forEach(s => {
-        teachers.forEach(t => {
-            if(s.teacher.name == t.name){
-                t.nStu++
-            }
-        });
-    });
+export default function LesIns({ teachers }) {
   let data = {
-    labels: students.map(s => {
-      return s.teacher.name || "";
+    labels: teachers.map(t => {
+      return t.name || "";
     }),
     datasets: [
       {
-        data: teachers.map(t=>{
-              return t.nStu;
-          })
+        data: teachers.map(t => {
+          return t.value || 0;
+        })
       }
     ]
   };
@@ -26,7 +19,7 @@ export default function Stu_Ins({ students, teachers }) {
       position: "bottom"
     },
     title: {
-      text: "Distribution of Students by Instructor",
+      text: "Distribution of Lessons by Instructor",
       display: true
     },
     responsive: true,

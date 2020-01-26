@@ -97,6 +97,7 @@ router.put("/api/update/lesson", (req, res) => {
       {
         $set: {
           "lessons.$": {
+            title:event.title,
             id: id,
             start,
             end,

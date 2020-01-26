@@ -1,4 +1,6 @@
 import axios from "axios";
+import moment from "moment";
+
 export const Teacher = {
   _id: "DEFAULT",
   name: "DEFAULT",
@@ -7,8 +9,16 @@ export const Teacher = {
   text: "DEFAULT",
   lessons: [],
   hours: [],
-  nStu:0,
-  create: function({ _id, name, lname, phone, lessons = [], hours = [], nStu = 0 }) {
+  nStu: 0,
+  create: function({
+    _id,
+    name,
+    lname,
+    phone,
+    lessons = [],
+    hours = [],
+    nStu = 0
+  }) {
     let teacher = Object.create(this);
     teacher._id = _id || "";
     teacher.name = name || window.prompt("Enter a first name: ");
@@ -98,44 +108,6 @@ export const Event = {
     this.borderColor = this.borderColor !== "red" ? "red" : "";
   }
 };
-const addZero = i => {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-};
-const timeFormat = eventObject => {
-  return (
-    addZero(eventObject.getUTCHours()) +
-    ":" +
-    addZero(eventObject.getUTCMinutes())
-  );
-};
-export const dayFormat = i => {
-  var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"];
-  return a[i];
-};
-export const monthFormat = i => {
-  var a = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-  ];
-  return a[i];
-};
-const _getIndexOfDay = d => {
-  var a = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"];
-  return a.indexOf(d);
-};
 const checkAvailability = (businessHours, day, time) => {
   let isAvailable = false;
   businessHours.forEach(item => {
@@ -155,13 +127,12 @@ const nameEvent = () => {
   return window.prompt("Name this event: ");
 };
 const extractEventDetails = eventObject => {
-  const eventDate = new Date(
-    eventObject.dateStr || eventObject.event._instance.range.start
+  const eventDate = moment.utc(
+    eventObject.date || eventObject.event._instance.range.start
   );
-  const day = eventDate.getDay();
-  const time = timeFormat(eventDate);
+  const day = eventDate.day();
+  const time = eventDate.format("HH:mm");
   const businessHours = eventObject.view.context.options.businessHours;
-  console.log("extracted: " + time);
   return { day, time, businessHours };
 };
 const postEvent = (newEvent, teacher, setTeacher) => {
@@ -221,7 +192,7 @@ const editTeacher = (name, phone, hours) => {
 export const editTeacherHours = (name, phone, hours) => {
   let arr = Object.keys(hours).map(key => {
     return {
-      daysOfWeek: [_getIndexOfDay(key)],
+      daysOfWeek: [key],
       startTime: hours[key].startTime,
       endTime: hours[key].endTime
     };
@@ -272,14 +243,24 @@ export const eventDrop = (edit, teacher, setTeacher) => {
     editEvent(edit.event.id, edit.event._instance, teacher, setTeacher);
   }
 };
-export const makeButtons = (SRC, footer, teacher, setTeacher) => {
+export const makeButtons = (SRC, footer, teacher, setTeacher, students) => {
+  //This links students and their teachers, disable to restore previous functionality
+  // SRC.forEach(i=> i.lessons=[]);
+  // students.forEach(s => {
+  //   SRC.forEach(i => {
+  //     if (i.name === s.teacher.name) {
+  //       s.lessons.forEach(l => {
+  //         i.lessons.push(l);
+  //       });
+  //     }
+  //   });
+
   let obj = SRC.reduce((obj, item) => {
-    const test = Teacher.create(item);
-    obj[test.name] = test;
-    test.click = function() {
-      selector(test, teacher, setTeacher);
+    obj[item.name] = item;
+    item.click = function() {
+      selector(item, teacher, setTeacher);
     };
-    footer.center += "," + test.text + " ";
+    footer.center += "," + item.text + " ";
     return obj;
   }, {});
   obj.New = {};

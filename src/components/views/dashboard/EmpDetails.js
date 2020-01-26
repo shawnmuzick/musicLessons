@@ -1,11 +1,11 @@
 import React from "react";
-import { dayFormat } from "../calendar/functions";
+import moment from 'moment';
 import EmpForm from "./forms/EmpForm";
 export default function EmpDetails({ name, phone, hours }) {
   if (hours) {
     hours.forEach(i => {
       i.daysOfWeek = i.daysOfWeek.map(i => {
-        return (i = dayFormat(i));
+        return (i = moment().day(i).format("ddd"));
       });
     });
   }

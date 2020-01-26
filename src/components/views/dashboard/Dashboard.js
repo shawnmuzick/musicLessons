@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EmpDetails from "./EmpDetails";
 import Metrics from './Metrics';
-import { Teacher, Student, monthFormat } from "../calendar/functions";
+import moment from 'moment';
+import { Teacher, Student} from "../calendar/functions";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
@@ -31,7 +32,7 @@ export default function DashboardView() {
   let totalStudents = students.length;
   let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (let i = 0; i < arr.length; i++) {
-    arr[i] = { name: monthFormat(i), value: 0 };
+    arr[i] = { name: moment().month(i).format("MMM"), value: 0 };
   }
   teachers.forEach(t => {
     let arr2 = t.lessonsPerMonth();

@@ -1,24 +1,24 @@
 import React from 'react'
-import Les_Ins from "./charts/Les_Ins";
-import Les_Mon from "./charts/Les_Mon";
-import Stu_Ins from "./charts/Stu_Ins";
+import LesIns from "./charts/LesIns";
+import LesMon from "./charts/LesMon";
+import StuIns from "./charts/StuIns";
 
 export default function Metrics({arr, teachers, students}) {
     return (
         <div className="metrics">
           <div className={"col"}>
             <div className={"colInn"}>
-              <Les_Mon arr={arr} />
+              <LesMon arr={arr} />
             </div>
           </div>
           <div className={"col"}>
             <div className={"colInn"}>
-              <Les_Ins teachers={teachers} />
+              <LesIns teachers={teachers} />
             </div>
           </div>
           <div className={"col"}>
             <div className={"colInn"}>
-              <Stu_Ins students={students} teachers={teachers} />
+              <StuIns students={students} teachers={teachers} />
             </div>
           </div>
         </div>

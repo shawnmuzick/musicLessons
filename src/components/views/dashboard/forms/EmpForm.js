@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { editTeacherHours } from "../../calendar/functions";
-
+import moment from 'moment';
 export default function EmpForm({name, phone}) {
   const [hours, setHours] = useState({});
-  const days = ["Sun", "Mon", "Tues", "Wed", "Thr", "Fri", "Sat"]
+  const days = [0,1,2,3,4,5,6]
   const changeStart = e => {
     const { name, value } = e.target;
     const update = hours;
@@ -26,7 +26,7 @@ export default function EmpForm({name, phone}) {
       {days.map(day =>
          (
           <div className="formGroup" key ={day}>
-          <label>{day}</label>
+          <label>{moment().day(day).format("ddd")}</label>
           <input
             type="time"
             name={`${day}`}
