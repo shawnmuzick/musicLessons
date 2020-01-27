@@ -10,6 +10,8 @@ export const Teacher = {
   lessons: [],
   hours: [],
   nStu: 0,
+  trConv:0,
+  trFail:0,
   create: function({
     _id,
     name,
@@ -254,7 +256,7 @@ export const makeButtons = (SRC, footer, teacher, setTeacher, students) => {
   //       });
   //     }
   //   });
-
+  // });
   let obj = SRC.reduce((obj, item) => {
     obj[item.name] = item;
     item.click = function() {

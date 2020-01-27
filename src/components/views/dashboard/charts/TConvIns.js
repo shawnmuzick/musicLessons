@@ -1,14 +1,13 @@
 import React from "react";
-import { Pie } from "react-chartjs-2";
-//Lessons by Instructor
-export default function StuIns({ students, teachers }) {
-    students.forEach(s => {
-        teachers.forEach(t => {
-            if(s.teacher.name === t.name){
-                t.nStu++
-            }
-        });
-    });
+import { Bar } from "react-chartjs-2";
+
+export default function TConvIns({ teachers, students }) {
+    let test = students.map(s=>{
+        return {teacher:s.teacher.name, conv:s.trial.trConv}
+    })
+    test.forEach(i =>{
+        i.conv === true ? teachers.find(t => t.name === i.teacher).trConv++ : teachers.find(t => t.name === i.teacher).trFail++
+    })
   let data = {
     labels: teachers.map(t => {
       return t.name || "";
@@ -16,9 +15,9 @@ export default function StuIns({ students, teachers }) {
     datasets: [
       {
         data: teachers.map(t=>{
-              return t.nStu;
-          }),
-          backgroundColor: [
+            return (t.trConv/(t.trConv + t.trFail)*100);
+        }),
+        backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
@@ -34,7 +33,7 @@ export default function StuIns({ students, teachers }) {
       position: "bottom"
     },
     title: {
-      text: "Distribution of Students by Instructor",
+      text: "Trial Conversion by Instructor",
       display: true
     },
     responsive: true,
@@ -42,7 +41,7 @@ export default function StuIns({ students, teachers }) {
   };
   return (
     <div className="chartWrap">
-      <Pie data={data} options={options} />
+      <Bar data={data} options={options} />
     </div>
   );
 }
