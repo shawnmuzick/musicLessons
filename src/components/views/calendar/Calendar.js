@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
-import { handler, makeButtons, eventDrop, eventClick, Teacher, Student} from "./functions";
+import { handler, makeButtons, eventDrop, eventClick} from "./functions";
+import { Teacher, Student} from "../objects";
 import "./calendar.css";
 import axios from 'axios';
 export default function Calendar() {

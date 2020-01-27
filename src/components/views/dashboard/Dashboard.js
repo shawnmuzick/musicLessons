@@ -3,7 +3,7 @@ import axios from "axios";
 import EmpDetails from "./EmpDetails";
 import Metrics from './Metrics';
 import moment from 'moment';
-import { Teacher, Student} from "../calendar/functions";
+import { Teacher, Student} from "../objects";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
