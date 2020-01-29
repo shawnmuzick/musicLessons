@@ -9,7 +9,7 @@ export default function LesIns({ teachers }) {
     datasets: [
       {
         data: teachers.map(t => {
-          return t.value || 0;
+          return t.lessons.length || 0;
         }),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',

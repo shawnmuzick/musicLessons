@@ -41,12 +41,10 @@ const postEvent = (newEvent, teacher, setTeacher) => {
     })
     .catch(error => console.log("load" + error));
 };
-const editEvent = (event, teacher, setTeacher) => {
+const editEvent = (e, teacher, setTeacher) => {
   axios
-    .put(`/api/update/lesson`, {
-      id: event.id,
-      event: event,
-      name: teacher.name
+    .put(`/api/update/student/lesson`, {
+      event: e,
     })
     .catch(err => console.log(err));
   axios
@@ -58,8 +56,7 @@ const editEvent = (event, teacher, setTeacher) => {
     .catch(error => console.log("load" + error));
 };
 export const eventClick = (e, teacher, setTeacher) => {
-  const { title, start, end, id, backgroundColor, borderColor } = e.event;
-  const v = Event.create(title, start, end, id, backgroundColor, borderColor);
+  const v = Event.create(e.event);
   v.update = e.event._instance;
   v.changeColor();
   editEvent(v, teacher, setTeacher);
@@ -114,15 +111,8 @@ export const handler = (args, calendarRef, teacher, setTeacher) => {
     api.changeView("timeGridDay", args.dateStr);
   }
 };
-export const selector = (next, current, setTeacher) => {
-  if (next.name === current.name) {
-    return;
-  }
-  setTeacher(next);
-};
 export const eventDrop = (edit, teacher, setTeacher) => {
   const { day, time, businessHours } = extractEventDetails(edit);
-
   const isAvailable = checkAvailability(businessHours, day, time);
   if (isAvailable === false) {
     window.alert(
@@ -130,34 +120,7 @@ export const eventDrop = (edit, teacher, setTeacher) => {
     );
     return;
   } else {
-    editEvent(edit.event.id, edit.event._instance, teacher, setTeacher);
+    const e = Event.create(edit.event)
+    editEvent(e, teacher, setTeacher);
   }
-};
-export const makeButtons = (SRC, footer, teacher, setTeacher, students) => {
-  //This links students and their teachers, disable to restore previous functionality
-  // SRC.forEach(i=> i.lessons=[]);
-  // students.forEach(s => {
-  //   SRC.forEach(i => {
-  //     if (i.name === s.teacher.name) {
-  //       s.lessons.forEach(l => {
-  //         i.lessons.push(l);
-  //       });
-  //     }
-  //   });
-  // });
-  let obj = SRC.reduce((obj, item) => {
-    obj[item.name] = item;
-    item.click = function() {
-      selector(item, teacher, setTeacher);
-    };
-    footer.center += "," + item.text + " ";
-    return obj;
-  }, {});
-  obj.New = {};
-  obj.New.text = "Add New";
-  obj.New.click = function() {
-    AddNewTeacher(setTeacher);
-  };
-  footer.center += "," + obj.New.text;
-  return obj;
 };

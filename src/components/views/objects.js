@@ -36,6 +36,9 @@ export const Teacher = {
       });
       return arr;
     },
+    getConvRate: function(){
+      return(this.trConv/(this.trConv + this.trFail)*100);
+    },
     getFullName: function() {
       return this.name + " " + this.lname;
     }
@@ -91,14 +94,15 @@ export const Event = {
     id: "",
     backgroundColor: "",
     borderColor: "",
-    create: function Event(title, start, end, id, bkColor, bdColor) {
+    create: function Event(eventObject) {
+      const {title, start, end, id, backgroundColor, borderColor} = eventObject;
       let event = Object.create(this);
       event.title = title || window.prompt("Name this event: ");;
       event.start = start || this.start;
       event.end = end || moment(event.start).add(30, 'minutes');
       event.id = id || this.id;
-      event.backgroundColor = bkColor || this.backgroundColor;
-      event.borderColor = bdColor || this.borderColor;
+      event.backgroundColor = backgroundColor || this.backgroundColor;
+      event.borderColor = borderColor || this.borderColor;
       return event;
     },
     changeColor: function() {

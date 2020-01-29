@@ -14,8 +14,9 @@ export default function TConvIns({ teachers, students }) {
     }),
     datasets: [
       {
+        label: 'Instructors',
         data: teachers.map(t=>{
-            return (t.trConv/(t.trConv + t.trFail)*100);
+            return t.getConvRate();
         }),
         backgroundColor: [
             'rgba(255, 99, 132, 0.2)',

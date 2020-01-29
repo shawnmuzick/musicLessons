@@ -1,5 +1,5 @@
 import express from "express";
-import {teacherModel, studentModel} from "./models.js";
+import { teacherModel, studentModel } from "./models.js";
 import uuidv4 from "uuid";
 import fs from "fs";
 
@@ -44,20 +44,20 @@ router.post("/api/teachers", (req, res) => {
 });
 router.put("/api/update/teacher", (req, res) => {
   const { name, phone, hours } = req.body;
-  console.log(hours)
+  console.log(hours);
   teacherModel
     .updateOne(
       { name: name },
       {
         $set: {
-          "phone": phone,
-          "hours": hours
+          phone: phone,
+          hours: hours
         }
       }
     )
     .exec((err, success) => {
       if (err) throw err;
-       res.json(success);
+      res.json(success);
     });
 });
 //Students-------------------------------------------------------------------------------
@@ -66,6 +66,44 @@ router.get("/api/students", (req, res) => {
     if (err) throw err;
     res.json(data);
   });
+});
+router.put("/api/update/student/lesson", (req, res) => {
+  const { event } = req.body;
+  const { start, end, id, title, backgroundColor,borderColor } = event;
+  console.log(event);
+  studentModel
+    .updateOne(
+      //find where lessons's child element that matches id
+      { lessons: { $elemMatch: { id: id } } },
+      //set the first child of lessons that matches id, to {stuff in here}
+      {
+        $set: {
+          "lessons.$": {
+            title,
+            id,
+            start,
+            end,
+            backgroundColor,
+            borderColor
+          }
+        }
+      }
+    )
+    .exec((err, success) => {
+      if (err) throw err;
+      fs.appendFile(
+        "./server/logs/updateLog.txt",
+        " Updated ID: " +
+          JSON.stringify(id) +
+          "\t" +
+          JSON.stringify(success) +
+          "\n",
+        err => {
+          if (err) throw err;
+        }
+      );
+      res.json(success);
+    });
 });
 //Lessons--------------------------------------------------------------------------------
 router.post("/api/newLesson", (req, res) => {
@@ -97,7 +135,7 @@ router.put("/api/update/lesson", (req, res) => {
       {
         $set: {
           "lessons.$": {
-            title:event.title,
+            title: event.title,
             id: id,
             start,
             end,
