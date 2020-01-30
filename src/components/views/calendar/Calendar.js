@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FullCalendar, plugins } from "./plugins";
-import { handler, eventDrop, eventClick } from "./functions";
+import { FullCalendar, plugins, Draggable } from "./plugins";
+import { handler, eventDrop, eventClick, externalDrop } from "./functions";
 import { Teacher, Student } from "../objects";
+import StuCont from "./stuCont";
 import "./calendar.css";
 import axios from "axios";
 export default function Calendar() {
@@ -37,12 +38,27 @@ export default function Calendar() {
         setStudents(b);
       })
       .catch(err => console.log(err));
+
+    let draggableEl = document.getElementById("extEvents");
+    new Draggable(draggableEl, {
+      itemSelector: ".fc-event",
+      eventData: function(eventEl) {
+        let title = eventEl.getAttribute("title");
+        let stID = eventEl.getAttribute("id");
+        return {
+          allDay:false,
+          title: title,
+          stID: stID
+        };
+      }
+    });
   }, []);
   const makeButtons = () => {
     //This links students and their teachers, disable to restore previous functionality
     students.forEach(s => {
       if (teacher.name === s.teacher.name) {
         s.lessons.forEach(l => {
+          l.stID = s.stID || '';
           teacher.lessons.push(l);
         });
       }
@@ -70,23 +86,28 @@ export default function Calendar() {
       })
       .catch(error => console.log("load" + error));
   };
+
   return (
     <div className="view">
       <h1>{teacher.name || <br />}</h1>
       <hr />
-      <div className="wrapper">
+      <div className="wrapper" id="CalendarWrap">
+        <StuCont students={students} teacher={teacher}/>
+        <div className="spacer"></div>
         <FullCalendar
           customButtons={makeButtons()}
           dateClick={args => handler(args, calendarRef, teacher, setTeacher)}
           eventClick={e => eventClick(e, teacher, setTeacher)}
           changeView={args => handler(args, calendarRef, teacher, setTeacher)}
           eventDrop={edit => eventDrop(edit, teacher, setTeacher)}
+          drop={edit => externalDrop(edit, teacher, calendarRef)}
           eventResize={edit => eventDrop(edit, teacher, setTeacher)}
           ref={calendarRef}
           footer={footer}
           header={header}
           plugins={plugins}
           events={teacher.lessons}
+          droppable={true}
           businessHours={teacher.hours}
           eventLimit={3}
           navLinks={true}

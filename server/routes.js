@@ -68,42 +68,78 @@ router.get("/api/students", (req, res) => {
   });
 });
 router.put("/api/update/student/lesson", (req, res) => {
-  const { event } = req.body;
-  const { start, end, id, title, backgroundColor,borderColor } = event;
-  console.log(event);
-  studentModel
-    .updateOne(
-      //find where lessons's child element that matches id
-      { lessons: { $elemMatch: { id: id } } },
-      //set the first child of lessons that matches id, to {stuff in here}
-      {
-        $set: {
-          "lessons.$": {
-            title,
-            id,
-            start,
-            end,
-            backgroundColor,
-            borderColor
+  const { event, stID } = req.body;
+  const { start, end, id, title, backgroundColor, borderColor } = event;
+  if (id === null || id ==='') {
+    let newid = uuidv4.v4();
+    studentModel
+      .updateOne(
+        //find where lessons's child element that matches id
+        { stID: stID },
+        {
+          $push: {
+            lessons: {
+              title,
+              id:newid,
+              start,
+              end,
+              backgroundColor,
+              borderColor
+            }
           }
         }
-      }
-    )
-    .exec((err, success) => {
-      if (err) throw err;
-      fs.appendFile(
-        "./server/logs/updateLog.txt",
-        " Updated ID: " +
-          JSON.stringify(id) +
-          "\t" +
-          JSON.stringify(success) +
-          "\n",
-        err => {
-          if (err) throw err;
+      )
+      .exec((err, success) => {
+        if (err) throw err;
+        fs.appendFile(
+          "./server/logs/updateLog.txt",
+          " Updated ID: " +
+            JSON.stringify(id) +
+            "\t" +
+            JSON.stringify(success) +
+            "\n",
+          err => {
+            if (err) throw err;
+          }
+        );
+        console.log(success)
+        res.json(success);
+      });
+  } else {
+    studentModel
+      .updateOne(
+        //find where lessons's child element that matches id
+        { stID: stID, lessons: { $elemMatch: { id: id } } },
+        //set the first child of lessons that matches id, to {stuff in here}
+        {
+          $set: {
+            "lessons.$": {
+              title,
+              id,
+              start,
+              end,
+              backgroundColor,
+              borderColor
+            }
+          }
         }
-      );
-      res.json(success);
-    });
+      )
+      .exec((err, success) => {
+        if (err) throw err;
+        fs.appendFile(
+          "./server/logs/updateLog.txt",
+          " Updated ID: " +
+            JSON.stringify(id) +
+            "\t" +
+            JSON.stringify(success) +
+            "\n",
+          err => {
+            if (err) throw err;
+          }
+        );
+        res.json(success);
+      });
+  }
 });
 //Lessons--------------------------------------------------------------------------------
 router.post("/api/newLesson", (req, res) => {

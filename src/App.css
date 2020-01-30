@@ -59,6 +59,14 @@ footer {
   box-sizing: border-box;
   padding: 1rem;
 }
+/*Enable space for external events */
+#CalendarWrap{
+  display: grid;
+  grid-template-columns: 200px 80fr;
+}
+#CalendarWrap .spacer{
+  display: none;
+}
 .wrapper {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -166,6 +174,17 @@ footer {
 }
 .fc-nonbusiness.fc-bgevent {
   background: red;
+}
+.extEvents{
+  z-index: 2;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  background: #eee;
+  overflow-y: scroll;
+}
+.extEvents .fc-event {
+  margin: 1em 0;
+  cursor: move;
 }
 /* Dashboard ------------------------------------------------------------------------------------------------- */
 .metrics,
@@ -287,4 +306,15 @@ summary h4 {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+@media screen and (min-width: 1200px){
+  #CalendarWrap .spacer{
+    display: block;
+  }
+  #CalendarWrap{
+    display: grid;
+    grid-template-columns: 300px 100px 80fr;
+    padding: 1rem;
+  }
 }

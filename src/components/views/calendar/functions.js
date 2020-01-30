@@ -41,10 +41,11 @@ const postEvent = (newEvent, teacher, setTeacher) => {
     })
     .catch(error => console.log("load" + error));
 };
-const editEvent = (e, teacher, setTeacher) => {
+const editEvent = (e, teacher, setTeacher, stID) => {
   axios
     .put(`/api/update/student/lesson`, {
       event: e,
+      stID
     })
     .catch(err => console.log(err));
   axios
@@ -113,6 +114,7 @@ export const handler = (args, calendarRef, teacher, setTeacher) => {
 };
 export const eventDrop = (edit, teacher, setTeacher) => {
   const { day, time, businessHours } = extractEventDetails(edit);
+  const stID = edit.event.extendedProps.stID;
   const isAvailable = checkAvailability(businessHours, day, time);
   if (isAvailable === false) {
     window.alert(
@@ -121,6 +123,13 @@ export const eventDrop = (edit, teacher, setTeacher) => {
     return;
   } else {
     const e = Event.create(edit.event)
-    editEvent(e, teacher, setTeacher);
+    editEvent(e, teacher, setTeacher,stID);
   }
 };
+export const externalDrop = (edit, teacher, calendarRef) => {
+  const api = calendarRef.current.getApi();
+  api.changeView("timeGridDay", edit.date);
+  edit.title = edit.draggedEl.title;
+  edit.stID = edit.draggedEl.id
+  edit.allDay = false;
+}
