@@ -109,7 +109,7 @@ router.put("/api/update/student/lesson", (req, res) => {
     studentModel
       .updateOne(
         //find where lessons's child element that matches id
-        { stID: stID, lessons: { $elemMatch: { id: id } } },
+        { lessons: { $elemMatch: { id: id } } },
         //set the first child of lessons that matches id, to {stuff in here}
         {
           $set: {
@@ -137,6 +137,7 @@ router.put("/api/update/student/lesson", (req, res) => {
             if (err) throw err;
           }
         );
+        console.log(success)
         res.json(success);
       });
   }

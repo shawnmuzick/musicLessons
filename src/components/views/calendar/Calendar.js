@@ -24,21 +24,12 @@ export default function Calendar() {
       .get("/api/teachers")
       .then(res => {
         const a = res.data.map(t => {
+          t.lessons = [];
           return Teacher.create(t);
         });
         setSRC(a);
       })
       .catch(err => console.log(err));
-    axios
-      .get("/api/students")
-      .then(res => {
-        const b = res.data.map(s => {
-          return Student.create(s);
-        });
-        setStudents(b);
-      })
-      .catch(err => console.log(err));
-
     let draggableEl = document.getElementById("extEvents");
     new Draggable(draggableEl, {
       itemSelector: ".fc-event",
@@ -53,6 +44,18 @@ export default function Calendar() {
       }
     });
   }, []);
+  useEffect(()=>{
+    teacher.lessons=[];
+    axios
+      .get("/api/students")
+      .then(res => {
+        const b = res.data.map(s => {
+          return Student.create(s);
+        });
+        setStudents(b);
+      })
+      .catch(err => console.log(err));
+  },[teacher])
   const makeButtons = () => {
     //This links students and their teachers, disable to restore previous functionality
     students.forEach(s => {
@@ -74,17 +77,12 @@ export default function Calendar() {
 
     return obj;
   };
+
   const selector = (next, current) => {
     if (next.name === current.name) {
       return;
     }
-    axios
-      .get(`/api/teachers/${next.name}`)
-      .then(res => {
-        const edit = Teacher.create(res.data);
-        setTeacher(edit);
-      })
-      .catch(error => console.log("load" + error));
+    setTeacher(next); 
   };
 
   return (
@@ -100,7 +98,7 @@ export default function Calendar() {
           eventClick={e => eventClick(e, teacher, setTeacher)}
           changeView={args => handler(args, calendarRef, teacher, setTeacher)}
           eventDrop={edit => eventDrop(edit, teacher, setTeacher)}
-          drop={edit => externalDrop(edit, teacher, calendarRef)}
+          drop={edit => externalDrop(edit, teacher, setTeacher, calendarRef)}
           eventResize={edit => eventDrop(edit, teacher, setTeacher)}
           ref={calendarRef}
           footer={footer}

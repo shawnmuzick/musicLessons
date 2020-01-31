@@ -106,7 +106,11 @@ export const Event = {
       return event;
     },
     changeColor: function() {
+      console.log('bg before:')
+      console.log(this.backgroundColor)
       this.backgroundColor = this.backgroundColor !== "red" ? "red" : "";
       this.borderColor = this.borderColor !== "red" ? "red" : "";
+      console.log('bg after:')
+      console.log(this.backgroundColor);
     }
 };

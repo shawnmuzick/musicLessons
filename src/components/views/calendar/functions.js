@@ -51,16 +51,19 @@ const editEvent = (e, teacher, setTeacher, stID) => {
   axios
     .get(`/api/teachers/${teacher.name}`)
     .then(res => {
+      res.data.lessons = [];
       const edit = Teacher.create(res.data);
       setTeacher(edit);
     })
     .catch(error => console.log("load" + error));
+    return;
 };
 export const eventClick = (e, teacher, setTeacher) => {
   const v = Event.create(e.event);
   v.update = e.event._instance;
   v.changeColor();
   editEvent(v, teacher, setTeacher);
+  e.event.remove();
 };
 export const AddNewTeacher = setTeacher => {
   const t = Teacher.create({});
@@ -91,6 +94,7 @@ export const editTeacherHours = (name, phone, hours) => {
 };
 export const handler = (args, calendarRef, teacher, setTeacher) => {
   //ENABLE THIS TO NAVIGATE ON DAY CLICK
+
   const api = calendarRef.current.getApi();
   const { day, time, businessHours } = extractEventDetails(args);
   if (api.view.type === "timeGridDay") {
@@ -124,12 +128,31 @@ export const eventDrop = (edit, teacher, setTeacher) => {
   } else {
     const e = Event.create(edit.event)
     editEvent(e, teacher, setTeacher,stID);
+    edit.event.remove();
   }
 };
-export const externalDrop = (edit, teacher, calendarRef) => {
-  const api = calendarRef.current.getApi();
-  api.changeView("timeGridDay", edit.date);
+export const externalDrop = (edit, teacher, setTeacher, calendarRef) => {
   edit.title = edit.draggedEl.title;
-  edit.stID = edit.draggedEl.id
-  edit.allDay = false;
+  let stID = edit.draggedEl.id
+  const api = calendarRef.current.getApi();
+  const { day, time, businessHours } = extractEventDetails(edit);
+  if (api.view.type === "timeGridDay") {
+    const isAvailable = checkAvailability(businessHours, day, time);
+    if (isAvailable === false) {
+      window.alert(
+        "The time you have selected is outside of this instructor's hours!"
+      );
+      return;
+    } else {
+      const e = Event.create(edit);
+      if (e.title === null) {
+        return;
+      }
+      editEvent(e, teacher, setTeacher, stID);
+      api.changeView("dayGridMonth");
+
+    }
+  } else {
+    api.changeView("timeGridDay", edit.date);
+  }
 }
