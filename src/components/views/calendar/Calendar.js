@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FullCalendar, plugins, Draggable } from "./plugins";
-import { handler, eventDrop, eventClick, externalDrop } from "./functions";
+import {eventClick, newDrop } from "./functions";
 import { Teacher, Student } from "../objects";
 import StuCont from "./stuCont";
 import "./calendar.css";
 import axios from "axios";
 export default function Calendar() {
   const calendarRef = React.createRef();
+  console.log(calendarRef)
   const [teacher, setTeacher] = useState({});
   const [students, setStudents] = useState([]);
   const [SRC, setSRC] = useState([]);
@@ -37,15 +38,18 @@ export default function Calendar() {
         let title = eventEl.getAttribute("title");
         let stID = eventEl.getAttribute("id");
         return {
-          allDay:false,
+          allDay: false,
           title: title,
-          stID: stID
+          stID: stID,
+          // you need this parameter to avoid duplicates!!!
+          create: false
         };
       }
     });
   }, []);
-  useEffect(()=>{
-    teacher.lessons=[];
+  //whenever the current teacher changes, rerender, fetch students, and link them up
+  useEffect(() => {
+    teacher.lessons = [];
     axios
       .get("/api/students")
       .then(res => {
@@ -55,51 +59,53 @@ export default function Calendar() {
         setStudents(b);
       })
       .catch(err => console.log(err));
-  },[teacher])
+  }, [teacher]);
+
   const makeButtons = () => {
-    //This links students and their teachers, disable to restore previous functionality
-    students.forEach(s => {
-      if (teacher.name === s.teacher.name) {
-        s.lessons.forEach(l => {
-          l.stID = s.stID || '';
-          teacher.lessons.push(l);
+        //This links students and their teachers, disable to restore previous functionality
+        students.forEach(s => {
+          if (teacher.name === s.teacher.name) {
+            s.lessons.forEach(l => {
+              l.stID = s.stID || "";
+              teacher.lessons.push(l);
+            });
+          }
         });
-      }
-    });
     let obj = SRC.reduce((obj, item) => {
       obj[item.name] = item;
       item.click = function() {
-        selector(item, teacher);
+        item.lessons=[];
+        setTeacher(item);
       };
-      footer.center += "," + item.text + " ";
+      footer.center += item.text + ",";
       return obj;
     }, {});
 
     return obj;
   };
-
-  const selector = (next, current) => {
-    if (next.name === current.name) {
+  const changeView = (args, calendarRef) => {
+    const api = calendarRef.current.getApi();
+    if (api.view.type === "timeGridDay") {
       return;
+    } else {
+      api.changeView("timeGridDay", args.date);
     }
-    setTeacher(next); 
   };
-
   return (
     <div className="view">
       <h1>{teacher.name || <br />}</h1>
       <hr />
       <div className="wrapper" id="CalendarWrap">
-        <StuCont students={students} teacher={teacher}/>
+        <StuCont students={students} teacher={teacher} />
         <div className="spacer"></div>
         <FullCalendar
           customButtons={makeButtons()}
-          dateClick={args => handler(args, calendarRef, teacher, setTeacher)}
+          dateClick={args => changeView(args, calendarRef)}
           eventClick={e => eventClick(e, teacher, setTeacher)}
-          changeView={args => handler(args, calendarRef, teacher, setTeacher)}
-          eventDrop={edit => eventDrop(edit, teacher, setTeacher)}
-          drop={edit => externalDrop(edit, teacher, setTeacher, calendarRef)}
-          eventResize={edit => eventDrop(edit, teacher, setTeacher)}
+          changeView={args => changeView(args, calendarRef)}
+          eventDrop={edit => newDrop(edit, teacher, setTeacher,calendarRef)}
+          drop={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
+          eventResize={edit => newDrop(edit, teacher, setTeacher,calendarRef)}
           ref={calendarRef}
           footer={footer}
           header={header}

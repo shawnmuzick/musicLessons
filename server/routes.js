@@ -161,42 +161,5 @@ router.post("/api/newLesson", (req, res) => {
       res.send({ data: data, id: newEvent.id });
     });
 });
-router.put("/api/update/lesson", (req, res) => {
-  const { event, name, id } = req.body;
-  const { start, end } = event.update.range;
-  teacherModel
-    .updateOne(
-      //find where name = name, and lessons's child element that matches id
-      { name: name, lessons: { $elemMatch: { id: id } } },
-      //set the first child of lessons that matches id, to {stuff in here}
-      {
-        $set: {
-          "lessons.$": {
-            title: event.title,
-            id: id,
-            start,
-            end,
-            backgroundColor: event.backgroundColor,
-            borderColor: event.borderColor
-          }
-        }
-      }
-    )
-    .exec((err, success) => {
-      if (err) throw err;
-      fs.appendFile(
-        "./server/logs/updateLog.txt",
-        " Updated ID: " +
-          JSON.stringify(id) +
-          "\t" +
-          JSON.stringify(success) +
-          "\n",
-        err => {
-          if (err) throw err;
-        }
-      );
-      res.json(success);
-    });
-});
 
 export default router;

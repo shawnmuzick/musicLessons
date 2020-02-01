@@ -41,6 +41,23 @@ export const Teacher = {
     },
     getFullName: function() {
       return this.name + " " + this.lname;
+    },
+    checkAvailability: function(eventObject){
+      const time = moment.utc(eventObject.start).format("HH:mm");
+      const day = moment.utc(eventObject.start).day();
+      let isAvailable = false;
+      this.hours.forEach(h => {
+        h.daysOfWeek.forEach(d => {
+          if (d === day) {
+            if (time >= h.startTime && time < h.endTime) {
+              isAvailable = true;
+            } else {
+              isAvailable = false;
+            }
+          }
+        });
+      });
+      return isAvailable;
     }
 };
 export const Student = {
@@ -98,19 +115,15 @@ export const Event = {
       const {title, start, end, id, backgroundColor, borderColor} = eventObject;
       let event = Object.create(this);
       event.title = title || window.prompt("Name this event: ");;
-      event.start = start || this.start;
-      event.end = end || moment.utc(event.start).add(30, 'minutes');
+      event.start = moment.utc(start).format() || this.start;
+      event.end = end || moment.utc(start).add(30, 'minutes').format();
       event.id = id || this.id;
       event.backgroundColor = backgroundColor || this.backgroundColor;
       event.borderColor = borderColor || this.borderColor;
       return event;
     },
     changeColor: function() {
-      console.log('bg before:')
-      console.log(this.backgroundColor)
       this.backgroundColor = this.backgroundColor !== "red" ? "red" : "";
       this.borderColor = this.borderColor !== "red" ? "red" : "";
-      console.log('bg after:')
-      console.log(this.backgroundColor);
     }
 };

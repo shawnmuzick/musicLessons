@@ -1,31 +1,6 @@
 import axios from "axios";
-import moment from "moment";
-import {Teacher, Event} from '../objects';
+import { Teacher, Event } from "../objects";
 
-const checkAvailability = (businessHours, day, time) => {
-  let isAvailable = false;
-  businessHours.forEach(item => {
-    item.daysOfWeek.forEach(d => {
-      if (d === day) {
-        if (time >= item.startTime && time < item.endTime) {
-          isAvailable = true;
-        } else {
-          isAvailable = false;
-        }
-      }
-    });
-  });
-  return isAvailable;
-};
-const extractEventDetails = eventObject => {
-  const eventDate = moment.utc(
-    eventObject.date || eventObject.event._instance.range.start
-  );
-  const day = eventDate.day();
-  const time = eventDate.format("HH:mm");
-  const businessHours = eventObject.view.context.options.businessHours;
-  return { day, time, businessHours };
-};
 const postEvent = (newEvent, teacher, setTeacher) => {
   axios
     .post(`/api/newLesson`, {
@@ -56,14 +31,7 @@ const editEvent = (e, teacher, setTeacher, stID) => {
       setTeacher(edit);
     })
     .catch(error => console.log("load" + error));
-    return;
-};
-export const eventClick = (e, teacher, setTeacher) => {
-  const v = Event.create(e.event);
-  v.update = e.event._instance;
-  v.changeColor();
-  editEvent(v, teacher, setTeacher);
-  e.event.remove();
+  return;
 };
 export const AddNewTeacher = setTeacher => {
   const t = Teacher.create({});
@@ -92,67 +60,41 @@ export const editTeacherHours = (name, phone, hours) => {
 
   editTeacher(name, phone, arr);
 };
-export const handler = (args, calendarRef, teacher, setTeacher) => {
-  //ENABLE THIS TO NAVIGATE ON DAY CLICK
-
+export const eventClick = (e, teacher, setTeacher) => {
+  const v = Event.create(e.event);
+  v.update = e.event._instance;
+  v.changeColor();
+  editEvent(v, teacher, setTeacher);
+  e.event.remove();
+};
+export const newDrop = (edit, teacher, setTeacher, calendarRef) => {
   const api = calendarRef.current.getApi();
-  const { day, time, businessHours } = extractEventDetails(args);
+  let e, stID;
   if (api.view.type === "timeGridDay") {
-    const isAvailable = checkAvailability(businessHours, day, time);
-    if (isAvailable === false) {
-      window.alert(
-        "The time you have selected is outside of this instructor's hours!"
-      );
-      return;
+    if (edit.draggedEl) {
+      edit.title = edit.draggedEl.title;
+      stID = edit.draggedEl.id;
+      edit.start = edit.date;
+      e = Event.create(edit);
     } else {
-      const e = Event.create(null, args.dateStr);
-      if (e.title === null) {
-        return;
-      }
-      postEvent(e, teacher, setTeacher);
-      api.changeView("dayGridMonth");
+      e = Event.create(edit.event);
+      stID = edit.event.extendedProps.stID;
     }
-  } else {
-    api.changeView("timeGridDay", args.dateStr);
-  }
-};
-export const eventDrop = (edit, teacher, setTeacher) => {
-  const { day, time, businessHours } = extractEventDetails(edit);
-  const stID = edit.event.extendedProps.stID;
-  const isAvailable = checkAvailability(businessHours, day, time);
-  if (isAvailable === false) {
-    window.alert(
-      "The time you have selected is outside of this instructor's hours!"
-    );
-    return;
-  } else {
-    const e = Event.create(edit.event)
-    editEvent(e, teacher, setTeacher,stID);
-    edit.event.remove();
-  }
-};
-export const externalDrop = (edit, teacher, setTeacher, calendarRef) => {
-  edit.title = edit.draggedEl.title;
-  let stID = edit.draggedEl.id
-  const api = calendarRef.current.getApi();
-  const { day, time, businessHours } = extractEventDetails(edit);
-  if (api.view.type === "timeGridDay") {
-    const isAvailable = checkAvailability(businessHours, day, time);
+
+    if (e.title === null) {
+      return;
+    }
+    const isAvailable = teacher.checkAvailability(e);
     if (isAvailable === false) {
       window.alert(
         "The time you have selected is outside of this instructor's hours!"
       );
       return;
     } else {
-      const e = Event.create(edit);
-      if (e.title === null) {
-        return;
-      }
       editEvent(e, teacher, setTeacher, stID);
       api.changeView("dayGridMonth");
-
     }
   } else {
     api.changeView("timeGridDay", edit.date);
   }
-}
+};
