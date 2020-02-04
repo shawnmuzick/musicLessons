@@ -80,14 +80,10 @@ export const newDrop = (edit, teacher, setTeacher, calendarRef) => {
       e = Event.create(edit.event);
       stID = edit.event.extendedProps.stID;
     }
-
-    if (e.title === null) {
-      return;
-    }
     const isAvailable = teacher.checkAvailability(e);
     if (isAvailable === false) {
       window.alert(
-        "The time you have selected is outside of this instructor's hours!"
+        `The time you have selected is outside of ${teacher.name}'s hours!`
       );
       return;
     } else {

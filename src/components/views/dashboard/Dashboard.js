@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EmpDetails from "./EmpDetails";
-import Metrics from "./Metrics";
+import Metrics from "./charts/Charts";
+import DashHeader from "./DashHeader";
 import moment from "moment";
 import { Teacher, Student } from "../objects";
 export default function DashboardView() {
@@ -27,18 +28,18 @@ export default function DashboardView() {
       })
       .catch(err => console.log(err));
   }, []);
+  let totalLessons = 0;
   //link student lessons with teachers---------------------------------------
-  teachers.forEach(t=> t.lessons=[]);
   students.forEach(s => {
     teachers.forEach(t => {
       if (t.name === s.teacher.name) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
+          totalLessons++;
         });
       }
     });
   });
-  let totalLessons = 0;
   let totalStudents = students.length;
   let conv = students.map(s => {
     return s.trial.trConv;
@@ -49,8 +50,8 @@ export default function DashboardView() {
     }, 0) /
       conv.length) *
     100;
-  let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  for (let i = 0; i < arr.length; i++) {
+  let arr = [];
+  for (let i = 0; i < 12; i++) {
     arr[i] = {
       name: moment()
         .month(i)
@@ -59,22 +60,19 @@ export default function DashboardView() {
     };
   }
   teachers.forEach(t => {
-    let arr2 = t.lessonsPerMonth();
-    for (let i = 0; i < arr.length; i++) {
-      arr[i].value += arr2[i];
+    for (let i = 0; i < 12; i++) {
+      arr[i].value += t.lessonsPerMonth()[i];
     }
-    totalLessons += t.lessons.length;
   });
 
   return (
     <div className={"view"}>
       <h2>Dashboard</h2>
-      <div className="dashHeader">
-        <h3>Metrics:</h3>
-        <h3>Total Lessons: {totalLessons}</h3>
-        <h3>Total Students: {totalStudents}</h3>
-        <h3>Conversion Rate: {conversionRate}%</h3>
-      </div>
+      <DashHeader
+        totalLessons={totalLessons}
+        totalStudents={totalStudents}
+        conversionRate={conversionRate}
+      />
       <hr />
       <h3>Graphs:</h3>
       <div className="wrapper">

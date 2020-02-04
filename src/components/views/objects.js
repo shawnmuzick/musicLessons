@@ -48,6 +48,7 @@ export const Teacher = {
       let isAvailable = false;
       this.hours.forEach(h => {
         h.daysOfWeek.forEach(d => {
+          d = Number(d);
           if (d === day) {
             if (time >= h.startTime && time < h.endTime) {
               isAvailable = true;
@@ -89,7 +90,7 @@ export const Student = {
       teacher
     }) {
       let student = Object.create(this);
-      student.stID = stID || this.stID;
+      student.stID = stID || window.prompt("Enter a student ID: ");
       student.fname = fname || window.prompt("Enter a first name: ");
       student.lname = lname || window.prompt("Enter a last name: ");
       student.phone = phone || window.prompt("Enter a phone number: ");
@@ -97,7 +98,7 @@ export const Student = {
       student.trial = trial || this.trial;
       student.lessons = lessons || this.lessons;
       student.instrument = instrument || window.prompt("Enter an instrument: ");
-      student.teacher = teacher || window.prompt("Enter a teacher: ");
+      student.teacher = teacher || this.teacher;
       return student;
     },
     getFullName: function() {

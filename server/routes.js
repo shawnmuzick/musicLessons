@@ -67,6 +67,25 @@ router.get("/api/students", (req, res) => {
     res.json(data);
   });
 });
+router.post("/api/students", (req, res) => {
+  const {s} = req.body;
+  const newStudent = new studentModel(s);
+  newStudent.save((err, success) => {
+    if (err) throw err;
+    fs.appendFile(
+      "./server/logs/newStudent.txt",
+      "Added Student: " +
+        JSON.stringify(s.stID) +
+        "\t" +
+        JSON.stringify(success) +
+        "\n",
+      err => {
+        if (err) throw err;
+      }
+    );
+    res.json(success);
+  });
+});
 router.put("/api/update/student/lesson", (req, res) => {
   const { event, stID } = req.body;
   const { start, end, id, title, backgroundColor, borderColor } = event;

@@ -1,9 +1,9 @@
 import React from 'react'
-import LesIns from "./charts/LesIns";
-import LesMon from "./charts/LesMon";
-import StuIns from "./charts/StuIns";
-import TConvIns from './charts/TConvIns';
-export default function Metrics({arr, teachers, students}) {
+import LesIns from "./LesIns";
+import LesMon from "./LesMon";
+import StuIns from "./StuIns";
+import TConvIns from './TConvIns';
+export default function Charts({arr, teachers, students}) {
     return (
         <div className="metrics">
           <div className={"col"}>

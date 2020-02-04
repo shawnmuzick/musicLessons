@@ -7,7 +7,6 @@ import "./calendar.css";
 import axios from "axios";
 export default function Calendar() {
   const calendarRef = React.createRef();
-  console.log(calendarRef)
   const [teacher, setTeacher] = useState({});
   const [students, setStudents] = useState([]);
   const [SRC, setSRC] = useState([]);
@@ -96,7 +95,7 @@ export default function Calendar() {
       <h1>{teacher.name || <br />}</h1>
       <hr />
       <div className="wrapper" id="CalendarWrap">
-        <StuCont students={students} teacher={teacher} />
+        <StuCont students={students} teacher={teacher} setStudents={setStudents}/>
         <div className="spacer"></div>
         <FullCalendar
           customButtons={makeButtons()}
@@ -121,6 +120,8 @@ export default function Calendar() {
           selectable={true}
           editable={true}
           allDayDefault={false}
+          minTime={'10:00:00'}
+          maxTime={'22:00:00'}
           height={"parent"}
           timeZone={"UTC"}
           defaultTimedEventDuration={{ minutes: 30 }}

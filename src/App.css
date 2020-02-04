@@ -5,7 +5,7 @@
   box-sizing: border-box;
   text-align: center;
   display: grid;
-  grid-template-rows: 50px 95fr;
+  grid-template-rows: 60px 95fr;
   min-height: 100vh;
   max-height: 100vh;
 }
@@ -136,14 +136,13 @@ footer {
 .fc-footer-toolbar button,
 .fc-header-toolbar button {
   color: black;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 10px;
   padding: 1rem 0rem 1rem 0rem;
   background-color: #3788d8;
   border: 0px;
   font-weight: bold;
   outline: none;
-  max-height: 100vh;
 }
 .MainMenu-button:hover,
 .fc-footer-toolbar button:hover,
@@ -166,16 +165,23 @@ footer {
   margin: 0px;
   padding: 10px;
 }
+.fc-footer-toolbar button:focus{
+  color: #fff;
+    background-color: #1a252f;
+    border-color: #151e27;
+}
 .fc-footer-toolbar button:first-child {
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 5px 0px 0px 5px;
 }
 .fc-footer-toolbar button:last-child {
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 5px 5px 0px;
 }
 .fc-nonbusiness.fc-bgevent {
   background: red;
 }
 .extEvents{
+  display: flex;
+  flex-direction: column;
   z-index: 2;
   padding: 0 10px;
   border: 1px solid #ccc;
@@ -186,6 +192,27 @@ footer {
   margin: 1em 0;
   cursor: move;
 }
+#AddStudent{
+  position: relative;
+  display: block;
+  font-size: 1.2em;
+  line-height: 1.4;
+  border-radius: 3px;
+  border: 1px solid #3788d8;
+  background-color: #3788d8;
+  color: white;
+  font-weight: bolder;
+  outline: none;
+}
+#AddStudent:hover{
+  color: black;
+  background-color: #3788d852;
+  border-color: #3788d852;
+}
+#AddStudent:focus {
+  box-shadow: 0 0 3px 2px #3788d852;
+}
+
 /* Dashboard ------------------------------------------------------------------------------------------------- */
 .metrics,
 .forms {
