@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { editTeacherHours } from "../../calendar/functions";
+import { editTeacher } from "../../calendar/functions";
 import moment from 'moment';
-export default function EmpForm({name, phone}) {
+export default function EmpForm({teacher}) {
   const [hours, setHours] = useState({});
   const days = [0,1,2,3,4,5,6]
   const changeStart = e => {
@@ -18,10 +18,11 @@ export default function EmpForm({name, phone}) {
   };
   const subnmitHandler = (e) =>{
     e.preventDefault();
-    editTeacherHours(name, phone, hours)
+    teacher.changeAvailability(hours);
+    editTeacher(teacher._id, teacher.phone, teacher.hours);
   }
   return (
-    <form className={"EmpForm"} onSubmit={subnmitHandler} key ={name}>
+    <form className={"EmpForm"} onSubmit={subnmitHandler} key ={teacher.name}>
       <h4>Edit Hours</h4>
       {days.map(day =>
          (

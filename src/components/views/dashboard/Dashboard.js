@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EmpDetails from "./EmpDetails";
-import Metrics from "./charts/Charts";
+import Charts from "./charts/Charts";
 import DashHeader from "./DashHeader";
 import moment from "moment";
 import { Teacher, Student } from "../objects";
@@ -65,6 +65,24 @@ export default function DashboardView() {
     }
   });
 
+  const handleClick = () => {
+    const t = Teacher.create({});
+    if (t.name === null || t.phone === null) {
+      return;
+    }
+    axios
+      .post(`/api/teachers`, { name: t.name, lname: t.lname, phone: t.phone })
+      .catch(err => console.log(err));
+    axios
+      .get("/api/teachers")
+      .then(res => {
+        const a = res.data.map(t => {
+          return Teacher.create(t);
+        });
+        setTeachers(a);
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <div className={"view"}>
       <h2>Dashboard</h2>
@@ -76,18 +94,17 @@ export default function DashboardView() {
       <hr />
       <h3>Graphs:</h3>
       <div className="wrapper">
-        <Metrics arr={arr} teachers={teachers} students={students} />
+        <Charts arr={arr} teachers={teachers} students={students} />
         <div className={"forms"}>
           <h3>Faculty</h3>
           <div className="formsWrap">
             {teachers.map(teacher => (
               <EmpDetails
                 key={teacher._id}
-                name={teacher.name}
-                phone={teacher.phone}
-                hours={teacher.hours}
+                teacher={teacher}
               />
             ))}
+            <button onClick={handleClick}>Add New</button>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MainMenu from "./mainMenu/MainMenu";
 import Footer from "../components/Footer";
-import {Calendar, Dashboard, VIEW } from "./views/views.js";
+import { Calendar, Dashboard, VIEW } from "./views/views.js";
 export default function Main({ menuState }) {
   const [view, setView] = useState("Calendar");
 
@@ -12,12 +12,10 @@ export default function Main({ menuState }) {
 
   return (
     <main className="main">
-      <MainMenu
-        view={view}
-        setView={setView}
-        menuItems={menuItems}
-        menuState={menuState}
-      />
+      {menuState ? (
+        <MainMenu view={view} setView={setView} menuItems={menuItems} />
+      ) : null}
+
       <div className="inner">
         {menuItems.map(item => (
           <VIEW name={item.name} view={view} key={item.name}>

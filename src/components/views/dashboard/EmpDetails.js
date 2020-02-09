@@ -1,9 +1,10 @@
 import React from "react";
 import moment from "moment";
 import EmpForm from "./forms/EmpForm";
-export default function EmpDetails({ name, phone, hours }) {
-  if (hours) {
-    hours.forEach(i => {
+import EmpHours from "./EmpHours";
+export default function EmpDetails({ teacher }) {
+  if (teacher.hours) {
+    teacher.hours.forEach(i => {
       i.daysOfWeek = i.daysOfWeek.map(i => {
         return (i = moment()
           .day(i)
@@ -15,24 +16,18 @@ export default function EmpDetails({ name, phone, hours }) {
     <div id="employees">
       <details>
         <summary>
-          <h4>{name}</h4>
+          <h4>{teacher.name}</h4>
         </summary>
-        <p>Phone: {phone}</p>
-        <p>Current Hours: </p>
-        {hours === undefined
-          ? ""
-          : hours.map(item => (
-              <div>
-                {item.daysOfWeek.map(i => (
-                  <p>
-                    {i + ", "}
-                    {item.startTime}
-                    {item.endTime}
-                  </p>
-                ))}{" "}
-              </div>
-            ))}
-        <EmpForm name={name} phone={phone} />
+        <div className="employee">
+          <div className="photoID">
+            <img src="" alt={`${teacher.name}`} />
+          </div>
+          <div className="phone">
+            <p>Phone: {teacher.phone}</p>
+          </div>
+          <EmpHours hours={teacher.hours} />
+        </div>
+        <EmpForm teacher={teacher}/>
       </details>
     </div>
   );

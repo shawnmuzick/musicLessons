@@ -274,13 +274,35 @@ summary h4 {
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-
+.employee{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 0px;
+}
+.photoID{
+  width: 200px;
+  height: 200px;
+  padding: auto;
+  background-color: grey;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin: 5px;
+}
+.phone{
+  margin: 5px;
+}
+.postedHours{
+  margin: 5px;
+}
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;

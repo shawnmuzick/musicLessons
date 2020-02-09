@@ -43,11 +43,10 @@ router.post("/api/teachers", (req, res) => {
   });
 });
 router.put("/api/update/teacher", (req, res) => {
-  const { name, phone, hours } = req.body;
-  console.log(hours);
+  const { _id, phone, hours } = req.body;
   teacherModel
     .updateOne(
-      { name: name },
+      { _id: _id },
       {
         $set: {
           phone: phone,
@@ -57,6 +56,7 @@ router.put("/api/update/teacher", (req, res) => {
     )
     .exec((err, success) => {
       if (err) throw err;
+      console.log(success);
       res.json(success);
     });
 });

@@ -43,22 +43,11 @@ export const AddNewTeacher = setTeacher => {
     .catch(err => console.log(err));
   setTeacher({});
 };
-const editTeacher = (name, phone, hours) => {
+export const editTeacher = (_id, phone, hours) => {
   axios
-    .put(`/api/update/teacher`, { name, phone, hours })
+    .put(`/api/update/teacher`, { _id, phone, hours })
     .then(res => console.log(res))
     .catch(err => console.log(err));
-};
-export const editTeacherHours = (name, phone, hours) => {
-  let arr = Object.keys(hours).map(key => {
-    return {
-      daysOfWeek: [key],
-      startTime: hours[key].startTime,
-      endTime: hours[key].endTime
-    };
-  });
-
-  editTeacher(name, phone, arr);
 };
 export const eventClick = (e, teacher, setTeacher) => {
   const v = Event.create(e.event);

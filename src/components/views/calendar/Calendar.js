@@ -63,7 +63,7 @@ export default function Calendar() {
   const makeButtons = () => {
         //This links students and their teachers, disable to restore previous functionality
         students.forEach(s => {
-          if (teacher.name === s.teacher.name) {
+          if ((teacher.name === s.teacher.name) && (teacher.lname === s.teacher.lname)) {
             s.lessons.forEach(l => {
               l.stID = s.stID || "";
               teacher.lessons.push(l);
@@ -71,15 +71,14 @@ export default function Calendar() {
           }
         });
     let obj = SRC.reduce((obj, item) => {
-      obj[item.name] = item;
+      obj[item.lname] = item;
       item.click = function() {
         item.lessons=[];
         setTeacher(item);
       };
-      footer.center += item.text + ",";
+      footer.center += item.lname + ",";
       return obj;
     }, {});
-
     return obj;
   };
   const changeView = (args, calendarRef) => {

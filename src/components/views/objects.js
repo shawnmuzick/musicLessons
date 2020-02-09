@@ -42,6 +42,18 @@ export const Teacher = {
     getFullName: function() {
       return this.name + " " + this.lname;
     },
+    changeAvailability: function(hours){
+      let newHours = Object.keys(hours).map(key => {
+        return {
+          daysOfWeek: [key],
+          startTime: hours[key].startTime,
+          endTime: hours[key].endTime
+        };
+      });
+      this.hours = newHours;
+      //makes this chainable!
+      return this;
+    },
     checkAvailability: function(eventObject){
       const time = moment.utc(eventObject.start).format("HH:mm");
       const day = moment.utc(eventObject.start).day();
@@ -69,7 +81,7 @@ export const Student = {
     img: "",
     trial: {
       trDate: "",
-      trConv: false,
+      trConv: true,
       trConvF: ""
     },
     lessons: [],
