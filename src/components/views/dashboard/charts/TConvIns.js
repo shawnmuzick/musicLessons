@@ -16,7 +16,7 @@ export default function TConvIns({ teachers, students }) {
       {
         label: 'Instructors',
         data: teachers.map(t=>{
-            return t.getConvRate();
+            return Math.round(t.getConvRate());
         }),
         backgroundColor: [
             'rgba(255, 99, 132, 0.2)',

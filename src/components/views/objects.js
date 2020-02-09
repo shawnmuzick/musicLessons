@@ -138,5 +138,7 @@ export const Event = {
     changeColor: function() {
       this.backgroundColor = this.backgroundColor !== "red" ? "red" : "";
       this.borderColor = this.borderColor !== "red" ? "red" : "";
+      //make this chainable
+      return this;
     }
 };

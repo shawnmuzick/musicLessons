@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./components/Button";
-
+import './mainMenu.css'
 export default function MainMenu({ setView, menuItems }) {
   return (
     <div id="MainMenu">

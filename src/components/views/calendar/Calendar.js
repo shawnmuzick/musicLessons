@@ -91,7 +91,7 @@ export default function Calendar() {
   };
   return (
     <div className="view">
-      <h1>{teacher.name || <br />}</h1>
+      <h1>{teacher.name ? teacher.name + ' '+ teacher.lname : <br />}</h1>
       <hr />
       <div className="wrapper" id="CalendarWrap">
         <StuCont students={students} teacher={teacher} setStudents={setStudents}/>

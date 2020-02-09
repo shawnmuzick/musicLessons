@@ -50,6 +50,7 @@ export const editTeacher = (_id, phone, hours) => {
     .catch(err => console.log(err));
 };
 export const eventClick = (e, teacher, setTeacher) => {
+  console.log(e)
   const v = Event.create(e.event);
   v.update = e.event._instance;
   v.changeColor();
