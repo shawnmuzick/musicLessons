@@ -20,7 +20,7 @@ export default function EmpDetails({ teacher }) {
         </summary>
         <div className="employee">
           <div className="photoID">
-            <img src="" alt={`${teacher.name}`} />
+            <img src={`/img/${teacher._id}.jpg`} alt={`${teacher.name}`} />
           </div>
           <div className="phone">
             <p>Phone: {teacher.phone}</p>

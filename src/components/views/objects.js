@@ -10,6 +10,7 @@ export const Teacher = {
     nStu: 0,
     trConv:0,
     trFail:0,
+    img:'',
     create: function({
       _id,
       name,

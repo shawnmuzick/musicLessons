@@ -44,9 +44,13 @@ export default function DashboardView() {
   let conv = students.map(s => {
     return s.trial.trConv;
   });
-  let conversionRate = Math.round((conv.reduce((x, y) => {
+  let conversionRate = Math.round(
+    (conv.reduce((x, y) => {
       return Number(x) + Number(y);
-    }, 0) / conv.length) * 100);
+    }, 0) /
+      conv.length) *
+      100
+  );
   let arr = [];
   for (let i = 0; i < 12; i++) {
     arr[i] = {
@@ -96,10 +100,7 @@ export default function DashboardView() {
           <h3>Faculty</h3>
           <div className="formsWrap">
             {teachers.map(teacher => (
-              <EmpDetails
-                key={teacher._id}
-                teacher={teacher}
-              />
+              <EmpDetails key={teacher._id} teacher={teacher} />
             ))}
             <button onClick={handleClick}>Add New</button>
           </div>
