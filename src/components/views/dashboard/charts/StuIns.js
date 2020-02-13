@@ -4,14 +4,14 @@ import { Pie } from "react-chartjs-2";
 export default function StuIns({ students, teachers }) {
     students.forEach(s => {
         teachers.forEach(t => {
-            if(s.teacher.name === t.name){
+            if(s.teacher.name === t.fname){
                 t.nStu++
             }
         });
     });
   let data = {
     labels: teachers.map(t => {
-      return t.name || "";
+      return t.fname || "";
     }),
     datasets: [
       {

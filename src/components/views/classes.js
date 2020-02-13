@@ -1,7 +1,7 @@
 import moment from "moment";
 
 class Person {
-  constructor({ _id, fname, lname, phone, img }) {
+  constructor(_id, fname, lname, phone, img) {
     this._id = _id || "";
     this.fname = fname;
     this.lname = lname;
@@ -13,7 +13,7 @@ class Person {
   }
 }
 
-class Teacher extends Person {
+export class Teacher extends Person {
   constructor({ _id, fname, lname, phone, lessons, hours, img }) {
     super(_id, fname, lname, phone, img);
     this.lessons = lessons || [];
@@ -65,8 +65,10 @@ class Teacher extends Person {
     return isAvailable;
   }
 }
-class Student extends Person {
+export class Student extends Person {
   constructor({
+    _id,
+    stID,
     fname,
     lname,
     phone,
@@ -76,7 +78,8 @@ class Student extends Person {
     instrument,
     teacher
   }) {
-    super(fname, lname, phone, img);
+    super(_id, fname, lname, phone, img);
+    this.stID = stID;
     this.trial = trial;
     this.lessons = lessons;
     this.instrument = instrument;

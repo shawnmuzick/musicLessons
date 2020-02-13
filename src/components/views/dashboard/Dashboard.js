@@ -4,7 +4,7 @@ import EmpDetails from "./EmpDetails";
 import Charts from "./charts/Charts";
 import DashHeader from "./DashHeader";
 import moment from "moment";
-import { Teacher, Student } from "../objects";
+import { Teacher, Student } from "../classes";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
@@ -13,7 +13,7 @@ export default function DashboardView() {
       .get("/api/teachers")
       .then(res => {
         const a = res.data.map(t => {
-          return Teacher.create(t);
+          return new Teacher(t);
         });
         setTeachers(a);
       })
@@ -22,7 +22,7 @@ export default function DashboardView() {
       .get("/api/students")
       .then(res => {
         const b = res.data.map(s => {
-          return Student.create(s);
+          return new Student(s);
         });
         setStudents(b);
       })
@@ -32,7 +32,7 @@ export default function DashboardView() {
   //link student lessons with teachers---------------------------------------
   students.forEach(s => {
     teachers.forEach(t => {
-      if (t.name === s.teacher.name) {
+      if (t.fname === s.teacher.name) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
           totalLessons++;
@@ -67,18 +67,18 @@ export default function DashboardView() {
   });
 
   const handleClick = () => {
-    const t = Teacher.create({});
+    const t = new Teacher();
     if (t.name === null || t.phone === null) {
       return;
     }
     axios
-      .post(`/api/teachers`, { name: t.name, lname: t.lname, phone: t.phone })
+      .post(`/api/teachers`, { fname: t.fname, lname: t.lname, phone: t.phone })
       .catch(err => console.log(err));
     axios
       .get("/api/teachers")
       .then(res => {
         const a = res.data.map(t => {
-          return Teacher.create(t);
+          return new Teacher(t);
         });
         setTeachers(a);
       })

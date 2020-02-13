@@ -4,7 +4,7 @@ import { Pie } from "react-chartjs-2";
 export default function LesIns({ teachers }) {
   let data = {
     labels: teachers.map(t => {
-      return t.name || "";
+      return t.fname || "";
     }),
     datasets: [
       {

@@ -1,24 +1,22 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { Student } from "../objects";
-export default function StuCont({ students, teacher, setStudents}) {
+export default function StuCont({ students, teacher, setStudents }) {
   const handleClick = () => {
-    console.log('test');
-    if(!teacher.name){
+    console.log("test");
+    if (!teacher.fname) {
       window.alert("Please select an instructor below");
       return;
-    }else{
+    } else {
       let s = Student.create({});
-      if(s.fname === 'DEFAULT' || s.fname === null){
+      if (s.fname === "DEFAULT" || s.fname === null) {
         window.alert("Please fill out all fields as prompted");
         return;
-      }else{
-        s.teacher.name = teacher.name;
+      } else {
+        s.teacher.name = teacher.fname;
         s.teacher.lname = teacher.lname;
-        axios
-        .post(`/api/students`, {s})
-        .catch(err => console.log(err));
-        const arr = [...students,s];
+        axios.post(`/api/students`, { s }).catch(err => console.log(err));
+        const arr = [...students, s];
         console.log(arr);
         setStudents(arr);
       }
@@ -32,15 +30,15 @@ export default function StuCont({ students, teacher, setStudents}) {
         Add New
       </button>
       {students
-        .filter(s => s.teacher.name === teacher.name)
+        .filter(s => s.teacher.name === teacher.fname)
         .map(s => (
           <div
             className="fc-event"
-            title={s.fname + " " + s.lname + "'s " + s.instrument + " lesson"}
+            title={`${s.fname} ${s.lname}'s ${s.instrument} lesson`}
             key={s.stId}
             id={s.stID}
           >
-            {s.fname + " " + s.lname}
+            {`${s.fname} ${s.lname}`}
           </div>
         ))}
     </div>

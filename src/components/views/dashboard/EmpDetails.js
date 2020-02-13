@@ -16,11 +16,11 @@ export default function EmpDetails({ teacher }) {
     <div id="employees">
       <details>
         <summary>
-          <h4>{teacher.name}</h4>
+          <h4>{teacher.fname}</h4>
         </summary>
         <div className="employee">
           <div className="photoID">
-            <img src={`/img/${teacher._id}.jpg`} alt={`${teacher.name}`} />
+            <img src={`/img/${teacher._id}.jpg`} alt={`${teacher.fname}`} />
           </div>
           <div className="phone">
             <p>Phone: {teacher.phone}</p>

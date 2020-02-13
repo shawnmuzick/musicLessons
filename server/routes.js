@@ -12,16 +12,16 @@ router.get("/api/teachers", (req, res) => {
   });
 });
 router.get("/api/teachers/:id", (req, res) => {
-  const name = req.params.id;
-  teacherModel.findOne({ name: name }).exec((err, data) => {
+  const fname = req.params.id;
+  teacherModel.findOne({ fname: fname }).exec((err, data) => {
     if (err) throw err;
     res.json(data);
   });
 });
 router.post("/api/teachers", (req, res) => {
-  const { name, lname, phone, lessons = [] } = req.body;
+  const { fname, lname, phone, lessons = [] } = req.body;
   const newTeacher = new teacherModel({
-    name,
+    fname,
     lname,
     phone,
     lessons
@@ -31,7 +31,7 @@ router.post("/api/teachers", (req, res) => {
     fs.appendFile(
       "./server/logs/newTeacherLog.txt",
       "Added Teacher: " +
-        JSON.stringify(name) +
+        JSON.stringify(fname) +
         "\t" +
         JSON.stringify(success) +
         "\n",
@@ -167,7 +167,7 @@ router.post("/api/newLesson", (req, res) => {
   newEvent.id = uuidv4.v4();
 
   teacherModel
-    .updateOne({ name: teacher }, { $push: { lessons: newEvent } })
+    .updateOne({ fname: teacher }, { $push: { lessons: newEvent } })
     .exec((err, data) => {
       if (err) throw err;
       fs.appendFile(

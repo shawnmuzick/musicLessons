@@ -6,7 +6,7 @@ export default function TConvIns({ teachers, students }) {
         return {teacher:s.teacher.name, conv:s.trial.trConv}
     })
     a.forEach(i =>{
-        i.conv === true ? teachers.find(t => t.name === i.teacher).trConv++ : teachers.find(t => t.name === i.teacher).trFail++
+        i.conv === true ? teachers.find(t => t.fname === i.teacher).trConv++ : teachers.find(t => t.fname === i.teacher).trFail++
     })
   let data = {
     labels: teachers.map(t => {

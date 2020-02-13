@@ -22,7 +22,7 @@ export default function EmpForm({teacher}) {
     editTeacher(teacher._id, teacher.phone, teacher.hours);
   }
   return (
-    <form className={"EmpForm"} onSubmit={subnmitHandler} key ={teacher.name}>
+    <form className={"EmpForm"} onSubmit={subnmitHandler} key ={teacher._id}>
       <h4>Edit Hours</h4>
       {days.map(day =>
          (
