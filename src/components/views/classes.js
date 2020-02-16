@@ -3,9 +3,9 @@ import moment from "moment";
 class Person {
   constructor(_id, fname, lname, phone, img) {
     this._id = _id || "";
-    this.fname = fname;
-    this.lname = lname;
-    this.phone = phone;
+    this.fname = fname || window.prompt("Enter first name: ");
+    this.lname = lname || window.prompt("Enter last name: ");
+    this.phone = phone || window.prompt("Enter phone number: ");
     this.img = img;
   }
   getFullName() {

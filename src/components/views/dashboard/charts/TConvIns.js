@@ -10,7 +10,7 @@ export default function TConvIns({ teachers, students }) {
     })
   let data = {
     labels: teachers.map(t => {
-      return t.name || "";
+      return t.fname || "";
     }),
     datasets: [
       {

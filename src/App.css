@@ -219,6 +219,12 @@ summary h4 {
   -ms-user-select: none;
   user-select: none;
 }
+details{
+  width: 100%;
+}
+#employees{
+  width: 100%;
+}
 .employee {
   display: flex;
   flex-direction: row;
@@ -227,7 +233,7 @@ summary h4 {
   padding: 1rem;
   margin: 0px;
 }
-.photoID {
+.photoId, .photoID img {
   width: 200px;
   height: 200px;
   padding: auto;
@@ -235,13 +241,51 @@ summary h4 {
   justify-content: center;
   text-align: center;
   align-items: center;
-  margin: 5px;
 }
 .phone {
   margin: 5px;
 }
 .postedHours {
   margin: 5px;
+}
+.modal{
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: rgba(207, 207, 207, 0.7);
+}
+.modal form input:focus, .modal form input:active{
+  color: black !important;
+}
+.modalWrapper{
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.modalHeader{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px white;
+  margin-bottom: 10px;
+}
+.modalWrapper button{
+  width:30px;
+  height:30px;
+  border-radius: 5px;
+  background-color: #202124;
+  border: solid 1px #202124;
+  outline: transparent;
+  color: white;
+  box-shadow: transparent;
+}
+.modalWrapper button:hover, .modalWrapper button:focus{
+  background-color: rgb(124, 122, 122);
+  border-color: rgb(124, 122, 122);
 }
 
 @media screen and (min-width: 1200px) {
