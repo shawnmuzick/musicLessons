@@ -28,6 +28,9 @@ router.post("/api/teachers", (req, res) => {
   });
   newTeacher.save((err, success) => {
     if (err) throw err;
+    if(!fs.existsSync('./server/logs')){
+      fs.mkdirSync('./server/logs');
+    }
     fs.appendFile(
       "./server/logs/newTeacherLog.txt",
       "Added Teacher: " +
@@ -72,6 +75,9 @@ router.post("/api/students", (req, res) => {
   const newStudent = new studentModel(s);
   newStudent.save((err, success) => {
     if (err) throw err;
+    if(!fs.existsSync('./server/logs')){
+      fs.mkdirSync('./server/logs');
+    }
     fs.appendFile(
       "./server/logs/newStudent.txt",
       "Added Student: " +
@@ -110,6 +116,9 @@ router.put("/api/update/student/lesson", (req, res) => {
       )
       .exec((err, success) => {
         if (err) throw err;
+        if(!fs.existsSync('./server/logs')){
+          fs.mkdirSync('./server/logs');
+        }
         fs.appendFile(
           "./server/logs/updateLog.txt",
           " Updated ID: " +
@@ -145,6 +154,9 @@ router.put("/api/update/student/lesson", (req, res) => {
       )
       .exec((err, success) => {
         if (err) throw err;
+        if(!fs.existsSync('./server/logs')){
+          fs.mkdirSync('./server/logs');
+        }
         fs.appendFile(
           "./server/logs/updateLog.txt",
           " Updated ID: " +
@@ -170,6 +182,9 @@ router.post("/api/newLesson", (req, res) => {
     .updateOne({ fname: teacher }, { $push: { lessons: newEvent } })
     .exec((err, data) => {
       if (err) throw err;
+      if(!fs.existsSync('./server/logs')){
+        fs.mkdirSync('./server/logs');
+      }
       fs.appendFile(
         "./server/logs/newLessonLog.txt",
         "Added ID: " + JSON.stringify(newEvent.id) + "\n",
