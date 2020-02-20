@@ -1,3 +1,38 @@
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
 @import "~@fullcalendar/timegrid/main.css";
+
+.fc-toolbar button {
+    padding: 10px;
+    margin: 0px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .fc-toolbar button:focus {
+    color: #fff;
+    background-color: #1a252f;
+    border-color: #151e27;
+  }
+  .fc-nonbusiness.fc-bgevent {
+    background-color: rgba(255, 0, 0, 0.521);
+    opacity: 1;
+  }
+  .fc-bg{
+    background-color: #202124;
+  }
+  .fc{
+    color: white;
+  }
+  .extEvents {
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background-color: #202124;
+    overflow-y: scroll;
+  }
+  .extEvents .fc-event {
+    margin: 1em 0;
+    cursor: move;
+  }

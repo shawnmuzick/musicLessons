@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import EmpForm from "./forms/EmpForm";
+import EmpForm from "../../forms/EmpForm";
 import EmpHours from "./EmpHours";
 export default function EmpDetails({ teacher }) {
   if (teacher.hours) {

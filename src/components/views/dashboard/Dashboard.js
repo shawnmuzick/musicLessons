@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Button from '../../buttons/Button';
 import EmpDetails from "./EmpDetails";
-import AddNew from "./forms/AddNew";
-import Charts from "./charts/Charts";
+import AddNew from "../../forms/AddNew";
 import DashHeader from "./DashHeader";
 import moment from "moment";
 import { Teacher, Student } from "../classes";
 import Modal from "@material-ui/core/Modal";
+import {LesIns, LesMon, StuIns,TConvIns,Charts} from "./charts/index";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
@@ -65,7 +66,6 @@ export default function DashboardView() {
       100
   );
   const handleClick = a => {
-    console.log(a);
     const t = new Teacher(a);
     if (t.name === null || t.phone === null) {
       return;
@@ -107,19 +107,24 @@ export default function DashboardView() {
       <hr />
       <h3>Graphs:</h3>
       <div className="wrapper">
-        <Charts arr={arr} teachers={teachers} students={students} />
+        <Charts>
+          <LesIns arr={arr} teachers={teachers} students={students} />
+          <LesMon arr={arr} teachers={teachers} students={students} />
+          <StuIns arr={arr} teachers={teachers} students={students} />
+          <TConvIns arr={arr} teachers={teachers} students={students} />
+        </Charts>
         <div className={"forms"}>
           <h3>Faculty</h3>
           <div className="formsWrap">
             {teachers.map(teacher => (
               <EmpDetails key={teacher._id} teacher={teacher} />
             ))}
-            <button onClick={handleOpen}>Add New</button>
+            <Button name={"Add New"} fn={handleOpen}/>
             <Modal open={open} className={"modal"}>
               <div className={"modalWrapper"}>
                 <div className="modalHeader">
                   <h2>Enter New Teacher Details</h2>
-                  <button onClick={handleClose}>x</button>
+                  <Button name={"x"} fn={handleClose} />
                 </div>
                 <AddNew handleClick={handleClick} />
               </div>

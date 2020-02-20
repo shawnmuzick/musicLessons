@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { Student } from "../objects";
+import { Student } from "../classes";
+import Button from "../../buttons/Button";
 export default function StuCont({ students, teacher, setStudents }) {
   const handleClick = () => {
-    console.log("test");
     if (!teacher.fname) {
       window.alert("Please select an instructor below");
       return;
     } else {
-      let s = Student.create({});
+      let s = new Student({});
       if (s.fname === "DEFAULT" || s.fname === null) {
         window.alert("Please fill out all fields as prompted");
         return;
@@ -17,7 +17,6 @@ export default function StuCont({ students, teacher, setStudents }) {
         s.teacher.lname = teacher.lname;
         axios.post(`/api/students`, { s }).catch(err => console.log(err));
         const arr = [...students, s];
-        console.log(arr);
         setStudents(arr);
       }
     }
@@ -26,9 +25,7 @@ export default function StuCont({ students, teacher, setStudents }) {
   return (
     <div className={"extEvents"} id="extEvents">
       <h2>Students</h2>
-      <button id="AddStudent" onClick={handleClick}>
-        Add New
-      </button>
+      <Button name={"Add New"} fn={handleClick} />
       {students
         .filter(s => s.teacher.name === teacher.fname)
         .map(s => (

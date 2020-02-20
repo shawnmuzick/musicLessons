@@ -104,54 +104,6 @@ footer {
 :focus{
   color:white;
 }
-/* Calendar ---------------------------------------------------------------------------------------------------*/
-.fc-toolbar button {
-  padding: 10px;
-  margin: 0px;
-  padding: 10px;
-  border-radius: 5px;
-}
-.fc-toolbar button:focus {
-  color: #fff;
-  background-color: #1a252f;
-  border-color: #151e27;
-}
-.fc-nonbusiness.fc-bgevent {
-  background: red;
-}
-.extEvents {
-  display: flex;
-  flex-direction: column;
-  z-index: 2;
-  padding: 0 10px;
-  border: 1px solid #ccc;
-  background-color: #202124;
-  overflow-y: scroll;
-}
-.extEvents .fc-event {
-  margin: 1em 0;
-  cursor: move;
-}
-#AddStudent {
-  position: relative;
-  display: block;
-  font-size: 1.2em;
-  line-height: 1.4;
-  border-radius: 3px;
-  border: 1px solid #3788d8;
-  background-color: #3788d8;
-  color: white;
-  font-weight: bolder;
-  outline: none;
-}
-#AddStudent:hover {
-  color: black;
-  background-color: #3788d852;
-  border-color: #3788d852;
-}
-#AddStudent:focus {
-  box-shadow: 0 0 3px 2px #3788d852;
-}
 
 /* Dashboard ------------------------------------------------------------------------------------------------- */
 .metrics,
@@ -256,7 +208,7 @@ details{
   display: flex;
   background-color: rgba(207, 207, 207, 0.7);
 }
-.modal form input:focus, .modal form input:active{
+form input:focus, .modal form input:active{
   color: black !important;
 }
 .modalWrapper{
@@ -272,20 +224,6 @@ details{
   justify-content: space-between;
   border-bottom: solid 1px white;
   margin-bottom: 10px;
-}
-.modalWrapper button{
-  width:30px;
-  height:30px;
-  border-radius: 5px;
-  background-color: #202124;
-  border: solid 1px #202124;
-  outline: transparent;
-  color: white;
-  box-shadow: transparent;
-}
-.modalWrapper button:hover, .modalWrapper button:focus{
-  background-color: rgb(124, 122, 122);
-  border-color: rgb(124, 122, 122);
 }
 
 @media screen and (min-width: 1200px) {

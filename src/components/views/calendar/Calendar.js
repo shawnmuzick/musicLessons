@@ -81,7 +81,7 @@ export default function Calendar() {
         item.lessons = [];
         setTeacher(item);
       };
-      footer.center += item.lname + ",";
+      footer.center += `${item.lname},`;
       return obj;
     }, {});
     return obj;

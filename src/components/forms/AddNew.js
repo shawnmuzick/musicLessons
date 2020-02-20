@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../buttons/Button";
 export default function AddNew({ handleClick }) {
   const [teacher, setTeacher] = useState({});
 
@@ -9,7 +10,6 @@ export default function AddNew({ handleClick }) {
     setTeacher(t);
   };
   const handleSubmit = e => {
-    e.preventDefault();
     handleClick(teacher);
   };
 
@@ -27,7 +27,7 @@ export default function AddNew({ handleClick }) {
         <label htmlFor="phone">Phone: </label>
         <input type="text" name="phone" onChange={handleChange} />
       </div>
-      <input type="submit" value="submit" />
+      <Button type="submit" name={"Submit"} fn={handleSubmit} />
     </form>
   );
 }
