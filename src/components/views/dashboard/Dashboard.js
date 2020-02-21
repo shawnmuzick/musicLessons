@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Button from '../../buttons/Button';
 import EmpDetails from "./EmpDetails";
-import AddNew from "../../forms/AddNew";
+import FrmNewTeacher from "../../forms/FrmNewTeacher";
 import DashHeader from "./DashHeader";
 import moment from "moment";
 import { Teacher, Student } from "../classes";
-import Modal from "@material-ui/core/Modal";
-import {LesIns, LesMon, StuIns,TConvIns,Charts} from "./charts/index";
+import PopModal from "../../modal/index";
+import { LesIns, LesMon, StuIns, TConvIns, Charts } from "./charts/index";
 export default function DashboardView() {
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
-  const [open, setOpen] = useState(false);
   useEffect(() => {
     axios
       .all([axios.get("/api/teachers"), axios.get("/api/students")])
@@ -88,24 +86,14 @@ export default function DashboardView() {
         })
       )
       .catch(err => console.log(err));
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
   return (
     <div className={"view"}>
-      <h2>Dashboard</h2>
       <DashHeader
         totalLessons={totalLessons}
         totalStudents={students.length}
         conversionRate={conversionRate}
       />
-      <hr />
-      <h3>Graphs:</h3>
       <div className="wrapper">
         <Charts>
           <LesIns arr={arr} teachers={teachers} students={students} />
@@ -115,23 +103,14 @@ export default function DashboardView() {
         </Charts>
         <div className={"forms"}>
           <h3>Faculty</h3>
-          <div className="formsWrap">
-            {teachers.map(teacher => (
-              <EmpDetails key={teacher._id} teacher={teacher} />
-            ))}
-            <Button name={"Add New"} fn={handleOpen}/>
-            <Modal open={open} className={"modal"}>
-              <div className={"modalWrapper"}>
-                <div className="modalHeader">
-                  <h2>Enter New Teacher Details</h2>
-                  <Button name={"x"} fn={handleClose} />
-                </div>
-                <AddNew handleClick={handleClick} />
-              </div>
-            </Modal>
-          </div>
+          {teachers.map(teacher => (
+            <EmpDetails key={teacher._id} teacher={teacher} />
+          ))}
         </div>
       </div>
+      <PopModal prompt={"Enter New Teacher"}>
+        <FrmNewTeacher handleClick={handleClick} />
+      </PopModal>
     </div>
   );
 }

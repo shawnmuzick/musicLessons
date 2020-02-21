@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { editTeacher } from "../views/calendar/functions";
 import Button from "../buttons/Button";
 import moment from "moment";
-export default function EmpForm({ teacher }) {
+export default function FrmEditHours({ teacher }) {
   const [hours, setHours] = useState({});
   const days = [0, 1, 2, 3, 4, 5, 6];
   const changeStart = e => {
@@ -40,7 +40,7 @@ export default function EmpForm({ teacher }) {
           <input type="time" name={`${day}`} onChange={changeEnd} />
         </div>
       ))}
-      <Button type="submit" name={"Submit"} fn={subnmitHandler} />
+      <Button type="submit" name={"Submit"}/>
     </form>
   );
 }

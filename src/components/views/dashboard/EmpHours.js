@@ -6,14 +6,12 @@ export default function EmpHours({ teacher }) {
       <div className={"postedHours"}>
         <p>Posted Hours: </p>
         {teacher.hours.map(item => (
-          <div key ={`${teacher._id} ${item.daysOfWeek}`}>
+          <div key={`${teacher._id} ${item.daysOfWeek}`}>
             {item.daysOfWeek.map(i => (
-              <p key ={`${teacher._id} ${i}`}>
-                {i + ", "}
-                {item.startTime}
-                {item.endTime}
+              <p key={`${teacher._id} ${i}`}>
+                {`${i} - ${item.startTime} - ${item.endTime}`}
               </p>
-            ))}{" "}
+            ))}
           </div>
         ))}
       </div>

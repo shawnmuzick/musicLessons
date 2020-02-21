@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../buttons/Button";
-export default function AddNew({ handleClick }) {
+export default function FrmNewTeacher({ handleClick }) {
   const [teacher, setTeacher] = useState({});
 
   const handleChange = e => {
@@ -27,7 +27,7 @@ export default function AddNew({ handleClick }) {
         <label htmlFor="phone">Phone: </label>
         <input type="text" name="phone" onChange={handleChange} />
       </div>
-      <Button type="submit" name={"Submit"} fn={handleSubmit} />
+      <Button type="submit" name={"Submit"}/>
     </form>
   );
 }

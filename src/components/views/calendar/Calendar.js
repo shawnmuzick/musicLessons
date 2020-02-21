@@ -28,7 +28,6 @@ export default function Calendar() {
           return new Teacher(t);
         });
         setSRC(a);
-        console.log(a);
       })
       .catch(err => console.log(err));
     let draggableEl = document.getElementById("extEvents");
@@ -53,7 +52,6 @@ export default function Calendar() {
     axios
       .get("/api/students")
       .then(res => {
-        console.log(res.data)
         const b = res.data.map(s => {
           return new Student(s);
         });
@@ -96,7 +94,7 @@ export default function Calendar() {
   };
   return (
     <div className="view">
-      <h1>{teacher.fname ? `${teacher.fname}  ${teacher.lname}` : <br />}</h1>
+      <h1>{teacher.fname ? `${teacher.fname} ${teacher.lname}` : <br />}</h1>
       <hr />
       <div className="wrapper" id="CalendarWrap">
         <StuCont

@@ -1,11 +1,16 @@
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
 @import "~@fullcalendar/timegrid/main.css";
-
+.fc-button, .fc-button-primary{
+  border-radius: 5px;
+}
+.fc-button-group{
+  display: flex;
+  flex-wrap: wrap;
+}
 .fc-toolbar button {
     padding: 10px;
     margin: 0px;
-    padding: 10px;
     border-radius: 5px;
   }
   .fc-toolbar button:focus {
