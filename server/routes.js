@@ -72,6 +72,7 @@ router.get("/api/students", (req, res) => {
 });
 router.post("/api/students", (req, res) => {
   const {s} = req.body;
+  delete s._id;
   const newStudent = new studentModel(s);
   newStudent.save((err, success) => {
     if (err) throw err;
@@ -100,7 +101,7 @@ router.put("/api/update/student/lesson", (req, res) => {
     studentModel
       .updateOne(
         //find where lessons's child element that matches id
-        { stID: stID },
+        { _id: stID },
         {
           $push: {
             lessons: {

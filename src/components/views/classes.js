@@ -68,7 +68,6 @@ export class Teacher extends Person {
 export class Student extends Person {
   constructor({
     _id,
-    stID,
     fname,
     lname,
     phone,
@@ -79,11 +78,10 @@ export class Student extends Person {
     teacher
   }) {
     super(_id, fname, lname, phone, img);
-    this.stID = stID;
-    this.trial = trial;
-    this.lessons = lessons;
+    this.trial = trial || { trDate: "", trConv: true, trConvF: "" };
+    this.lessons = lessons || [];
     this.instrument = instrument;
-    this.teacher = teacher;
+    this.teacher = teacher || { name: "", lname: "" };
   }
 }
 export const Event = {

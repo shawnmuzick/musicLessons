@@ -35,11 +35,11 @@ export default function Calendar() {
       itemSelector: ".fc-event",
       eventData: function(eventEl) {
         let title = eventEl.getAttribute("title");
-        let stID = eventEl.getAttribute("id");
+        let _id = eventEl.getAttribute("id");
         return {
           allDay: false,
           title: title,
-          stID: stID,
+          _id: _id,
           // you need this parameter to avoid duplicates!!!
           create: false
         };
@@ -53,9 +53,11 @@ export default function Calendar() {
       .get("/api/students")
       .then(res => {
         const b = res.data.map(s => {
+          // console.log(s);
           return new Student(s);
         });
         setStudents(b);
+        // console.log(b);
       })
       .catch(err => console.log(err));
   }, [teacher]);

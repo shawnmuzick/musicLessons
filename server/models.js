@@ -14,7 +14,6 @@ const teacherSchema = new Schema({
     hours:[]
 },{collection:'teachers'})
 const studentSchema = new Schema({
-    stID: String,
     fname: String,
     lname: String,
     phone: String,
