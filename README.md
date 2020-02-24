@@ -1,4 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Objective:
+
+The goal of this project is to make a webapp for organizing lessons between students and instructors. This is designed with musicians in mind, but the concept can work in other scenarios. 
 
 ## Available Scripts
 
