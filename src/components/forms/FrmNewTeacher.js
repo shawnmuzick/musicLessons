@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../buttons/Button";
+import {Teacher} from '../views/classes';
 export default function FrmNewTeacher({ handleClick }) {
   const [teacher, setTeacher] = useState({});
 
@@ -10,7 +11,8 @@ export default function FrmNewTeacher({ handleClick }) {
     setTeacher(t);
   };
   const handleSubmit = e => {
-    handleClick(teacher);
+    const t = new Teacher(teacher);
+    handleClick(t);
   };
 
   return (

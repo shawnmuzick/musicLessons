@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import Button from "../buttons/Button";
-
+import {Student} from '../views/classes';
 export default function FrmNewStudent({handleClick}) {
     const [student, setStudent] = useState({});
 
@@ -11,8 +11,8 @@ export default function FrmNewStudent({handleClick}) {
         setStudent(s);
       };
       const handleSubmit = e => {
-          e.preventDefault();
-        handleClick(student);
+        const s = new Student(student);
+        handleClick(s);
       };
 
     return (
@@ -30,7 +30,7 @@ export default function FrmNewStudent({handleClick}) {
           <input type="text" name="phone" onChange={handleChange} />
         </div>
         <div className="formGroup">
-          <label htmlFor="phone">Instrument: </label>
+          <label htmlFor="instrument">Instrument: </label>
           <input type="text" name="instrument" onChange={handleChange} />
         </div>
         <Button type="submit" name={"Submit"}/>

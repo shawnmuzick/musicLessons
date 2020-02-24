@@ -150,10 +150,11 @@ summary h4 {
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  width: 40vw;
+  width: 50vw;
+  overflow-wrap: break-word;
 }
 .formGroup label {
-  width: 50px;
+  width: 100px;
 }
 .formGroup input {
   flex-grow: 1;

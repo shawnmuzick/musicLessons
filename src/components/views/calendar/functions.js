@@ -1,21 +1,6 @@
 import axios from "axios";
 import { Teacher, Event } from "../classes";
 
-const postEvent = (newEvent, teacher, setTeacher) => {
-  axios
-    .post(`/api/newLesson`, {
-      teacher: teacher.fname,
-      newEvent: newEvent
-    })
-    .catch(error => console.log("load" + error));
-  axios
-    .get(`/api/teachers/${teacher.fname}`)
-    .then(res => {
-      const edit = new Teacher(res.data);
-      setTeacher(edit);
-    })
-    .catch(error => console.log("load" + error));
-};
 const editEvent = (e, teacher, setTeacher, stID) => {
   axios
     .put(`/api/update/student/lesson`, {
@@ -50,7 +35,6 @@ export const editTeacher = (_id, phone, hours) => {
     .catch(err => console.log(err));
 };
 export const eventClick = (e, teacher, setTeacher) => {
-  console.log(e)
   const v = Event.create(e.event);
   v.update = e.event._instance;
   v.changeColor();

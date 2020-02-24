@@ -1,15 +1,13 @@
 import React from "react";
 import axios from "axios";
-import { Student } from "../classes";
 import PopModal from "../../modal/index";
 import FrmNewStudent from "../../forms/FrmNewStudent";
-export default function StuCont({ students, teacher, setStudents }) {
-  const handleClick = (a) => {
+export default function StuCont({ students, teacher }) {
+  const handleClick = (s) => {
     if (!teacher.fname) {
       window.alert("Please select an instructor below");
       return;
     } else {
-      let s = new Student(a);
       if (s.fname === "DEFAULT" || s.fname === null) {
         window.alert("Please fill out all fields as prompted");
         return;
@@ -17,19 +15,6 @@ export default function StuCont({ students, teacher, setStudents }) {
         s.teacher.name = teacher.fname;
         s.teacher.lname = teacher.lname;
         axios.post(`/api/students`, { s }).catch(err => console.log(err));
-        axios
-          .get("/api/students")
-          .then(res => {
-            const b = res.data.map(s => {
-              // console.log(s);
-              return new Student(s);
-            });
-            setStudents(b);
-            // console.log(b);
-          })
-          .catch(err => console.log(err));
-        const arr = [...students, s];
-        setStudents(arr);
       }
     }
     return;

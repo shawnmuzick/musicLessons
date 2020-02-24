@@ -1,32 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import EmpDetails from "./EmpDetails";
 import FrmNewTeacher from "../../forms/FrmNewTeacher";
 import DashHeader from "./DashHeader";
 import moment from "moment";
-import { Teacher, Student } from "../classes";
 import PopModal from "../../modal/index";
 import { LesIns, LesMon, StuIns, TConvIns, Charts } from "./charts/index";
-export default function DashboardView() {
-  const [teachers, setTeachers] = useState([]);
-  const [students, setStudents] = useState([]);
-  useEffect(() => {
-    axios
-      .all([axios.get("/api/teachers"), axios.get("/api/students")])
-      .then(
-        axios.spread((...res) => {
-          const a = res[0].data.map(t => {
-            return new Teacher(t);
-          });
-          setTeachers(a);
-          const b = res[1].data.map(s => {
-            return new Student(s);
-          });
-          setStudents(b);
-        })
-      )
-      .catch(err => console.log(err));
-  }, []);
+export default function DashboardView({ teachers, students }) {
   let totalLessons = 0;
   let arr = [];
   for (let i = 0; i < 12; i++) {
@@ -63,28 +43,16 @@ export default function DashboardView() {
       conv.length) *
       100
   );
-  const handleClick = a => {
-    const t = new Teacher(a);
+  const handleClick = t => {
     if (t.name === null || t.phone === null) {
       return;
     }
     axios
-      .all([
-        axios.post(`/api/teachers`, {
-          fname: t.fname,
-          lname: t.lname,
-          phone: t.phone
-        }),
-        axios.get("/api/teachers")
-      ])
-      .then(
-        axios.spread((...res) => {
-          const a = res[1].data.map(t => {
-            return new Teacher(t);
-          });
-          setTeachers(a);
-        })
-      )
+      .post(`/api/teachers`, {
+        fname: t.fname,
+        lname: t.lname,
+        phone: t.phone
+      })
       .catch(err => console.log(err));
   };
   return (

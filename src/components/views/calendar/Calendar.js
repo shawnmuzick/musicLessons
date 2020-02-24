@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FullCalendar, plugins, Draggable } from "./plugins";
-import { eventClick, newDrop } from "./functions";
+import { Draggable } from "./plugins";
 import { Teacher, Student } from "../classes";
+import ReactFullCalendar from "./ReactFullCalendar";
 import StuCont from "./stuCont";
 import "./calendar.css";
 import axios from "axios";
@@ -46,31 +46,28 @@ export default function Calendar() {
       }
     });
   }, []);
-  //whenever the current teacher changes, rerender, fetch students, and link them up
+  //whenever the current teacher changes, rerender, fetch students,
   useEffect(() => {
     teacher.lessons = [];
     axios
       .get("/api/students")
       .then(res => {
         const b = res.data.map(s => {
-          // console.log(s);
           return new Student(s);
         });
         setStudents(b);
-        // console.log(b);
       })
       .catch(err => console.log(err));
   }, [teacher]);
 
   const makeButtons = () => {
-    //This links students and their teachers, disable to restore previous functionality
+    //This links students and their teachers
     students.forEach(s => {
       if (
         teacher.fname === s.teacher.name &&
         teacher.lname === s.teacher.lname
       ) {
         s.lessons.forEach(l => {
-          l.stID = s.stID || "";
           teacher.lessons.push(l);
         });
       }
@@ -86,14 +83,7 @@ export default function Calendar() {
     }, {});
     return obj;
   };
-  const changeView = (args, calendarRef) => {
-    const api = calendarRef.current.getApi();
-    if (api.view.type === "timeGridDay") {
-      return;
-    } else {
-      api.changeView("timeGridDay", args.date);
-    }
-  };
+
   return (
     <div className="view">
       <h1>{teacher.fname ? `${teacher.fname} ${teacher.lname}` : <br />}</h1>
@@ -102,37 +92,16 @@ export default function Calendar() {
         <StuCont
           students={students}
           teacher={teacher}
-          setStudents={setStudents}
         />
         <div className="spacer"></div>
-        <FullCalendar
-          customButtons={makeButtons()}
-          dateClick={args => changeView(args, calendarRef)}
-          eventClick={e => eventClick(e, teacher, setTeacher)}
-          changeView={args => changeView(args, calendarRef)}
-          eventDrop={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
-          drop={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
-          eventResize={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
-          ref={calendarRef}
-          footer={footer}
+
+        <ReactFullCalendar
+          calendarRef={calendarRef}
+          teacher={teacher}
+          setTeacher={setTeacher}
+          makeButtons={makeButtons}
           header={header}
-          plugins={plugins}
-          events={teacher.lessons}
-          droppable={true}
-          businessHours={teacher.hours}
-          eventLimit={3}
-          navLinks={true}
-          eventDurationEditable={true}
-          eventStartEditable={true}
-          eventOverlap={false}
-          selectable={true}
-          editable={true}
-          allDayDefault={false}
-          minTime={"10:00:00"}
-          maxTime={"22:00:00"}
-          height={"parent"}
-          timeZone={"UTC"}
-          defaultTimedEventDuration={{ minutes: 30 }}
+          footer={footer}
         />
       </div>
     </div>

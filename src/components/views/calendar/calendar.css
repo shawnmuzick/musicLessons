@@ -19,7 +19,8 @@
     border-color: #151e27;
   }
   .fc-nonbusiness.fc-bgevent {
-    background-color: rgba(255, 0, 0, 0.521);
+    /* background-color: rgba(255, 0, 0, 0.521); */
+    background-color: black;
     opacity: 1;
   }
   .fc-bg{
