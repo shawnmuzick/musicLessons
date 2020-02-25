@@ -18,7 +18,7 @@ export default function ReactFullCalendar({calendarRef,teacher,setTeacher,makeBu
           dateClick={args => changeView(args, calendarRef)}
           eventClick={e => eventClick(e, teacher, setTeacher)}
           changeView={args => changeView(args, calendarRef)}
-          eventDrop={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
+          eventDrop={edit => {console.log(edit); newDrop(edit, teacher, setTeacher, calendarRef)}}
           drop={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
           eventResize={edit => newDrop(edit, teacher, setTeacher, calendarRef)}
           ref={calendarRef}

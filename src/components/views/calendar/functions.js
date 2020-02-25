@@ -11,9 +11,8 @@ const editEvent = (e, teacher, setTeacher, stID) => {
   axios
     .get(`/api/teachers/${teacher.fname}`)
     .then(res => {
-      res.data.lessons = [];
-      const edit = new Teacher(res.data);
-      setTeacher(edit);
+      const t = new Teacher(res.data);
+      setTeacher(t);
     })
     .catch(error => console.log("load" + error));
   return;
@@ -42,6 +41,7 @@ export const eventClick = (e, teacher, setTeacher) => {
   e.event.remove();
 };
 export const newDrop = (edit, teacher, setTeacher, calendarRef) => {
+  console.log('drop');
   const api = calendarRef.current.getApi();
   let e, stID;
   if (api.view.type === "timeGridDay") {

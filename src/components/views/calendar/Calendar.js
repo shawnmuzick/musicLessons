@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Draggable } from "./plugins";
-import { Teacher, Student } from "../classes";
+import {Student } from "../classes";
 import ReactFullCalendar from "./ReactFullCalendar";
 import StuCont from "./stuCont";
 import "./calendar.css";
 import axios from "axios";
-export default function Calendar() {
+export default function Calendar({SRC, students, setStudents}) {
   const calendarRef = React.createRef();
   const [teacher, setTeacher] = useState({});
-  const [students, setStudents] = useState([]);
-  const [SRC, setSRC] = useState([]);
   const header = {
     left: "prev,next, today",
     center: "title",
@@ -20,16 +18,6 @@ export default function Calendar() {
   };
   //On First Render----------------------------------------------------------------
   useEffect(() => {
-    axios
-      .get("/api/teachers")
-      .then(res => {
-        const a = res.data.map(t => {
-          t.lessons = [];
-          return new Teacher(t);
-        });
-        setSRC(a);
-      })
-      .catch(err => console.log(err));
     let draggableEl = document.getElementById("extEvents");
     new Draggable(draggableEl, {
       itemSelector: ".fc-event",
@@ -45,7 +33,9 @@ export default function Calendar() {
         };
       }
     });
-  }, []);
+    //you have to leave the empty array in the dependencies
+    //or you'll get infinite postings
+  },[]);
   //whenever the current teacher changes, rerender, fetch students,
   useEffect(() => {
     teacher.lessons = [];
@@ -58,8 +48,7 @@ export default function Calendar() {
         setStudents(b);
       })
       .catch(err => console.log(err));
-  }, [teacher]);
-
+  }, [teacher,setStudents]);
   const makeButtons = () => {
     //This links students and their teachers
     students.forEach(s => {
@@ -83,7 +72,6 @@ export default function Calendar() {
     }, {});
     return obj;
   };
-
   return (
     <div className="view">
       <h1>{teacher.fname ? `${teacher.fname} ${teacher.lname}` : <br />}</h1>

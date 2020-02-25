@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import MainMenu from "./mainMenu/MainMenu";
 import Footer from "./Footer";
 import ViewContainer from "./views/ViewContainer";
@@ -27,20 +27,15 @@ export default function Main({ menuState }) {
         })
       )
       .catch(err => console.log(err));
-  }, []);
+  }, [view]);
   return (
     <main className="main">
       {menuState ? <MainMenu view={view} setView={setView} /> : null}
 
       <div className="inner">
         <ViewContainer
-          Calendar={<Calendar />}
-          Dashboard={
-            <Dashboard
-              teachers={teachers}
-              students={students}
-            />
-          }
+          Calendar={<Calendar SRC={teachers} students={students} setStudents={setStudents}/>}
+          Dashboard={<Dashboard teachers={teachers} students={students} />}
           view={view}
         />
         <Footer />
