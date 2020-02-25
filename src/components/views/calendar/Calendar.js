@@ -38,6 +38,7 @@ export default function Calendar({SRC, students, setStudents}) {
   },[]);
   //whenever the current teacher changes, rerender, fetch students,
   useEffect(() => {
+    //you need this to clean out what was in here previously
     teacher.lessons = [];
     axios
       .get("/api/students")
