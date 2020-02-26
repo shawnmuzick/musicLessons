@@ -41,4 +41,10 @@
   .extEvents .fc-event {
     margin: 1em 0;
     cursor: move;
+    flex-grow: 1;
+  }
+  .extWrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
   }

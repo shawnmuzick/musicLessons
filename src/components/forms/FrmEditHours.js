@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { editTeacher } from "../views/calendar/functions";
+import axios from 'axios';
 import Button from "../buttons/Button";
 import moment from "moment";
 export default function FrmEditHours({ teacher }) {
@@ -23,7 +23,10 @@ export default function FrmEditHours({ teacher }) {
   };
   const subnmitHandler = e => {
     teacher.changeAvailability(hours);
-    editTeacher(teacher._id, teacher.phone, teacher.hours);
+      axios
+        .put(`/api/update/teacher`, { _id:teacher._id, phone:teacher.phone, hours:teacher.hours })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
   };
   return (
     <form className={"EmpForm"} onSubmit={subnmitHandler} key={teacher._id}>

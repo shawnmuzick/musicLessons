@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Draggable } from "./plugins";
-import {Student } from "../classes";
+import { Student } from "../classes";
 import ReactFullCalendar from "./ReactFullCalendar";
 import StuCont from "./stuCont";
+import FcDraggable from "./FcDraggable";
 import "./calendar.css";
 import axios from "axios";
-export default function Calendar({SRC, students, setStudents}) {
+export default function Calendar({ SRC, students, setStudents }) {
   const calendarRef = React.createRef();
   const [teacher, setTeacher] = useState({});
   const header = {
@@ -18,24 +18,10 @@ export default function Calendar({SRC, students, setStudents}) {
   };
   //On First Render----------------------------------------------------------------
   useEffect(() => {
-    let draggableEl = document.getElementById("extEvents");
-    new Draggable(draggableEl, {
-      itemSelector: ".fc-event",
-      eventData: function(eventEl) {
-        let title = eventEl.getAttribute("title");
-        let _id = eventEl.getAttribute("id");
-        return {
-          allDay: false,
-          title: title,
-          _id: _id,
-          // you need this parameter to avoid duplicates!!!
-          create: false
-        };
-      }
-    });
+    FcDraggable();
     //you have to leave the empty array in the dependencies
     //or you'll get infinite postings
-  },[]);
+  }, []);
   //whenever the current teacher changes, rerender, fetch students,
   useEffect(() => {
     //you need this to clean out what was in here previously
@@ -49,7 +35,7 @@ export default function Calendar({SRC, students, setStudents}) {
         setStudents(b);
       })
       .catch(err => console.log(err));
-  }, [teacher,setStudents]);
+  }, [teacher, setStudents]);
   const makeButtons = () => {
     //This links students and their teachers
     students.forEach(s => {
@@ -78,12 +64,8 @@ export default function Calendar({SRC, students, setStudents}) {
       <h1>{teacher.fname ? `${teacher.fname} ${teacher.lname}` : <br />}</h1>
       <hr />
       <div className="wrapper" id="CalendarWrap">
-        <StuCont
-          students={students}
-          teacher={teacher}
-        />
-        <div className="spacer"></div>
-
+        <StuCont students={students} teacher={teacher} setTeacher={setTeacher}/>
+        <div className="spacer"/>
         <ReactFullCalendar
           calendarRef={calendarRef}
           teacher={teacher}

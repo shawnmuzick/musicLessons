@@ -156,7 +156,7 @@ summary h4 {
 .formGroup label {
   width: 100px;
 }
-.formGroup input {
+.formGroup input, .formGroup select {
   flex-grow: 1;
   padding: 5px;
   margin: 5px;
@@ -202,7 +202,8 @@ details{
   margin: 5px;
 }
 
-form input:focus, form input:active{
+form input:focus, form input:active,
+form select:focus, form select:active{
   color: black !important;
 }
 

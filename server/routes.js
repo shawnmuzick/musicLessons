@@ -174,6 +174,12 @@ router.put("/api/update/student/lesson", (req, res) => {
       });
   }
 });
+router.delete("/api/students:id",(req,res)=>{
+  studentModel.findByIdAndDelete({_id:req.params.id}).exec((err,success)=>{
+    if (err) throw err;
+    res.json(success);
+  });
+});
 //Lessons--------------------------------------------------------------------------------
 router.post("/api/newLesson", (req, res) => {
   const { teacher, newEvent } = req.body;

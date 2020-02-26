@@ -2,7 +2,7 @@ import React, { useState }  from "react";
 import Modal from "@material-ui/core/Modal";
 import Button from "../buttons/Button";
 import "./modal.css";
-export default function PopModal({prompt, children }) {
+export default function PopModal({prompt, bName,children }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -11,9 +11,16 @@ export default function PopModal({prompt, children }) {
   const handleClose = () => {
     setOpen(false);
   };
+  const checkForAlt= () =>{
+    if(!bName){
+      return prompt;
+    }else{
+      return bName;
+    }
+  }
   return (
     <>
-    <Button name={prompt} fn={handleOpen} />
+    <Button name={checkForAlt()} fn={handleOpen} />
     <Modal open={open} className={"modal"}>
       <div className={"modalWrapper"}>
         <div className="modalHeader">

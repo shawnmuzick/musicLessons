@@ -5,10 +5,20 @@ export default function Button({
   fn = () => {
     return;
   },
-  name
+  name,
+  value = ''
 }) {
   return (
-    <button className={"MainMenu-button"} onClick={() => fn(name)}>
+    <button
+      className={"MainMenu-button"}
+      onClick={() => {
+        if (name !== "x"){
+          fn(name);
+        }else{
+          fn(value);
+        }
+      }}
+    >
       {name}
     </button>
   );
