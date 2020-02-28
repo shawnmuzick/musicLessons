@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import axios from "axios";
 import EmpDetails from "./EmpDetails";
 import FrmNewTeacher from "../../forms/FrmNewTeacher";
@@ -9,6 +9,12 @@ import { LesIns, LesMon, StuIns, TConvIns, Charts } from "./charts/index";
 export default function DashboardView({ teachers, students }) {
   let totalLessons = 0;
   let arr = [];
+  useEffect(() => {
+    //clean lessons array on each render
+    teachers.forEach(t=>{
+      t.lessons=[];
+    })
+  })
   for (let i = 0; i < 12; i++) {
     arr[i] = {
       name: moment()
