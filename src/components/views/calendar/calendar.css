@@ -48,3 +48,9 @@
     flex-direction: row;
     width: 100%;
   }
+  .fc-content{
+    display: flex;
+  }
+  .fc-content .fc-title{
+    width: 100%;
+  }

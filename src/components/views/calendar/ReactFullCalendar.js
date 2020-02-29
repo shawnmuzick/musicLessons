@@ -68,6 +68,12 @@ export default function ReactFullCalendar({
       editEvent(e, stID);
     }
   };
+
+  const appendX = (info) =>{
+    let node = document.createElement("button");
+    node.innerText = "x";
+    info.el.firstElementChild.appendChild(node);
+  }
   return (
     <FullCalendar
       customButtons={makeButtons()}
@@ -82,6 +88,7 @@ export default function ReactFullCalendar({
       header={header}
       plugins={plugins}
       events={teacher.lessons}
+      eventPositioned={info=> appendX(info)}
       droppable={true}
       businessHours={teacher.hours}
       eventLimit={3}
