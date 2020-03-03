@@ -13,7 +13,7 @@ class Person {
 }
 
 export class Teacher extends Person {
-  constructor({ _id, fname, lname, phone, lessons, hours }) {
+  constructor({ _id, fname, lname, phone, lessons, hours, salary }) {
     super(_id, fname, lname, phone);
     this.lessons = lessons || [];
     this.hours = hours || [];
@@ -21,6 +21,7 @@ export class Teacher extends Person {
     this.nStu = 0;
     this.trConv = 0;
     this.trFail = 0;
+    this.salary = salary || 14.0;
   }
   lessonsPerMonth() {
     let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -73,13 +74,15 @@ export class Student extends Person {
     trial,
     lessons,
     instrument,
-    teacher
+    teacher,
+    tuition
   }) {
     super(_id, fname, lname, phone);
     this.trial = trial || { trDate: "", trConv: true, trConvF: "" };
     this.lessons = lessons || [];
     this.instrument = instrument;
     this.teacher = teacher || { name: "", lname: "" };
+    this.tuition = tuition || 30.00;
   }
 }
 export const Event = {

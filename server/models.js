@@ -11,7 +11,8 @@ const teacherSchema = new Schema({
     id: String,
     phone: String,
     lessons: [],
-    hours:[]
+    hours:[],
+    salary: Number
 },{collection:'teachers'})
 const studentSchema = new Schema({
     fname: String,
@@ -28,7 +29,8 @@ const studentSchema = new Schema({
     teacher: {
         name: String,
         lname: String
-    }
+    },
+    tuition: Number
 },{collection:'students'})
 export const teacherModel = mongoose.model('teacherModel',teacherSchema);
 export const studentModel = mongoose.model('studentModel', studentSchema)
