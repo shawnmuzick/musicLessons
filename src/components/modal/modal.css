@@ -11,6 +11,9 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    padding: 10px;
+    background-color: rgb(85, 84, 84);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .modalHeader{
     display: flex;
@@ -19,4 +22,8 @@
     justify-content: space-between;
     border-bottom: solid 1px white;
     margin-bottom: 10px;
+    padding: 10px;
+  }
+  .modalHeader img{
+    padding: 10px;
   }

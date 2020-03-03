@@ -1,12 +1,11 @@
 import moment from "moment";
 
 class Person {
-  constructor(_id, fname, lname, phone, img) {
+  constructor(_id, fname, lname, phone) {
     this._id = _id || "";
     this.fname = fname || window.prompt("Enter first name: ");
     this.lname = lname || window.prompt("Enter last name: ");
     this.phone = phone || window.prompt("Enter phone number: ");
-    this.img = img;
   }
   getFullName() {
     return this.name + " " + this.lname;
@@ -14,8 +13,8 @@ class Person {
 }
 
 export class Teacher extends Person {
-  constructor({ _id, fname, lname, phone, lessons, hours, img }) {
-    super(_id, fname, lname, phone, img);
+  constructor({ _id, fname, lname, phone, lessons, hours }) {
+    super(_id, fname, lname, phone);
     this.lessons = lessons || [];
     this.hours = hours || [];
     this.text = fname;
@@ -71,13 +70,12 @@ export class Student extends Person {
     fname,
     lname,
     phone,
-    img,
     trial,
     lessons,
     instrument,
     teacher
   }) {
-    super(_id, fname, lname, phone, img);
+    super(_id, fname, lname, phone);
     this.trial = trial || { trDate: "", trConv: true, trConvF: "" };
     this.lessons = lessons || [];
     this.instrument = instrument;
