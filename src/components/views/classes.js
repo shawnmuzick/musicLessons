@@ -82,7 +82,7 @@ export class Student extends Person {
     this.lessons = lessons || [];
     this.instrument = instrument;
     this.teacher = teacher || { name: "", lname: "" };
-    this.tuition = tuition || 30.00;
+    this.tuition = tuition || 30.0;
   }
 }
 export const Event = {
@@ -96,12 +96,11 @@ export const Event = {
     const { title, start, end, id, backgroundColor, borderColor } = eventObject;
     let event = Object.create(this);
     event.title = title || window.prompt("Name this event: ");
-    event.start = moment.utc(start).format() || this.start;
+    event.start = moment.utc(start).format() || moment.utc(this.start).format();
     event.end =
-      end ||
-      moment
-        .utc(start)
-        .add(30, "minutes")
+      moment.utc(end).format() ||
+      moment.utc(start)
+        .add(30, "m")
         .format();
     event.id = id || this.id;
     event.backgroundColor = backgroundColor || this.backgroundColor;

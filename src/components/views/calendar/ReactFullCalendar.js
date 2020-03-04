@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import axios from "axios";
 import { Teacher, Event } from "../classes";
-
+import Modal from "@material-ui/core/Modal";
+import Button from "../../buttons/Button";
+import piano from '../../icons/piano.jpg';
 export default function ReactFullCalendar({
   calendarRef,
   teacher,
@@ -11,6 +13,16 @@ export default function ReactFullCalendar({
   header,
   footer
 }) {
+  const [open, setOpen] = useState(false);
+  const [currentEvent, setCurrentEvent] = useState({});
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const changeView = (args, calendarRef) => {
     const api = calendarRef.current.getApi();
     if (api.view.type === "timeGridDay") {
@@ -39,10 +51,12 @@ export default function ReactFullCalendar({
   };
   const eventClick = e => {
     const v = Event.create(e.event);
-    v.update = e.event._instance;
-    v.changeColor();
-    editEvent(v);
-    e.event.remove();
+    handleOpen();
+    setCurrentEvent(v);
+    // v.update = e.event._instance;
+    // v.changeColor();
+    // editEvent(v);
+    // e.event.remove();
   };
   const newDrop = (edit, calendarRef) => {
     const api = calendarRef.current.getApi();
@@ -68,40 +82,50 @@ export default function ReactFullCalendar({
       editEvent(e, stID);
     }
   };
-
-  const appendX = (info) =>{
-    let node = document.createElement("button");
-    node.innerText = "x";
-    info.el.firstElementChild.appendChild(node);
-  }
   return (
-    <FullCalendar
-      customButtons={makeButtons()}
-      dateClick={args => changeView(args, calendarRef)}
-      eventClick={e => eventClick(e)}
-      changeView={args => changeView(args, calendarRef)}
-      eventDrop={edit => newDrop(edit, calendarRef)}
-      drop={edit => newDrop(edit, calendarRef)}
-      eventResize={edit => newDrop(edit, calendarRef)}
-      ref={calendarRef}
-      footer={footer}
-      header={header}
-      plugins={plugins}
-      events={teacher.lessons}
-      eventPositioned={info=> appendX(info)}
-      droppable={true}
-      businessHours={teacher.hours}
-      eventLimit={3}
-      eventDurationEditable={true}
-      eventStartEditable={true}
-      eventOverlap={false}
-      editable={true}
-      allDayDefault={false}
-      minTime={"10:00:00"}
-      maxTime={"22:00:00"}
-      height={"parent"}
-      timeZone={"UTC"}
-      defaultTimedEventDuration={{ minutes: 30 }}
-    />
+    <>
+      <FullCalendar
+        customButtons={makeButtons()}
+        dateClick={args => changeView(args, calendarRef)}
+        eventClick={e => eventClick(e)}
+        changeView={args => changeView(args, calendarRef)}
+        eventDrop={edit => newDrop(edit, calendarRef)}
+        drop={edit => newDrop(edit, calendarRef)}
+        eventResize={edit => newDrop(edit, calendarRef)}
+        ref={calendarRef}
+        footer={footer}
+        header={header}
+        plugins={plugins}
+        events={teacher.lessons}
+        droppable={true}
+        businessHours={teacher.hours}
+        eventLimit={3}
+        eventDurationEditable={true}
+        eventStartEditable={true}
+        eventOverlap={false}
+        editable={true}
+        allDayDefault={false}
+        minTime={"10:00:00"}
+        maxTime={"22:00:00"}
+        height={"parent"}
+        timeZone={"UTC"}
+        defaultTimedEventDuration={{ minutes: 30 }}
+      />
+      <Modal open={open} className={"modal"}>
+        <div className={"modalWrapper"}>
+          <div className="modalHeader">
+            <img src={`${piano}`} alt={`${currentEvent.title}`} />
+            <h2>{currentEvent.title}</h2>
+            <Button name={"x"} fn={handleClose} />
+          </div>
+          {/* walk the student's properties */}
+          {Object.keys(currentEvent).map(key => {
+            // except for the 'lessons' property
+            return <p>{`${key}: ${currentEvent[key]}`}</p>;
+          })}
+        </div>
+      </Modal>
+      ;
+    </>
   );
 }
