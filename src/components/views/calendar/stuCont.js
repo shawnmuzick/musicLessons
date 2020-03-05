@@ -74,6 +74,8 @@ export default function StuCont({ students, teacher, setTeacher }) {
                   // except for the 'lessons' property
                   if (key !== "lessons") {
                     return <p>{`${key}: ${s[key]}`}</p>;
+                  }else{
+                    return null;
                   }
                 })}
               </div>
@@ -83,6 +85,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
               title={`${s.fname} ${s.lname}'s ${s.instrument} lesson`}
               key={s._id}
               id={s._id}
+              instrument={s.instrument}
               onClick={handleOpen}
             >
               {`${s.fname} ${s.lname}`}

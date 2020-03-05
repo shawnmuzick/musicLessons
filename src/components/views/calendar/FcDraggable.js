@@ -6,10 +6,12 @@ export default function FcDraggable() {
     eventData: function(eventEl) {
       let title = eventEl.getAttribute("title");
       let _id = eventEl.getAttribute("id");
+      let instrument = eventEl.getAttribute("instrument");
       return {
         allDay: false,
         title: title,
         _id: _id,
+        instrument: instrument,
         // you need this parameter to avoid duplicates!!!
         create: false
       };

@@ -85,32 +85,52 @@ export class Student extends Person {
     this.tuition = tuition || 30.0;
   }
 }
-export const Event = {
-  title: "DEFAULT",
-  start: "",
-  end: "",
-  id: "",
-  backgroundColor: "",
-  borderColor: "",
-  create: function Event(eventObject) {
-    const { title, start, end, id, backgroundColor, borderColor } = eventObject;
-    let event = Object.create(this);
-    event.title = title || window.prompt("Name this event: ");
-    event.start = moment.utc(start).format() || moment.utc(this.start).format();
-    event.end =
+export class Event {
+  constructor({
+    title,
+    start,
+    end,
+    id,
+    backgroundColor,
+    borderColor,
+    instrument,
+    icon
+  }) {
+    this.title = title || window.prompt("Name this event: ");
+    this.start = moment.utc(start).format();
+    this.end =
       moment.utc(end).format() ||
-      moment.utc(start)
+      moment
+        .utc(start)
         .add(30, "m")
         .format();
-    event.id = id || this.id;
-    event.backgroundColor = backgroundColor || this.backgroundColor;
-    event.borderColor = borderColor || this.borderColor;
-    return event;
-  },
-  changeColor: function() {
-    this.backgroundColor = this.backgroundColor !== "red" ? "red" : "";
-    this.borderColor = this.borderColor !== "red" ? "red" : "";
-    //make this chainable
-    return this;
+    this.id = id;
+    this.backgroundColor = backgroundColor;
+    this.borderColor = borderColor;
+    this.instrument = instrument;
+    this.icon = icon || `/img/${instrument}`;
+    //this sets properties to not show up in for...in loops
+    Object.defineProperties(this, {
+      icon: {
+        enumerable: false,
+        writable: true
+      },
+      backgroundColor: {
+        enumerable: false,
+        writable: true
+      },
+      borderColor: {
+        enumerable: false,
+        writable: true
+      },
+      title: {
+        enumerable: false,
+        writable: true
+      },
+      instrument: {
+        enumerable: false,
+        writable: true
+      }
+    });
   }
-};
+}

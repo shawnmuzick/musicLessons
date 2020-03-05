@@ -4,7 +4,6 @@ import axios from "axios";
 import { Teacher, Event } from "../classes";
 import Modal from "@material-ui/core/Modal";
 import Button from "../../buttons/Button";
-import piano from '../../icons/piano.jpg';
 export default function ReactFullCalendar({
   calendarRef,
   teacher,
@@ -50,13 +49,11 @@ export default function ReactFullCalendar({
     return;
   };
   const eventClick = e => {
-    const v = Event.create(e.event);
+    e.event.instrument = e.event.extendedProps.instrument;
+    e.event.icon = e.event.extendedProps.icon;
+    const v = new Event(e.event);
     handleOpen();
     setCurrentEvent(v);
-    // v.update = e.event._instance;
-    // v.changeColor();
-    // editEvent(v);
-    // e.event.remove();
   };
   const newDrop = (edit, calendarRef) => {
     const api = calendarRef.current.getApi();
@@ -65,11 +62,15 @@ export default function ReactFullCalendar({
     //if the source is an externally dragged in event
     if (edit.draggedEl) {
       edit.title = edit.draggedEl.title;
+      edit.instrument = edit.draggedEl.attributes[3].value;
       stID = edit.draggedEl.id;
       edit.start = edit.date;
-      e = Event.create(edit);
+      e = new Event(edit);
     } else {
-      e = Event.create(edit.event);
+      console.log(edit.event)
+      edit.event.instrument = edit.event.extendedProps.instrument;
+      edit.event.icon = edit.event.extendedProps.icon;
+      e = new Event(edit.event);
       stID = edit.event.extendedProps._id;
     }
     const isAvailable = teacher.checkAvailability(e);
@@ -114,7 +115,7 @@ export default function ReactFullCalendar({
       <Modal open={open} className={"modal"}>
         <div className={"modalWrapper"}>
           <div className="modalHeader">
-            <img src={`${piano}`} alt={`${currentEvent.title}`} />
+            <img src={`${currentEvent.icon}.jpg`} alt={`${currentEvent.title}`} />
             <h2>{currentEvent.title}</h2>
             <Button name={"x"} fn={handleClose} />
           </div>
@@ -125,7 +126,6 @@ export default function ReactFullCalendar({
           })}
         </div>
       </Modal>
-      ;
     </>
   );
 }

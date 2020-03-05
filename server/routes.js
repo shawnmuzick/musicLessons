@@ -95,8 +95,8 @@ router.post("/api/students", (req, res) => {
 });
 router.put("/api/update/student/lesson", (req, res) => {
   const { event, stID } = req.body;
-  const { start, end, id, title, backgroundColor, borderColor } = event;
-  if (id === null || id ==='') {
+  const { start, end, id, title, backgroundColor, borderColor, instrument, icon } = event;
+  if (id === null || id ==='' || id === undefined) {
     let newid = uuidv4.v4();
     studentModel
       .updateOne(
@@ -110,7 +110,9 @@ router.put("/api/update/student/lesson", (req, res) => {
               start,
               end,
               backgroundColor,
-              borderColor
+              borderColor,
+              instrument,
+              icon
             }
           }
         }
@@ -148,7 +150,9 @@ router.put("/api/update/student/lesson", (req, res) => {
               start,
               end,
               backgroundColor,
-              borderColor
+              borderColor,
+              instrument,
+              icon
             }
           }
         }
