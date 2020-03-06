@@ -34,9 +34,30 @@
     flex-direction: column;
     z-index: 2;
     padding: 0 10px;
-    border: 1px solid #ccc;
     background-color: #202124;
     overflow-y: scroll;
+    align-items: center;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  ::-webkit-scrollbar-button{
+    display: none;
   }
   .extEvents .fc-event {
     margin: 1em 0;
@@ -45,6 +66,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 10px;
   }
   .extWrapper{
     display: flex;
@@ -57,4 +79,17 @@
   }
   .fc-content .fc-title{
     width: 100%;
+  }
+  .calendarHeader{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: linear-gradient(90deg, #202124, black 70%);
+    min-height: 150px;
+  }
+  .calendarHeader img{
+    margin-right: 20px;
+    min-height: 150px;
+    min-width: 150px;
+
   }

@@ -215,6 +215,9 @@ form select:focus, form select:active{
   #CalendarWrap {
     display: grid;
     grid-template-columns: 300px 100px 80fr 100px;
-    padding: 1rem;
+    padding: 0rem 1rem 1rem 1rem;
+  }
+  .calendarHeader{
+    margin: 1rem 1rem 0rem 1rem;
   }
 }

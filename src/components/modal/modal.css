@@ -25,5 +25,10 @@
     padding: 10px;
   }
   .modalHeader img{
+    max-width: 150px;
+    max-height: 150px;
     padding: 10px;
+  }
+  .modalHeader h2{
+    max-width: 200px;
   }

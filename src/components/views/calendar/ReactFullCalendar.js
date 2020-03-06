@@ -108,7 +108,6 @@ export default function ReactFullCalendar({
         allDayDefault={false}
         minTime={"10:00:00"}
         maxTime={"22:00:00"}
-        height={"parent"}
         timeZone={"UTC"}
         defaultTimedEventDuration={{ minutes: 30 }}
       />

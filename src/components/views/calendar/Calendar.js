@@ -61,11 +61,29 @@ export default function Calendar({ SRC, students, setStudents }) {
   };
   return (
     <div className="view">
-      <h1>{teacher.fname ? `${teacher.fname} ${teacher.lname}` : <br />}</h1>
-      <hr />
+      <div className="calendarHeader">
+        {teacher.fname ? (
+          <img
+            src={`/img/${teacher._id}.jpg`}
+            alt={`${teacher.fname} ${teacher.lname}`}
+          />
+        ) : (
+          <br />
+        )}
+        {teacher.fname ? (
+          <h1>{`${teacher.fname} ${teacher.lname}`}</h1>
+        ) : (
+          <h1 style={{ margin: "auto" }}>Welcome</h1>
+        )}
+      </div>
+
       <div className="wrapper" id="CalendarWrap">
-        <StuCont students={students} teacher={teacher} setTeacher={setTeacher}/>
-        <div className="spacer"/>
+        <StuCont
+          students={students}
+          teacher={teacher}
+          setTeacher={setTeacher}
+        />
+        <div className="spacer" />
         <ReactFullCalendar
           calendarRef={calendarRef}
           teacher={teacher}
