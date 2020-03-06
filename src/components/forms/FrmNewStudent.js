@@ -38,6 +38,10 @@ export default function FrmNewStudent({handleClick}) {
           <input type="text" name="phone" onChange={handleChange} />
         </div>
         <div className="formGroup">
+          <label htmlFor="tuition">Tuition: </label>
+          <input type="number" step = "0.01" name="tuition" onChange={handleChange} />
+        </div>
+        <div className="formGroup">
           <label htmlFor="instrument">Instrument: </label>
           <SelectInstrument fn={handleChange}/>
         </div>

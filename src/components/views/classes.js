@@ -110,27 +110,27 @@ export class Event {
     this.instrument = instrument;
     this.icon = icon || `/img/${instrument}`;
     //this sets properties to not show up in for...in loops
-    Object.defineProperties(this, {
-      icon: {
-        enumerable: false,
-        writable: true
-      },
-      backgroundColor: {
-        enumerable: false,
-        writable: true
-      },
-      borderColor: {
-        enumerable: false,
-        writable: true
-      },
-      title: {
-        enumerable: false,
-        writable: true
-      },
-      instrument: {
-        enumerable: false,
-        writable: true
-      }
-    });
+    // Object.defineProperties(this, {
+    //   icon: {
+    //     enumerable: false,
+    //     writable: true
+    //   },
+    //   backgroundColor: {
+    //     enumerable: false,
+    //     writable: true
+    //   },
+    //   borderColor: {
+    //     enumerable: false,
+    //     writable: true
+    //   },
+    //   title: {
+    //     enumerable: false,
+    //     writable: true
+    //   },
+    //   instrument: {
+    //     enumerable: false,
+    //     writable: true
+    //   }
+    // });
   }
 }

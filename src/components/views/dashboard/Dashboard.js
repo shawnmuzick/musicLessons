@@ -8,6 +8,7 @@ import PopModal from "../../modal/index";
 import { LesIns, LesMon, StuIns, TConvIns, Charts } from "./charts/index";
 export default function DashboardView({ teachers, students }) {
   let totalLessons = 0;
+  let grossIncome = 0;
   let arr = [];
   useEffect(() => {
     //clean lessons array on each render
@@ -31,6 +32,7 @@ export default function DashboardView({ teachers, students }) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
           totalLessons++;
+          grossIncome+=s.tuition;
         });
       }
       for (let i = 0; i < 12; i++) {
@@ -67,6 +69,7 @@ export default function DashboardView({ teachers, students }) {
         totalLessons={totalLessons}
         totalStudents={students.length}
         conversionRate={conversionRate}
+        grossIncome={grossIncome}
       />
       <div className="wrapper">
         <Charts>
