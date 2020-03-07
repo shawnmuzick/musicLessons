@@ -86,6 +86,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
               key={s._id}
               id={s._id}
               instrument={s.instrument}
+              rate={s.tuition}
               onClick={handleOpen}
             >
               {`${s.fname} ${s.lname}`}

@@ -94,14 +94,13 @@ export class Event {
     backgroundColor,
     borderColor,
     instrument,
-    icon
+    icon,
+    rate
   }) {
     this.title = title || window.prompt("Name this event: ");
     this.start = moment.utc(start).format();
-    this.end =
-      moment.utc(end).format() ||
-      moment
-        .utc(start)
+    this.end = end ? moment.utc(end).format() :
+      moment.utc(start)
         .add(30, "m")
         .format();
     this.id = id;
@@ -109,28 +108,9 @@ export class Event {
     this.borderColor = borderColor;
     this.instrument = instrument;
     this.icon = icon || `/img/${instrument}`;
-    //this sets properties to not show up in for...in loops
-    // Object.defineProperties(this, {
-    //   icon: {
-    //     enumerable: false,
-    //     writable: true
-    //   },
-    //   backgroundColor: {
-    //     enumerable: false,
-    //     writable: true
-    //   },
-    //   borderColor: {
-    //     enumerable: false,
-    //     writable: true
-    //   },
-    //   title: {
-    //     enumerable: false,
-    //     writable: true
-    //   },
-    //   instrument: {
-    //     enumerable: false,
-    //     writable: true
-    //   }
-    // });
+    this.rate = rate;
+    console.log(start);
+    console.log(end);
+    console.log(this);
   }
 }
