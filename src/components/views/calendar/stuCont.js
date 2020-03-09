@@ -16,7 +16,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
     setOpen(false);
   };
 
-  const handleClick = s => {
+  const handleClick = (s, img) => {
     if (!teacher.fname) {
       window.alert("Please select an instructor below");
       return;
@@ -27,7 +27,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
       } else {
         s.teacher.name = teacher.fname;
         s.teacher.lname = teacher.lname;
-        axios.post(`/api/students`, { s }).catch(err => console.log(err));
+        axios.post(`/api/students`, { s, img }).catch(err => console.log(err));
       }
     }
     return;
@@ -59,7 +59,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
               <div className={"modalWrapper"}>
                 <div className="modalHeader">
                   <img
-                    src={`/img/${s._id}.jpg`}
+                    src={`/img/students/${s._id}.jpg`}
                     alt={`${s.fname} ${s.lname}`}
                   />
                   <h2>

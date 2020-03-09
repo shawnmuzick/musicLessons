@@ -109,8 +109,5 @@ export class Event {
     this.instrument = instrument;
     this.icon = icon || `/img/${instrument}`;
     this.rate = rate;
-    console.log(start);
-    console.log(end);
-    console.log(this);
   }
 }

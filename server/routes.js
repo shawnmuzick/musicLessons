@@ -28,8 +28,8 @@ router.post("/api/teachers", (req, res) => {
   });
   newTeacher.save((err, success) => {
     if (err) throw err;
-    if(!fs.existsSync('./server/logs')){
-      fs.mkdirSync('./server/logs');
+    if (!fs.existsSync("./server/logs")) {
+      fs.mkdirSync("./server/logs");
     }
     fs.appendFile(
       "./server/logs/newTeacherLog.txt",
@@ -71,22 +71,25 @@ router.get("/api/students", (req, res) => {
   });
 });
 router.post("/api/students", (req, res) => {
-  const {s} = req.body;
-  console.log(s);
+  const { s, img } = req.body;
   delete s._id;
   const newStudent = new studentModel(s);
   newStudent.save((err, success) => {
     if (err) throw err;
-    if(!fs.existsSync('./server/logs')){
-      fs.mkdirSync('./server/logs');
+    if (!fs.existsSync("./server/logs")) {
+      fs.mkdirSync("./server/logs");
     }
+    fs.writeFile(
+      `./public/img/students/${success._id}.jpg`,
+      img,
+      { encoding: "base64" },
+      function() {
+        console.log("Saved Img!");
+      }
+    );
     fs.appendFile(
       "./server/logs/newStudent.txt",
-      "Added Student: " +
-        JSON.stringify(s.stID) +
-        "\t" +
-        JSON.stringify(success) +
-        "\n",
+      `Added Student: ${JSON.stringify(success)}\n`,
       err => {
         if (err) throw err;
       }
@@ -96,8 +99,18 @@ router.post("/api/students", (req, res) => {
 });
 router.put("/api/update/student/lesson", (req, res) => {
   const { event, stID } = req.body;
-  const { start, end, id, title, backgroundColor, borderColor, instrument, icon, rate } = event;
-  if (id === null || id ==='' || id === undefined) {
+  const {
+    start,
+    end,
+    id,
+    title,
+    backgroundColor,
+    borderColor,
+    instrument,
+    icon,
+    rate
+  } = event;
+  if (id === null || id === "" || id === undefined) {
     let newid = uuidv4.v4();
     studentModel
       .updateOne(
@@ -107,7 +120,7 @@ router.put("/api/update/student/lesson", (req, res) => {
           $push: {
             lessons: {
               title,
-              id:newid,
+              id: newid,
               start,
               end,
               backgroundColor,
@@ -121,8 +134,8 @@ router.put("/api/update/student/lesson", (req, res) => {
       )
       .exec((err, success) => {
         if (err) throw err;
-        if(!fs.existsSync('./server/logs')){
-          fs.mkdirSync('./server/logs');
+        if (!fs.existsSync("./server/logs")) {
+          fs.mkdirSync("./server/logs");
         }
         fs.appendFile(
           "./server/logs/updateLog.txt",
@@ -135,7 +148,7 @@ router.put("/api/update/student/lesson", (req, res) => {
             if (err) throw err;
           }
         );
-        console.log(success)
+        console.log(success);
         res.json(success);
       });
   } else {
@@ -162,8 +175,8 @@ router.put("/api/update/student/lesson", (req, res) => {
       )
       .exec((err, success) => {
         if (err) throw err;
-        if(!fs.existsSync('./server/logs')){
-          fs.mkdirSync('./server/logs');
+        if (!fs.existsSync("./server/logs")) {
+          fs.mkdirSync("./server/logs");
         }
         fs.appendFile(
           "./server/logs/updateLog.txt",
@@ -176,16 +189,18 @@ router.put("/api/update/student/lesson", (req, res) => {
             if (err) throw err;
           }
         );
-        console.log(success)
+        console.log(success);
         res.json(success);
       });
   }
 });
-router.delete("/api/students:id",(req,res)=>{
-  studentModel.findByIdAndDelete({_id:req.params.id}).exec((err,success)=>{
-    if (err) throw err;
-    res.json(success);
-  });
+router.delete("/api/students:id", (req, res) => {
+  studentModel
+    .findByIdAndDelete({ _id: req.params.id })
+    .exec((err, success) => {
+      if (err) throw err;
+      res.json(success);
+    });
 });
 //Lessons--------------------------------------------------------------------------------
 router.post("/api/newLesson", (req, res) => {
@@ -196,8 +211,8 @@ router.post("/api/newLesson", (req, res) => {
     .updateOne({ fname: teacher }, { $push: { lessons: newEvent } })
     .exec((err, data) => {
       if (err) throw err;
-      if(!fs.existsSync('./server/logs')){
-        fs.mkdirSync('./server/logs');
+      if (!fs.existsSync("./server/logs")) {
+        fs.mkdirSync("./server/logs");
       }
       fs.appendFile(
         "./server/logs/newLessonLog.txt",

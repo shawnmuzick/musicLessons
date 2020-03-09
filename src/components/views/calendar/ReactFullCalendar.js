@@ -50,9 +50,6 @@ export default function ReactFullCalendar({
     return;
   };
   const eventClick = e => {
-    console.log('eventclick: ');
-    console.log(e.event);
-    console.log('------------------------')
     e.event.instrument = e.event.extendedProps.instrument;
     e.event.icon = e.event.extendedProps.icon;
     moment.utc(e.event.start).format();
@@ -66,7 +63,6 @@ export default function ReactFullCalendar({
     api.changeView("timeGridDay", edit.date);
     //if the source is an externally dragged in event
     if (edit.draggedEl) {
-      console.log(edit)
       edit.title = edit.draggedEl.title;
       edit.instrument = edit.draggedEl.attributes[3].value;
       edit.rate = parseFloat(edit.draggedEl.attributes[4].value);
@@ -74,12 +70,10 @@ export default function ReactFullCalendar({
       edit.start = edit.date;
       e = new Event(edit);
     } else {
-      console.log(edit.event)
       edit.event.instrument = edit.event.extendedProps.instrument;
       edit.event.icon = edit.event.extendedProps.icon;
       edit.event.rate = parseFloat(edit.event.extendedProps.rate);
       e = new Event(edit.event);
-      console.log(e)
       stID = edit.event.extendedProps._id;
     }
     const isAvailable = teacher.checkAvailability(e);
