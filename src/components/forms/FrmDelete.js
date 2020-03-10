@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../buttons/Button";
-export default function FrmDeleteStudent({ fname, lname, id, fn }) {
+export default function FrmDelete({ fname, lname, id, fn }) {
   const [confirm, setConfirm] = useState("");
   const handleChange = e => {
     setConfirm(e.target.value);

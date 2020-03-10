@@ -3,6 +3,8 @@ import moment from "moment";
 import FrmEditHours from "../../forms/FrmEditHours";
 import EmpHours from "./EmpHours";
 import PopModal from "../../modal/index";
+import FrmDelete from "../../forms/FrmDelete";
+import axios from 'axios';
 export default function EmpDetails({ teacher }) {
   if (teacher.hours) {
     teacher.hours.forEach(i => {
@@ -13,6 +15,9 @@ export default function EmpDetails({ teacher }) {
       });
     });
   }
+  const dbDelete = _id => {
+    axios.delete(`/api/teachers${_id}`).catch(err => console.log(err));
+  };
   return (
     <div className="formsWrap">
       <div id="employees">
@@ -32,6 +37,14 @@ export default function EmpDetails({ teacher }) {
 
           <PopModal prompt={"Enter New Hours"}>
             <FrmEditHours teacher={teacher} />
+          </PopModal>
+          <PopModal prompt={"Delete Instructor"}>
+            <FrmDelete
+              fname={teacher.fname}
+              lname={teacher.lname}
+              id={teacher._id}
+              fn={dbDelete}
+            />
           </PopModal>
         </details>
       </div>

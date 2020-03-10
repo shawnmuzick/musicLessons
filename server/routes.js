@@ -63,6 +63,14 @@ router.put("/api/update/teacher", (req, res) => {
       res.json(success);
     });
 });
+router.delete("/api/teachers:id", (req, res) => {
+  teacherModel
+    .findByIdAndDelete({ _id: req.params.id })
+    .exec((err, success) => {
+      if (err) throw err;
+      res.json(success);
+    });
+});
 //Students-------------------------------------------------------------------------------
 router.get("/api/students", (req, res) => {
   studentModel.find().exec((err, data) => {
@@ -79,7 +87,7 @@ router.post("/api/students", (req, res) => {
     if (!fs.existsSync("./server/logs")) {
       fs.mkdirSync("./server/logs");
     }
-    fs.writeFile(
+    fs.writeFileSync(
       `./public/img/students/${success._id}.jpg`,
       img,
       { encoding: "base64" },

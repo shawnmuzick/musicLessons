@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import PopModal from "../../modal/index";
 import FrmNewStudent from "../../forms/FrmNewStudent";
-import FrmDeleteStudent from "../../forms/FrmDeleteStudent";
+import FrmDelete from "../../forms/FrmDelete";
 import { Teacher } from "../classes";
 import Modal from "@material-ui/core/Modal";
 import Button from "../../buttons/Button";
@@ -48,7 +48,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
         .map(s => (
           <div className="extWrapper" key={s._id}>
             <PopModal prompt={"Remove Student"} bName={"x"}>
-              <FrmDeleteStudent
+              <FrmDelete
                 fname={s.fname}
                 lname={s.lname}
                 id={s._id}
