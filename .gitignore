@@ -18,6 +18,8 @@
 .env.test.local
 .env.production.local
 /server/logs/
+/public/img/students
+/public/img/faculty
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

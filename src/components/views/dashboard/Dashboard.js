@@ -9,6 +9,7 @@ import { LesIns, LesMon, StuIns, TConvIns, Charts } from "./charts/index";
 export default function DashboardView({ teachers, students }) {
   let totalLessons = 0;
   let grossIncome = 0;
+  let profit = 0;
   let arr = [];
   useEffect(() => {
     //clean lessons array on each render
@@ -28,19 +29,20 @@ export default function DashboardView({ teachers, students }) {
   //link student lessons with teachers---------------------------------------
   students.forEach(s => {
     teachers.forEach(t => {
+      let arr2 = t.lessonsPerMonth();
       if (t.fname === s.teacher.name) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
           totalLessons++;
           grossIncome+=s.tuition;
+          profit+= (s.tuition - t.salary);
         });
       }
       for (let i = 0; i < 12; i++) {
-        arr[i].value += t.lessonsPerMonth()[i];
+        arr[i].value += arr2[i];
       }
     });
   });
-
   let conv = students.map(s => {
     return s.trial.trConv;
   });
@@ -70,6 +72,7 @@ export default function DashboardView({ teachers, students }) {
         totalStudents={students.length}
         conversionRate={conversionRate}
         grossIncome={grossIncome}
+        profit={profit}
       />
       <div className="wrapper">
         <Charts>

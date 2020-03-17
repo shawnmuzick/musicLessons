@@ -32,6 +32,9 @@ export default function EmpDetails({ teacher }) {
             <div className="phone">
               <p>Phone: {teacher.phone}</p>
             </div>
+            <div className="salary">
+              <p>Salary: {`$${teacher.salary} per 1/2hr`}</p>
+            </div>
             <EmpHours teacher={teacher} />
           </div>
 

@@ -86,6 +86,7 @@ router.post("/api/students", (req, res) => {
     if (err) throw err;
     if (!fs.existsSync("./server/logs")) {
       fs.mkdirSync("./server/logs");
+      fs.mkdirSync("./public/img/students");
     }
     fs.writeFileSync(
       `./public/img/students/${success._id}.jpg`,

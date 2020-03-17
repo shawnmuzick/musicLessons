@@ -4,7 +4,8 @@ export default function DashHeader({
   totalLessons,
   totalStudents,
   conversionRate,
-  grossIncome
+  grossIncome,
+  profit
 }) {
   return (
     <>
@@ -14,6 +15,7 @@ export default function DashHeader({
         <h3>Total Students: {totalStudents}</h3>
         <h3>Conversion Rate: {conversionRate}%</h3>
         <h3>Gross Income: ${Math.round(grossIncome *100)/100}</h3>
+        <h3>Profit: ${Math.round(profit *100)/100}</h3>
       </div>
       <hr />
     </>
