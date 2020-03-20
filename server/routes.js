@@ -4,6 +4,13 @@ import uuidv4 from "uuid";
 import fs from "fs";
 
 const router = express.Router();
+//Interface--------------------------------------------------------------
+router.get("/login",(req,res)=>{
+  //use ejs to render a simple login page
+  //fill in here after install and design
+})
+
+
 //Teachers-----------------------------------------------------------------------------------------
 router.get("/api/teachers", (req, res) => {
   teacherModel.find().exec((err, data) => {
@@ -32,16 +39,15 @@ router.post("/api/teachers", (req, res) => {
       fs.mkdirSync("./server/logs");
     }
     fs.appendFile(
-      "./server/logs/newTeacherLog.txt",
-      "Added Teacher: " +
-        JSON.stringify(fname) +
-        "\t" +
-        JSON.stringify(success) +
-        "\n",
+      "./server/logs/teacher_new.txt",
+      `Added Teacher: 
+        ${JSON.stringify(fname)}\t
+        ${JSON.stringify(success)}\n`,
       err => {
         if (err) throw err;
       }
     );
+    console.log(success);
     res.json(success);
   });
 });
@@ -68,7 +74,11 @@ router.delete("/api/teachers:id", (req, res) => {
     .findByIdAndDelete({ _id: req.params.id })
     .exec((err, success) => {
       if (err) throw err;
+      console.log(success);
       res.json(success);
+    });
+    fs.unlink(`./public/img/faculty/${req.params.id}.jpg`, err => {
+      if (err) console.log(err);
     });
 });
 //Students-------------------------------------------------------------------------------
@@ -88,7 +98,7 @@ router.post("/api/students", (req, res) => {
       fs.mkdirSync("./server/logs");
       fs.mkdirSync("./public/img/students");
     }
-    fs.writeFileSync(
+    fs.writeFile(
       `./public/img/students/${success._id}.jpg`,
       img,
       { encoding: "base64" },
@@ -103,6 +113,7 @@ router.post("/api/students", (req, res) => {
         if (err) throw err;
       }
     );
+    console.log(success);
     res.json(success);
   });
 });
@@ -208,8 +219,12 @@ router.delete("/api/students:id", (req, res) => {
     .findByIdAndDelete({ _id: req.params.id })
     .exec((err, success) => {
       if (err) throw err;
+      console.log(success);
       res.json(success);
     });
+  fs.unlink(`./public/img/students/${req.params.id}.jpg`, err => {
+      if (err) console.log(err);
+  });
 });
 //Lessons--------------------------------------------------------------------------------
 router.post("/api/newLesson", (req, res) => {

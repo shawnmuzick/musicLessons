@@ -59,7 +59,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
               <div className={"modalWrapper"}>
                 <div className="modalHeader">
                   <img
-                    src={`/img/students/${s._id}.jpg`}
+                    src={`/assets/img/students/${s._id}.jpg`}
                     alt={`${s.fname} ${s.lname}`}
                   />
                   <h2>

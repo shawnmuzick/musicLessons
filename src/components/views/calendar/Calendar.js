@@ -64,7 +64,7 @@ export default function Calendar({ SRC, students, setStudents }) {
       <div className="calendarHeader">
         {teacher.fname ? (
           <img
-            src={`/img/${teacher._id}.jpg`}
+            src={`/assets/img/faculty/${teacher._id}.jpg`}
             alt={`${teacher.fname} ${teacher.lname}`}
           />
         ) : (
