@@ -82,8 +82,9 @@ export class Student extends Person {
     this.trial = trial || { trDate: "", trConv: true, trConvF: "" };
     this.lessons = lessons || [];
     this.instrument = instrument;
-    this.teacher = teacher || { name: "", lname: "" };
+    this.teacher = teacher || { name: "", lname: "",_id: "" };
     this.tuition = tuition || 30.0;
+    console.log(this);
   }
 }
 export class Event {

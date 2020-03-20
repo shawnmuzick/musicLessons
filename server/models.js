@@ -28,7 +28,8 @@ const studentSchema = new Schema({
     instrument: String,
     teacher: {
         name: String,
-        lname: String
+        lname: String,
+        _id: String,
     },
     tuition: Number
 },{collection:'students'})

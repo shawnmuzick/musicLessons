@@ -4,7 +4,7 @@ import { Pie } from "react-chartjs-2";
 export default function StuIns({ students, teachers }) {
     students.forEach(s => {
         teachers.forEach(t => {
-            if(s.teacher.name === t.fname){
+            if(s.teacher._id === t._id){
                 t.nStu++
             }
         });

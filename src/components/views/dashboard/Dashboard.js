@@ -30,7 +30,7 @@ export default function DashboardView({ teachers, students }) {
   students.forEach(s => {
     teachers.forEach(t => {
       let arr2 = t.lessonsPerMonth();
-      if (t.fname === s.teacher.name) {
+      if (t._id === s.teacher._id) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
           totalLessons++;

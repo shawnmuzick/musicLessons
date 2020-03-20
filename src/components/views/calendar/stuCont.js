@@ -27,6 +27,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
       } else {
         s.teacher.name = teacher.fname;
         s.teacher.lname = teacher.lname;
+        s.teacher._id = teacher._id;
         axios.post(`/api/students`, { s, img }).catch(err => console.log(err));
       }
     }
@@ -44,7 +45,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
         <FrmNewStudent handleClick={handleClick} />
       </PopModal>
       {students
-        .filter(s => s.teacher.name === teacher.fname)
+        .filter(s => s.teacher._id === teacher._id)
         .map(s => (
           <div className="extWrapper" key={s._id}>
             <PopModal prompt={"Remove Student"} bName={"x"}>

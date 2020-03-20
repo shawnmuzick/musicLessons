@@ -3,10 +3,10 @@ import { Bar } from "react-chartjs-2";
 
 export default function TConvIns({ teachers, students }) {
     let a = students.map(s=>{
-        return {teacher:s.teacher.name, conv:s.trial.trConv}
+        return {_id:s.teacher._id, conv:s.trial.trConv}
     })
     a.forEach(i =>{
-        i.conv === true ? teachers.find(t => t.fname === i.teacher).trConv++ : teachers.find(t => t.fname === i.teacher).trFail++
+        i.conv === true ? teachers.find(t => t._id === i._id).trConv++ : teachers.find(t => t._id === i._id).trFail++
     })
   let data = {
     labels: teachers.map(t => {

@@ -39,10 +39,7 @@ export default function Calendar({ SRC, students, setStudents }) {
   const makeButtons = () => {
     //This links students and their teachers
     students.forEach(s => {
-      if (
-        teacher.fname === s.teacher.name &&
-        teacher.lname === s.teacher.lname
-      ) {
+      if (teacher._id === s.teacher._id) {
         s.lessons.forEach(l => {
           teacher.lessons.push(l);
         });
@@ -62,7 +59,7 @@ export default function Calendar({ SRC, students, setStudents }) {
   return (
     <div className="view">
       <div className="calendarHeader">
-        {teacher.fname ? (
+        {teacher._id ? (
           <img
             src={`/assets/img/faculty/${teacher._id}.jpg`}
             alt={`${teacher.fname} ${teacher.lname}`}
@@ -70,7 +67,7 @@ export default function Calendar({ SRC, students, setStudents }) {
         ) : (
           <br />
         )}
-        {teacher.fname ? (
+        {teacher._id ? (
           <h1>{`${teacher.fname} ${teacher.lname}`}</h1>
         ) : (
           <h1 style={{ margin: "auto" }}>Welcome</h1>
