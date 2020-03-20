@@ -26,7 +26,7 @@ router.get("/api/teachers/:id", (req, res) => {
   });
 });
 router.post("/api/teachers", (req, res) => {
-  const { fname, lname, phone, lessons = [] } = req.body;
+  const { fname, lname, phone, lessons = [], img } = req.body;
   const newTeacher = new teacherModel({
     fname,
     lname,
@@ -38,6 +38,14 @@ router.post("/api/teachers", (req, res) => {
     if (!fs.existsSync("./server/logs")) {
       fs.mkdirSync("./server/logs");
     }
+    fs.writeFile(
+      `./public/img/faculty/${success._id}.jpg`,
+      img,
+      { encoding: "base64" },
+      function() {
+        console.log("Saved Img!");
+      }
+    );
     fs.appendFile(
       "./server/logs/teacher_new.txt",
       `Added Teacher: 

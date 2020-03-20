@@ -53,7 +53,7 @@ export default function DashboardView({ teachers, students }) {
       conv.length) *
       100
   );
-  const handleClick = t => {
+  const handleClick = (t,img) => {
     if (t.name === null || t.phone === null) {
       return;
     }
@@ -61,7 +61,8 @@ export default function DashboardView({ teachers, students }) {
       .post(`/api/teachers`, {
         fname: t.fname,
         lname: t.lname,
-        phone: t.phone
+        phone: t.phone,
+        img: img
       })
       .catch(err => console.log(err));
   };
