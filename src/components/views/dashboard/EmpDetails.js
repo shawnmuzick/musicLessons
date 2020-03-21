@@ -4,8 +4,7 @@ import FrmEditHours from "../../forms/FrmEditHours";
 import EmpHours from "./EmpHours";
 import PopModal from "../../modal/index";
 import FrmDelete from "../../forms/FrmDelete";
-import axios from 'axios';
-export default function EmpDetails({ teacher }) {
+export default function EmpDetails({ teacher, dbDelete }) {
   if (teacher.hours) {
     teacher.hours.forEach(i => {
       i.daysOfWeek = i.daysOfWeek.map(i => {
@@ -15,9 +14,6 @@ export default function EmpDetails({ teacher }) {
       });
     });
   }
-  const dbDelete = _id => {
-    axios.delete(`/api/teachers${_id}`).catch(err => console.log(err));
-  };
   return (
     <div className="formsWrap">
       <div id="employees">

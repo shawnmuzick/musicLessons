@@ -55,7 +55,6 @@ export default function DashboardView({ teachers, students }) {
       conv.length) *
       100
   );
-  console.log(arr);
   const handleClick = (t,img) => {
     if (t.name === null || t.phone === null) {
       return;
@@ -68,6 +67,9 @@ export default function DashboardView({ teachers, students }) {
         img: img
       })
       .catch(err => console.log(err));
+  };
+  const dbDelete = _id => {
+    axios.delete(`/api/teachers${_id}`).catch(err => console.log(err));
   };
   return (
     <div className={"view"}>
@@ -88,7 +90,7 @@ export default function DashboardView({ teachers, students }) {
         <div className={"forms"}>
           <h3>Faculty</h3>
           {teachers.map(teacher => (
-            <EmpDetails key={teacher._id} teacher={teacher} />
+            <EmpDetails key={teacher._id} teacher={teacher} dbDelete={dbDelete}/>
           ))}
         </div>
       </div>
