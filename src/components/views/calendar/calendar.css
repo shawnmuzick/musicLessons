@@ -44,7 +44,7 @@
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #202124;
   }
   
   /* Handle */
@@ -91,6 +91,15 @@
     margin-right: 20px;
     min-height: 150px;
     min-width: 150px;
-    max-height: 150px;
-    max-width: 150px;
+    max-height: 200px;
+    max-width: 200px;
+  }
+  @media screen and (min-width: 1200px) {
+    .calendarHeader img{
+      margin-right: 20px;
+      min-height: 150px;
+      min-width: 150px;
+      max-height: 300px;
+      max-width: 300px;
+    }
   }
