@@ -15,6 +15,7 @@ export default function DashboardView({ teachers, students }) {
     //clean lessons array on each render
     teachers.forEach(t=>{
       t.lessons=[];
+      t.nStu=0;
     })
   })
   for (let i = 0; i < 12; i++) {
@@ -29,15 +30,16 @@ export default function DashboardView({ teachers, students }) {
   //link student lessons with teachers---------------------------------------
   students.forEach(s => {
     teachers.forEach(t => {
-      let arr2 = t.lessonsPerMonth();
       if (t._id === s.teacher._id) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
+          t.nStu++;
           totalLessons++;
           grossIncome+=s.tuition;
           profit+= (s.tuition - t.salary);
         });
       }
+      let arr2 = t.lessonsPerMonth();
       for (let i = 0; i < 12; i++) {
         arr[i].value += arr2[i];
       }
@@ -53,6 +55,7 @@ export default function DashboardView({ teachers, students }) {
       conv.length) *
       100
   );
+  console.log(arr);
   const handleClick = (t,img) => {
     if (t.name === null || t.phone === null) {
       return;

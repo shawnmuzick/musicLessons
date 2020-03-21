@@ -1,14 +1,8 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 //Lessons by Instructor
-export default function StuIns({ students, teachers }) {
-    students.forEach(s => {
-        teachers.forEach(t => {
-            if(s.teacher._id === t._id){
-                t.nStu++
-            }
-        });
-    });
+export default function StuIns({teachers }) {
+
   let data = {
     labels: teachers.map(t => {
       return t.fname || "";
