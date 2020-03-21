@@ -33,11 +33,11 @@ export default function DashboardView({ teachers, students }) {
       if (t._id === s.teacher._id) {
         s.lessons.forEach(l => {
           t.lessons.push(l);
-          t.nStu++;
           totalLessons++;
           grossIncome+=s.tuition;
           profit+= (s.tuition - t.salary);
         });
+        t.nStu++;
       }
       let arr2 = t.lessonsPerMonth();
       for (let i = 0; i < 12; i++) {

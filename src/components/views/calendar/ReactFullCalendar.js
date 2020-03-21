@@ -50,7 +50,6 @@ export default function ReactFullCalendar({
     return;
   };
   const postEvent = (e, stID) => {
-    console.log('test')
     axios
       .all([
         axios.post(`/api/lesson`, {
@@ -103,7 +102,6 @@ export default function ReactFullCalendar({
       return;
     } else {
       if (edit.draggedEl) {
-        console.log('test')
         postEvent(e, stID);
       } else {
         editEvent(e, stID);
