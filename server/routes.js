@@ -17,9 +17,9 @@ router.get("/api/teachers", (req, res) => {
     res.json(data);
   });
 });
-router.get("/api/teachers/:id", (req, res) => {
-  const fname = req.params.id;
-  teacherModel.findOne({ fname: fname }).exec((err, data) => {
+router.get("/api/teachers:id", (req, res) => {
+  const id = req.params.id;
+  teacherModel.findOne({ _id: id }).exec((err, data) => {
     if (err) throw err;
     res.json(data);
   });
@@ -95,6 +95,9 @@ router.get("/api/students", (req, res) => {
     res.json(data);
   });
 });
+router.get("/api/students/:id", (req, res) => {
+  //placeholder to get students by ID
+});
 router.post("/api/students", (req, res) => {
   const { s, img } = req.body;
   delete s._id;
@@ -124,58 +127,8 @@ router.post("/api/students", (req, res) => {
     res.json(success);
   });
 });
-router.put("/api/update/student/lesson", (req, res) => {
-  const {
-    start,
-    end,
-    id,
-    title,
-    backgroundColor,
-    borderColor,
-    instrument,
-    icon,
-    rate
-  } = req.body.event;
-  studentModel
-    .updateOne(
-      //find where lessons's child element that matches id
-      { lessons: { $elemMatch: { id: id } } },
-      //set the first child of lessons that matches id, to {stuff in here}
-      {
-        $set: {
-          "lessons.$": {
-            title,
-            id,
-            start,
-            end,
-            backgroundColor,
-            borderColor,
-            instrument,
-            icon,
-            rate
-          }
-        }
-      }
-    )
-    .exec((err, success) => {
-      if (err) throw err;
-      if (!fs.existsSync("./server/logs")) {
-        fs.mkdirSync("./server/logs");
-      }
-      fs.appendFile(
-        "./server/logs/updateLog.txt",
-        " Updated ID: " +
-          JSON.stringify(id) +
-          "\t" +
-          JSON.stringify(success) +
-          "\n",
-        err => {
-          if (err) throw err;
-        }
-      );
-      console.log(success);
-      res.json(success);
-    });
+router.put("/api/students", (req, res) => {
+  //placeholder for updating students
 });
 router.delete("/api/students:id", (req, res) => {
   studentModel
@@ -190,7 +143,13 @@ router.delete("/api/students:id", (req, res) => {
   });
 });
 //Lessons--------------------------------------------------------------------------------
-router.post("/api/lesson", (req, res) => {
+router.get("/api/lessons",(req,res)=>{
+//placeholder for getting all lessons
+})
+router.get("/api/lessons/:id",(req,res)=>{
+  //placeholder to get lessons by ID
+})
+router.post("/api/lessons", (req, res) => {
   console.log("test");
   const { event, stID } = req.body;
   const {
@@ -241,5 +200,54 @@ router.post("/api/lesson", (req, res) => {
       res.json(success);
     });
 });
-
+router.put("/api/lessons", (req, res) => {
+  const {
+    start,
+    end,
+    id,
+    title,
+    backgroundColor,
+    borderColor,
+    instrument,
+    icon,
+    rate
+  } = req.body.event;
+  studentModel
+    .updateOne(
+      //find where lessons's child element that matches id
+      { lessons: { $elemMatch: { id: id } } },
+      //set the first child of lessons that matches id, to {stuff in here}
+      {
+        $set: {
+          "lessons.$": {
+            title,
+            id,
+            start,
+            end,
+            backgroundColor,
+            borderColor,
+            instrument,
+            icon,
+            rate
+          }
+        }
+      }
+    )
+    .exec((err, success) => {
+      if (err) throw err;
+      if (!fs.existsSync("./server/logs")) {
+        fs.mkdirSync("./server/logs");
+      }
+      fs.appendFile(
+        "./server/logs/lesson.txt",
+        `Updated ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
+        err => {
+          if (err) throw err;
+        }
+      );
+      console.log(success);
+      res.json(success);
+    });
+});
+router.delete("/api/lessons:id")
 export default router;

@@ -34,11 +34,11 @@ export default function ReactFullCalendar({
   const editEvent = (e, stID) => {
     axios
       .all([
-        axios.put(`/api/update/student/lesson`, {
+        axios.put(`/api/lessons`, {
           event: e,
           stID
         }),
-        axios.get(`/api/teachers/${teacher.fname}`)
+        axios.get(`/api/teachers${teacher._id}`)
       ])
       .then(
         axios.spread((...res) => {
@@ -52,11 +52,11 @@ export default function ReactFullCalendar({
   const postEvent = (e, stID) => {
     axios
       .all([
-        axios.post(`/api/lesson`, {
+        axios.post(`/api/lessons`, {
           event: e,
           stID
         }),
-        axios.get(`/api/teachers/${teacher.fname}`)
+        axios.get(`/api/teachers${teacher._id}`)
       ])
       .then(
         axios.spread((...res) => {
