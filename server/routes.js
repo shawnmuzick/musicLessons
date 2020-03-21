@@ -5,11 +5,10 @@ import fs from "fs";
 
 const router = express.Router();
 //Interface--------------------------------------------------------------
-router.get("/login",(req,res)=>{
+router.get("/login", (req, res) => {
   //use ejs to render a simple login page
   //fill in here after install and design
-})
-
+});
 
 //Teachers-----------------------------------------------------------------------------------------
 router.get("/api/teachers", (req, res) => {
@@ -85,9 +84,9 @@ router.delete("/api/teachers:id", (req, res) => {
       console.log(success);
       res.json(success);
     });
-    fs.unlink(`./public/img/faculty/${req.params.id}.jpg`, err => {
-      if (err) console.log(err);
-    });
+  fs.unlink(`./public/img/faculty/${req.params.id}.jpg`, err => {
+    if (err) console.log(err);
+  });
 });
 //Students-------------------------------------------------------------------------------
 router.get("/api/students", (req, res) => {
@@ -126,6 +125,73 @@ router.post("/api/students", (req, res) => {
   });
 });
 router.put("/api/update/student/lesson", (req, res) => {
+  const {
+    start,
+    end,
+    id,
+    title,
+    backgroundColor,
+    borderColor,
+    instrument,
+    icon,
+    rate
+  } = req.body.event;
+  studentModel
+    .updateOne(
+      //find where lessons's child element that matches id
+      { lessons: { $elemMatch: { id: id } } },
+      //set the first child of lessons that matches id, to {stuff in here}
+      {
+        $set: {
+          "lessons.$": {
+            title,
+            id,
+            start,
+            end,
+            backgroundColor,
+            borderColor,
+            instrument,
+            icon,
+            rate
+          }
+        }
+      }
+    )
+    .exec((err, success) => {
+      if (err) throw err;
+      if (!fs.existsSync("./server/logs")) {
+        fs.mkdirSync("./server/logs");
+      }
+      fs.appendFile(
+        "./server/logs/updateLog.txt",
+        " Updated ID: " +
+          JSON.stringify(id) +
+          "\t" +
+          JSON.stringify(success) +
+          "\n",
+        err => {
+          if (err) throw err;
+        }
+      );
+      console.log(success);
+      res.json(success);
+    });
+});
+router.delete("/api/students:id", (req, res) => {
+  studentModel
+    .findByIdAndDelete({ _id: req.params.id })
+    .exec((err, success) => {
+      if (err) throw err;
+      console.log(success);
+      res.json(success);
+    });
+  fs.unlink(`./public/img/students/${req.params.id}.jpg`, err => {
+    if (err) console.log(err);
+  });
+});
+//Lessons--------------------------------------------------------------------------------
+router.post("/api/lesson", (req, res) => {
+  console.log("test");
   const { event, stID } = req.body;
   const {
     start,
@@ -138,122 +204,41 @@ router.put("/api/update/student/lesson", (req, res) => {
     icon,
     rate
   } = event;
-  if (id === null || id === "" || id === undefined) {
-    let newid = uuidv4.v4();
-    studentModel
-      .updateOne(
-        //find where lessons's child element that matches id
-        { _id: stID },
-        {
-          $push: {
-            lessons: {
-              title,
-              id: newid,
-              start,
-              end,
-              backgroundColor,
-              borderColor,
-              instrument,
-              icon,
-              rate
-            }
-          }
-        }
-      )
-      .exec((err, success) => {
-        if (err) throw err;
-        if (!fs.existsSync("./server/logs")) {
-          fs.mkdirSync("./server/logs");
-        }
-        fs.appendFile(
-          "./server/logs/updateLog.txt",
-          " Updated ID: " +
-            JSON.stringify(id) +
-            "\t" +
-            JSON.stringify(success) +
-            "\n",
-          err => {
-            if (err) throw err;
-          }
-        );
-        console.log(success);
-        res.json(success);
-      });
-  } else {
-    studentModel
-      .updateOne(
-        //find where lessons's child element that matches id
-        { lessons: { $elemMatch: { id: id } } },
-        //set the first child of lessons that matches id, to {stuff in here}
-        {
-          $set: {
-            "lessons.$": {
-              title,
-              id,
-              start,
-              end,
-              backgroundColor,
-              borderColor,
-              instrument,
-              icon,
-              rate
-            }
-          }
-        }
-      )
-      .exec((err, success) => {
-        if (err) throw err;
-        if (!fs.existsSync("./server/logs")) {
-          fs.mkdirSync("./server/logs");
-        }
-        fs.appendFile(
-          "./server/logs/updateLog.txt",
-          " Updated ID: " +
-            JSON.stringify(id) +
-            "\t" +
-            JSON.stringify(success) +
-            "\n",
-          err => {
-            if (err) throw err;
-          }
-        );
-        console.log(success);
-        res.json(success);
-      });
-  }
-});
-router.delete("/api/students:id", (req, res) => {
+  let newid = uuidv4.v4();
   studentModel
-    .findByIdAndDelete({ _id: req.params.id })
+    .updateOne(
+      //find where lessons's child element that matches id
+      { _id: stID },
+      {
+        $push: {
+          lessons: {
+            title,
+            id: newid,
+            start,
+            end,
+            backgroundColor,
+            borderColor,
+            instrument,
+            icon,
+            rate
+          }
+        }
+      }
+    )
     .exec((err, success) => {
-      if (err) throw err;
-      console.log(success);
-      res.json(success);
-    });
-  fs.unlink(`./public/img/students/${req.params.id}.jpg`, err => {
-      if (err) console.log(err);
-  });
-});
-//Lessons--------------------------------------------------------------------------------
-router.post("/api/newLesson", (req, res) => {
-  const { teacher, newEvent } = req.body;
-  newEvent.id = uuidv4.v4();
-
-  teacherModel
-    .updateOne({ fname: teacher }, { $push: { lessons: newEvent } })
-    .exec((err, data) => {
       if (err) throw err;
       if (!fs.existsSync("./server/logs")) {
         fs.mkdirSync("./server/logs");
       }
       fs.appendFile(
-        "./server/logs/newLessonLog.txt",
-        "Added ID: " + JSON.stringify(newEvent.id) + "\n",
+        "./server/logs/lesson.txt",
+        ` Added ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
         err => {
           if (err) throw err;
         }
       );
-      res.send({ data: data, id: newEvent.id });
+      console.log(success);
+      res.json(success);
     });
 });
 

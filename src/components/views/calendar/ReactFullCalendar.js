@@ -4,7 +4,7 @@ import axios from "axios";
 import { Teacher, Event } from "../classes";
 import Modal from "@material-ui/core/Modal";
 import Button from "../../buttons/Button";
-import moment from 'moment';
+import moment from "moment";
 export default function ReactFullCalendar({
   calendarRef,
   teacher,
@@ -35,6 +35,25 @@ export default function ReactFullCalendar({
     axios
       .all([
         axios.put(`/api/update/student/lesson`, {
+          event: e,
+          stID
+        }),
+        axios.get(`/api/teachers/${teacher.fname}`)
+      ])
+      .then(
+        axios.spread((...res) => {
+          const t = new Teacher(res[1].data);
+          setTeacher(t);
+        })
+      )
+      .catch(err => console.log(err));
+    return;
+  };
+  const postEvent = (e, stID) => {
+    console.log('test')
+    axios
+      .all([
+        axios.post(`/api/lesson`, {
           event: e,
           stID
         }),
@@ -83,7 +102,12 @@ export default function ReactFullCalendar({
       );
       return;
     } else {
-      editEvent(e, stID);
+      if (edit.draggedEl) {
+        console.log('test')
+        postEvent(e, stID);
+      } else {
+        editEvent(e, stID);
+      }
     }
   };
   return (
@@ -117,7 +141,10 @@ export default function ReactFullCalendar({
       <Modal open={open} className={"modal"}>
         <div className={"modalWrapper"}>
           <div className="modalHeader">
-            <img src={`${currentEvent.icon}.jpg`} alt={`${currentEvent.title}`} />
+            <img
+              src={`${currentEvent.icon}.jpg`}
+              alt={`${currentEvent.title}`}
+            />
             <h2>{currentEvent.title}</h2>
             <Button name={"x"} fn={handleClose} />
           </div>
