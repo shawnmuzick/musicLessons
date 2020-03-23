@@ -58,8 +58,9 @@ router.post("/api/teachers", (req, res) => {
     res.json(success);
   });
 });
-router.put("/api/update/teacher", (req, res) => {
-  const { _id, phone, hours } = req.body;
+router.put("/api/teachers:id", (req, res) => {
+  const _id = req.params.id;
+  const {phone, hours } = req.body;
   teacherModel
     .updateOne(
       { _id: _id },
@@ -95,8 +96,12 @@ router.get("/api/students", (req, res) => {
     res.json(data);
   });
 });
-router.get("/api/students/:id", (req, res) => {
-  //placeholder to get students by ID
+router.get("/api/students:id", (req, res) => {
+  const id = req.params.id;
+  studentModel.findOne({ _id: id }).exec((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
 });
 router.post("/api/students", (req, res) => {
   const { s, img } = req.body;
@@ -127,7 +132,7 @@ router.post("/api/students", (req, res) => {
     res.json(success);
   });
 });
-router.put("/api/students", (req, res) => {
+router.put("/api/students:id", (req, res) => {
   //placeholder for updating students
 });
 router.delete("/api/students:id", (req, res) => {
@@ -146,7 +151,7 @@ router.delete("/api/students:id", (req, res) => {
 router.get("/api/lessons",(req,res)=>{
 //placeholder for getting all lessons
 })
-router.get("/api/lessons/:id",(req,res)=>{
+router.get("/api/lessons:id",(req,res)=>{
   //placeholder to get lessons by ID
 })
 router.post("/api/lessons", (req, res) => {

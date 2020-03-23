@@ -24,7 +24,7 @@ export default function FrmEditHours({ teacher }) {
   const subnmitHandler = e => {
     teacher.changeAvailability(hours);
       axios
-        .put(`/api/update/teacher`, { _id:teacher._id, phone:teacher.phone, hours:teacher.hours })
+        .put(`/api/teachers${teacher._id}`, {phone:teacher.phone, hours:teacher.hours })
         .then(res => console.log(res))
         .catch(err => console.log(err));
   };
