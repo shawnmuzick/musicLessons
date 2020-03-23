@@ -6,8 +6,7 @@ import fs from "fs";
 const router = express.Router();
 //Interface--------------------------------------------------------------
 router.get("/login", (req, res) => {
-  //use ejs to render a simple login page
-  //fill in here after install and design
+  res.render('login');
 });
 
 //Teachers-----------------------------------------------------------------------------------------
@@ -254,5 +253,7 @@ router.put("/api/lessons", (req, res) => {
       res.json(success);
     });
 });
-router.delete("/api/lessons:id")
+router.delete("/api/lessons:id",(req,res)=>{
+  //placeholder to delete lessons by ID
+});
 export default router;
