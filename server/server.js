@@ -6,8 +6,7 @@ const PORT = process.env.port || 5001;
 
 app.set('view engine','ejs');
 app.set('views', 'server/views');
-app.use(express.json({limit:"50mb"}));
-app.use(express.urlencoded({extended:true, limit:'50mb'}));
+
 app.use('/',router)
 app.use('/', express.static('build')); 
 app.use('/assets', express.static('public'));

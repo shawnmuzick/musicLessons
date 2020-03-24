@@ -2,13 +2,16 @@ import express from "express";
 import { teacherModel, studentModel } from "./models.js";
 import uuidv4 from "uuid";
 import fs from "fs";
-
+const urlEncodedParser = express.urlencoded({extended:true, limit:'50mb'});
+const jsonParser = express.json({limit:"50mb"})
 const router = express.Router();
 //Interface--------------------------------------------------------------
 router.get("/login", (req, res) => {
   res.render('login');
 });
-
+router.post("/login",(req,res)=>{
+  //placeholder for posting login, pass credentials to passport
+})
 //Teachers-----------------------------------------------------------------------------------------
 router.get("/api/teachers", (req, res) => {
   teacherModel.find().exec((err, data) => {
@@ -23,7 +26,7 @@ router.get("/api/teachers:id", (req, res) => {
     res.json(data);
   });
 });
-router.post("/api/teachers", (req, res) => {
+router.post("/api/teachers", urlEncodedParser, jsonParser, (req, res) => {
   const { fname, lname, phone, lessons = [], img } = req.body;
   const newTeacher = new teacherModel({
     fname,
@@ -57,7 +60,7 @@ router.post("/api/teachers", (req, res) => {
     res.json(success);
   });
 });
-router.put("/api/teachers:id", (req, res) => {
+router.put("/api/teachers:id", urlEncodedParser, jsonParser, (req, res) => {
   const _id = req.params.id;
   const {phone, hours } = req.body;
   teacherModel
@@ -102,7 +105,7 @@ router.get("/api/students:id", (req, res) => {
     res.json(data);
   });
 });
-router.post("/api/students", (req, res) => {
+router.post("/api/students", urlEncodedParser, jsonParser, (req, res) => {
   const { s, img } = req.body;
   delete s._id;
   const newStudent = new studentModel(s);
@@ -153,7 +156,7 @@ router.get("/api/lessons",(req,res)=>{
 router.get("/api/lessons:id",(req,res)=>{
   //placeholder to get lessons by ID
 })
-router.post("/api/lessons", (req, res) => {
+router.post("/api/lessons", urlEncodedParser, jsonParser, (req, res) => {
   console.log("test");
   const { event, stID } = req.body;
   const {
@@ -204,7 +207,7 @@ router.post("/api/lessons", (req, res) => {
       res.json(success);
     });
 });
-router.put("/api/lessons", (req, res) => {
+router.put("/api/lessons", urlEncodedParser, jsonParser, (req, res) => {
   const {
     start,
     end,
