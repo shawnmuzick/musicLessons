@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/lessons-app',{useNewUrlParser:true,useUnifiedTopology: true})
 const db = mongoose.connection
@@ -33,5 +33,16 @@ const studentSchema = new Schema({
     },
     tuition: Number
 },{collection:'students'})
-export const teacherModel = mongoose.model('teacherModel',teacherSchema);
-export const studentModel = mongoose.model('studentModel', studentSchema)
+const userSchema = new Schema({
+    username: String,
+    fname: String,
+    lname: String,
+    password: String
+},{collection:'users'})
+
+ const teacherModel = mongoose.model('teacherModel',teacherSchema);
+ const studentModel = mongoose.model('studentModel', studentSchema);
+ const userModel = mongoose.model('userSchema',userSchema);
+ module.exports={
+     teacherModel,studentModel,userModel
+ }

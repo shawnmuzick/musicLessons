@@ -1,11 +1,22 @@
-import express from "express";
-import router from './routes.js'
-
+const express = require("express");
+const router = require('./routes');
+const passport = require('passport');
+const session = require('express-session');
 const app = express();
 const PORT = process.env.port || 5001;
 
+//Passport config
+require('./passport.js')(passport);
+
 app.set('view engine','ejs');
 app.set('views', 'server/views');
+app.use(session({
+    secret:'secret',
+    resave:true,
+    saveUninitialized:true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/',router)
 app.use('/', express.static('build')); 

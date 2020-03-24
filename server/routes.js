@@ -1,17 +1,28 @@
-import express from "express";
-import { teacherModel, studentModel } from "./models.js";
-import uuidv4 from "uuid";
-import fs from "fs";
-const urlEncodedParser = express.urlencoded({extended:true, limit:'50mb'});
-const jsonParser = express.json({limit:"50mb"})
+const express = require("express");
+const { teacherModel, studentModel } = require("./models.js");
+const uuidv4 = require("uuid");
+const fs = require("fs");
+const passport = require("passport");
+
+const urlEncodedParser = express.urlencoded({ extended: true, limit: "50mb" });
+const jsonParser = express.json({ limit: "50mb" });
 const router = express.Router();
+
 //Interface--------------------------------------------------------------
 router.get("/login", (req, res) => {
-  res.render('login');
+  res.render("login");
 });
-router.post("/login",(req,res)=>{
-  //placeholder for posting login, pass credentials to passport
-})
+router.post(
+  "/login",
+  urlEncodedParser,
+  jsonParser,
+  passport.authenticate("local", { successRedirect: "/" }),
+  (req, res, next) => {}
+);
+//temporary test route while setting up passport
+router.get("/test", (req, res) => {
+  res.render("test");
+});
 //Teachers-----------------------------------------------------------------------------------------
 router.get("/api/teachers", (req, res) => {
   teacherModel.find().exec((err, data) => {
@@ -62,7 +73,7 @@ router.post("/api/teachers", urlEncodedParser, jsonParser, (req, res) => {
 });
 router.put("/api/teachers:id", urlEncodedParser, jsonParser, (req, res) => {
   const _id = req.params.id;
-  const {phone, hours } = req.body;
+  const { phone, hours } = req.body;
   teacherModel
     .updateOne(
       { _id: _id },
@@ -150,12 +161,12 @@ router.delete("/api/students:id", (req, res) => {
   });
 });
 //Lessons--------------------------------------------------------------------------------
-router.get("/api/lessons",(req,res)=>{
-//placeholder for getting all lessons
-})
-router.get("/api/lessons:id",(req,res)=>{
+router.get("/api/lessons", (req, res) => {
+  //placeholder for getting all lessons
+});
+router.get("/api/lessons:id", (req, res) => {
   //placeholder to get lessons by ID
-})
+});
 router.post("/api/lessons", urlEncodedParser, jsonParser, (req, res) => {
   console.log("test");
   const { event, stID } = req.body;
@@ -256,7 +267,7 @@ router.put("/api/lessons", urlEncodedParser, jsonParser, (req, res) => {
       res.json(success);
     });
 });
-router.delete("/api/lessons:id",(req,res)=>{
+router.delete("/api/lessons:id", (req, res) => {
   //placeholder to delete lessons by ID
 });
-export default router;
+module.exports = router;
