@@ -6,13 +6,8 @@ const bcrypt = require("bcrypt");
 module.exports = passport => {
   passport.use(
     new LocalStrategy((username, password, done) => {
-        console.log(password);
-        console.log(username);
       //match user
       userModel.findOne({ username: username }, (err, user) => {
-          console.log('usermodel');
-
-          console.log(user);
         if (err) {
           return done(err);
         }
