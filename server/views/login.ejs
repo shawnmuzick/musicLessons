@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form action="/login" method ="POST">
-        <input type="text" name="username">Username:
-        <input type="text" name="password">Password:
-        <input type="submit" balue="submit">Submit
-    </form>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/styles/style.css" type="text/css" />
+    <title>Login</title>
+  </head>
+  <body class="App">
+    <div class="App-header">
+      <h1>Login</h1>
+    </div>
+    <main>
+      <form action="/login" method="POST">
+        <div class="formsWrap">
+          <div class="formGroup">
+            <label for="username">Username:</label>
+            <input type="text" name="username" />
+          </div>
+          <div class="formGroup">
+            <label for="password">Password:</label>
+            <input type="text" name="password" />
+          </div>
+          <input type="submit" balue="submit" />
+        </div>
+      </form>
+    </main>
+  </body>
 </html>
