@@ -14,25 +14,23 @@ module.exports = passport => {
         if (!user) {
           return done(null, false, { message: "Incorrect Username" });
         }
-        if (password == user.password) {
-          return done(null, user);
-        }
-        // if (
-        //   bcrypt.compare(password, user.password, (err, match) => {
-        //     //passwords match
-        //     if (err) throw err;
-        //     if (match) {
-        //       return done(null, user);
-        //     }
-        //   })
-        // )
-        else {
-          return done(null, false, { message: "Incorrect Password" });
+        if (
+          bcrypt.compare(password, user.password, (err, match) => {
+            //passwords match
+            if (err) throw err;
+            if (match) {
+              return done(null, user);
+            } else {
+              return done(null, false, { message: "Incorrect Password" });
+            }
+          })
+        ) {
         }
       });
     })
   );
   passport.serializeUser(function(user, done) {
+    console.log("serialized user");
     done(null, user._id);
   });
 
