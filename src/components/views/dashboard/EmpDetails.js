@@ -1,9 +1,8 @@
 import React from "react";
 import moment from "moment";
-import FrmEditHours from "../../forms/FrmEditHours";
 import EmpHours from "./EmpHours";
-import PopModal from "../../modal/index";
-import FrmDelete from "../../forms/FrmDelete";
+import PopModal from "../../PopModal";
+import {FrmDelete, FrmEditHours} from "../../../forms/";
 export default function EmpDetails({ teacher, dbDelete }) {
   if (teacher.hours) {
     teacher.hours.forEach(i => {

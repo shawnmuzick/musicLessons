@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Student } from "../classes";
+import { Student } from "../../../classes/classes";
+import {Header} from '../../../components/';
 import ReactFullCalendar from "./ReactFullCalendar";
 import StuCont from "./stuCont";
 import FcDraggable from "./FcDraggable";
@@ -58,6 +59,7 @@ export default function Calendar({ SRC, students, setStudents }) {
   };
   return (
     <div className="view">
+      <Header>
       <div className="calendarHeader">
         {teacher._id ? (
           <img
@@ -73,6 +75,7 @@ export default function Calendar({ SRC, students, setStudents }) {
           <h1 style={{ margin: "auto" }}>Welcome</h1>
         )}
       </div>
+      </Header>
 
       <div className="wrapper" id="CalendarWrap">
         <StuCont

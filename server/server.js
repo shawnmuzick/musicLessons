@@ -1,5 +1,6 @@
 const express = require("express");
-const router = require('./routes');
+const apiRouter = require('./routes/apiRouter');
+const router = require('./routes/routes');
 const passport = require('passport');
 const session = require('express-session');
 const app = express();
@@ -17,8 +18,8 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use('/',router)
+app.use('/api',apiRouter);
+app.use('/',router);
 app.use('/', express.static('build')); 
 app.use('/assets', express.static('public'));
 

@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import axios from "axios";
-import { Teacher, Event } from "../classes";
+import { Teacher, Event } from "../../../classes/classes";
 import Modal from "@material-ui/core/Modal";
-import Button from "../../buttons/Button";
+import { Button } from "../../../components/";
 import moment from "moment";
-export default function ReactFullCalendar({
-  calendarRef,
-  teacher,
-  setTeacher,
-  makeButtons,
-  header,
-  footer
-}) {
+export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, makeButtons, header, footer }) {
   const [open, setOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState({});
 
@@ -36,9 +29,9 @@ export default function ReactFullCalendar({
       .all([
         axios.put(`/api/lessons`, {
           event: e,
-          stID
+          stID,
         }),
-        axios.get(`/api/teachers${teacher._id}`)
+        axios.get(`/api/teachers${teacher._id}`),
       ])
       .then(
         axios.spread((...res) => {
@@ -46,7 +39,7 @@ export default function ReactFullCalendar({
           setTeacher(t);
         })
       )
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
     return;
   };
   const postEvent = (e, stID) => {
@@ -54,9 +47,9 @@ export default function ReactFullCalendar({
       .all([
         axios.post(`/api/lessons`, {
           event: e,
-          stID
+          stID,
         }),
-        axios.get(`/api/teachers${teacher._id}`)
+        axios.get(`/api/teachers${teacher._id}`),
       ])
       .then(
         axios.spread((...res) => {
@@ -64,10 +57,10 @@ export default function ReactFullCalendar({
           setTeacher(t);
         })
       )
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
     return;
   };
-  const eventClick = e => {
+  const eventClick = (e) => {
     e.event.instrument = e.event.extendedProps.instrument;
     e.event.icon = e.event.extendedProps.icon;
     moment.utc(e.event.start).format();
@@ -96,9 +89,7 @@ export default function ReactFullCalendar({
     }
     const isAvailable = teacher.checkAvailability(e);
     if (isAvailable === false) {
-      window.alert(
-        `The time you have selected is outside of ${teacher.fname}'s hours!`
-      );
+      window.alert(`The time you have selected is outside of ${teacher.fname}'s hours!`);
       return;
     } else {
       if (edit.draggedEl) {
@@ -112,12 +103,12 @@ export default function ReactFullCalendar({
     <>
       <FullCalendar
         customButtons={makeButtons()}
-        dateClick={args => changeView(args, calendarRef)}
-        eventClick={e => eventClick(e)}
-        changeView={args => changeView(args, calendarRef)}
-        eventDrop={edit => newDrop(edit, calendarRef)}
-        drop={edit => newDrop(edit, calendarRef)}
-        eventResize={edit => newDrop(edit, calendarRef)}
+        dateClick={(args) => changeView(args, calendarRef)}
+        eventClick={(e) => eventClick(e)}
+        changeView={(args) => changeView(args, calendarRef)}
+        eventDrop={(edit) => newDrop(edit, calendarRef)}
+        drop={(edit) => newDrop(edit, calendarRef)}
+        eventResize={(edit) => newDrop(edit, calendarRef)}
         ref={calendarRef}
         footer={footer}
         header={header}
@@ -139,15 +130,12 @@ export default function ReactFullCalendar({
       <Modal open={open} className={"modal"}>
         <div className={"modalWrapper"}>
           <div className="modalHeader">
-            <img
-              src={`${currentEvent.icon}.jpg`}
-              alt={`${currentEvent.title}`}
-            />
+            <img src={`${currentEvent.icon}.jpg`} alt={`${currentEvent.title}`} />
             <h2>{currentEvent.title}</h2>
             <Button name={"x"} fn={handleClose} />
           </div>
           {/* walk the student's properties */}
-          {Object.keys(currentEvent).map(key => {
+          {Object.keys(currentEvent).map((key) => {
             // except for the 'lessons' property
 
             return <p>{`${key}: ${currentEvent[key]}`}</p>;
