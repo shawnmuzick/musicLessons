@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.port || 5001;
 
 //Passport config
-require('./passport.js')(passport);
+require('./config/passport.js')(passport);
 
 app.set('view engine','ejs');
 app.set('views', 'server/views');

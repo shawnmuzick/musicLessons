@@ -24,14 +24,14 @@ const teacherCtrl = {
     });
     newTeacher.save((err, success) => {
       if (err) throw err;
-      if (!fs.existsSync("../server/logs")) {
-        fs.mkdirSync("../server/logs");
+      if (!fs.existsSync("./logs")) {
+        fs.mkdirSync("./logs");
       }
-      fs.writeFile(`../public/img/faculty/${success._id}.jpg`, img, { encoding: "base64" }, function () {
-        console.log("Saved Img!");
+      fs.writeFile(`./public/img/faculty/${success._id}.jpg`, img, { encoding: "base64" }, (err) => {
+        if (err) throw err;
       });
       fs.appendFile(
-        "../server/logs/teacher_new.txt",
+        "./logs/teachers.txt",
         `Added Teacher: 
           ${JSON.stringify(fname)}\t
           ${JSON.stringify(success)}\n`,
@@ -65,11 +65,11 @@ const teacherCtrl = {
   deleteTeacher: (req, res) => {
     teacherModel.findByIdAndDelete({ _id: req.params.id }).exec((err, success) => {
       if (err) throw err;
+      fs.unlink(`./public/img/faculty/${req.params.id}.jpg`, (err) => {
+        if (err) console.log(err);
+      });
       console.log(success);
       res.json(success);
-    });
-    fs.unlink(`./public/img/faculty/${req.params.id}.jpg`, (err) => {
-      if (err) console.log(err);
     });
   },
 };

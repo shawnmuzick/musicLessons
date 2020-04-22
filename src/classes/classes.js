@@ -22,7 +22,6 @@ export class Teacher extends Person {
     this.trConv = 0;
     this.trFail = 0;
     this.salary = salary || 14.0;
-    console.log(this)
   }
   lessonsPerMonth() {
     let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -84,7 +83,6 @@ export class Student extends Person {
     this.instrument = instrument;
     this.teacher = teacher || { name: "", lname: "",_id: "" };
     this.tuition = tuition || 30.0;
-    console.log(this);
   }
 }
 export class Event {

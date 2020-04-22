@@ -1,5 +1,5 @@
 const LocalStrategy = require("passport-local").Strategy;
-const { userModel } = require("./models");
+const { userModel } = require("../models");
 const bcrypt = require("bcrypt");
 
 //pass in passport from function run in server.js

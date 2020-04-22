@@ -1,54 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Student } from "../../../classes/classes";
-import {Header} from '../../../components/';
+import { fetches, maps } from "../../../util";
+import { Header } from "../../../components/";
 import ReactFullCalendar from "./ReactFullCalendar";
 import StuCont from "./stuCont";
-import FcDraggable from "./FcDraggable";
 import "./calendar.css";
-import axios from "axios";
 export default function Calendar({ SRC, students, setStudents }) {
   const calendarRef = React.createRef();
   const [teacher, setTeacher] = useState({});
   const header = {
     left: "prev,next, today",
     center: "title",
-    right: "dayGridMonth,timeGridWeek,timeGridDay"
+    right: "dayGridMonth,timeGridWeek,timeGridDay",
   };
   const footer = {
-    center: ""
+    center: "",
   };
-  //On First Render----------------------------------------------------------------
+
   useEffect(() => {
-    FcDraggable();
-    //you have to leave the empty array in the dependencies
-    //or you'll get infinite postings
-  }, []);
-  //whenever the current teacher changes, rerender, fetch students,
-  useEffect(() => {
-    //you need this to clean out what was in here previously
+    //whenever the current teacher changes, rerender, fetch students, clean lessons array
     teacher.lessons = [];
-    axios
-      .get("/api/students")
-      .then(res => {
-        const b = res.data.map(s => {
-          return new Student(s);
-        });
-        setStudents(b);
-      })
-      .catch(err => console.log(err));
+    fetches
+      .getStudents()
+      .then((res) => setStudents(res))
+      .catch((err) => console.log(err));
   }, [teacher, setStudents]);
   const makeButtons = () => {
     //This links students and their teachers
-    students.forEach(s => {
-      if (teacher._id === s.teacher._id) {
-        s.lessons.forEach(l => {
-          teacher.lessons.push(l);
-        });
-      }
-    });
+    maps.addTeacherLessons(students, teacher);
     let obj = SRC.reduce((obj, item) => {
       obj[item.lname] = item;
-      item.click = function() {
+      item.click = function () {
         item.lessons = [];
         setTeacher(item);
       };
@@ -60,29 +41,18 @@ export default function Calendar({ SRC, students, setStudents }) {
   return (
     <div className="view">
       <Header>
-      <div className="calendarHeader">
-        {teacher._id ? (
-          <img
-            src={`/assets/img/faculty/${teacher._id}.jpg`}
-            alt={`${teacher.fname} ${teacher.lname}`}
-          />
-        ) : (
-          <br />
-        )}
-        {teacher._id ? (
-          <h1>{`${teacher.fname} ${teacher.lname}`}</h1>
-        ) : (
-          <h1 style={{ margin: "auto" }}>Welcome</h1>
-        )}
-      </div>
+        <div className="calendarHeader">
+          {teacher._id ? (
+            <img src={`/assets/img/faculty/${teacher._id}.jpg`} alt={`${teacher.fname} ${teacher.lname}`} />
+          ) : (
+            <br />
+          )}
+          {teacher._id ? <h1>{`${teacher.fname} ${teacher.lname}`}</h1> : <h1 style={{ margin: "auto" }}>Welcome</h1>}
+        </div>
       </Header>
 
       <div className="wrapper" id="CalendarWrap">
-        <StuCont
-          students={students}
-          teacher={teacher}
-          setTeacher={setTeacher}
-        />
+        <StuCont students={students} teacher={teacher} setTeacher={setTeacher} />
         <div className="spacer" />
         <ReactFullCalendar
           calendarRef={calendarRef}

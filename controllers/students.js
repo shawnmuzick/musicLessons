@@ -21,14 +21,14 @@ const studentCtrl = {
     const newStudent = new studentModel(s);
     newStudent.save((err, success) => {
       if (err) throw err;
-      if (!fs.existsSync("./server/logs")) {
-        fs.mkdirSync("./server/logs");
+      if (!fs.existsSync("./logs")) {
+        fs.mkdirSync("./logs");
         fs.mkdirSync("./public/img/students");
       }
-      fs.writeFile(`../public/img/students/${success._id}.jpg`, img, { encoding: "base64" }, function () {
-        console.log("Saved Img!");
+      fs.writeFile(`./public/img/students/${success._id}.jpg`, img, { encoding: "base64" }, (err) => {
+        if (err) throw err;
       });
-      fs.appendFile("./server/logs/newStudent.txt", `Added Student: ${JSON.stringify(success)}\n`, (err) => {
+      fs.appendFile("./logs/students.txt", `Added Student: ${JSON.stringify(success)}\n`, (err) => {
         if (err) throw err;
       });
       console.log(success);
@@ -41,11 +41,11 @@ const studentCtrl = {
   deleteStudents: (req, res) => {
     studentModel.findByIdAndDelete({ _id: req.params.id }).exec((err, success) => {
       if (err) throw err;
+      fs.unlink(`./public/img/students/${req.params.id}.jpg`, (err) => {
+        if (err) throw err;
+      });
       console.log(success);
       res.json(success);
-    });
-    fs.unlink(`../public/img/students/${req.params.id}.jpg`, (err) => {
-      if (err) console.log(err);
     });
   },
 };

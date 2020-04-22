@@ -34,11 +34,11 @@ const lessonsCtrl = {
       )
       .exec((err, success) => {
         if (err) throw err;
-        if (!fs.existsSync("../server/logs")) {
-          fs.mkdirSync("../server/logs");
+        if (!fs.existsSync("./logs")) {
+          fs.mkdirSync("./logs");
         }
         fs.appendFile(
-          "../server/logs/lesson.txt",
+          "./logs/lesson.txt",
           ` Added ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
           (err) => {
             if (err) throw err;
@@ -73,11 +73,11 @@ const lessonsCtrl = {
       )
       .exec((err, success) => {
         if (err) throw err;
-        if (!fs.existsSync("../server/logs")) {
-          fs.mkdirSync("../server/logs");
+        if (!fs.existsSync("./logs")) {
+          fs.mkdirSync("./logs");
         }
         fs.appendFile(
-          "../server/logs/lesson.txt",
+          "./logs/lesson.txt",
           `Updated ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
           (err) => {
             if (err) throw err;
