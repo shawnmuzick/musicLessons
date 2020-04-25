@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "../components/";
+import { Form, InputGroup } from "../forms/";
 export default function FrmDelete({ fname, lname, id, fn }) {
   const [confirm, setConfirm] = useState("");
   const handleChange = (e) => {
@@ -14,18 +14,16 @@ export default function FrmDelete({ fname, lname, id, fn }) {
     return;
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="formGroup">
+    <Form submitFn={handleSubmit}>
+      <InputGroup>
         <p>{`Are you SURE you want to remove ${fname} ${lname}?`}</p>
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <p>Type DELETE to Confirm</p>
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <input type="text" onChange={handleChange} />
-      </div>
-
-      <Button type="submit" name="submit" />
-    </form>
+      </InputGroup>
+    </Form>
   );
 }

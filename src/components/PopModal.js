@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Modal from "@material-ui/core/Modal";
-import { Button, Header } from "../components/";
+import { Button, Header, Modal } from "../components/";
 import "./modal.css";
 export default function PopModal({ prompt, bName, children, imgSrc }) {
   const [open, setOpen] = useState(false);
@@ -19,19 +18,17 @@ export default function PopModal({ prompt, bName, children, imgSrc }) {
     }
   };
   const renderImg = () => {
-    return <img src={imgSrc} />;
+    return <img src={imgSrc} alt={""} />;
   };
   return (
     <>
       <Button name={checkForAlt()} fn={handleOpen} />
-      <Modal open={open} className={"modal"}>
+      <Modal open={open}>
         <div className={"modalWrapper"}>
           <Header>
-            <div className="modalHeader">
-              {renderImg()}
-              <h2>{prompt}</h2>
-              <Button name={"x"} fn={handleClose} />
-            </div>
+            {renderImg()}
+            <h2>{prompt}</h2>
+            <Button name={"x"} fn={handleClose} />
           </Header>
           {children}
         </div>

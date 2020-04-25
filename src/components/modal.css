@@ -1,34 +1,63 @@
-.modal{
-    color: white;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    background-color: rgba(207, 207, 207, 0.7);
-  }
-  .modalWrapper{
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding: 10px;
-    background-color: rgb(85, 84, 84);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  .modalHeader{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: solid 1px white;
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-  .modalHeader img{
-    max-width: 150px;
-    max-height: 150px;
-    padding: 10px;
-  }
-  .modalHeader h2{
-    max-width: 200px;
-  }
+.modal {
+  position: absolute;
+  z-index: 3;
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: rgba(207, 207, 207, 0.7);
+}
+.modalWrapper {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: rgb(85, 84, 84);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.modal header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px white;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #202124;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.modal header img {
+  max-width: 150px;
+  max-height: 150px;
+  padding: 10px;
+}
+.modal header h2 {
+  padding: 10px;
+  margin: auto;
+}
+.backdrop {
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5;
+}
+dialog {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+.modal .App-header button {
+  width: auto !important;
+}
+.modal .App-header button:hover,
+.modal .modalWrapper button:hover {
+  background-color: rgb(124, 122, 122) !important;
+}

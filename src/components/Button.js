@@ -10,7 +10,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={"MainMenu-button"}
+      className={"button"}
       onClick={() => {
         if (name !== "x"){
           fn(name);

@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./Header";
+import {Header} from "../components/";
 import icon from "../icons/menu-24px.svg";
 export default function AppHeader({ menuState, setMenu }) {
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "../components/";
 import { Student } from "../classes/classes";
+import { Form, InputGroup } from "../forms/";
 import SelectInstrument from "./SelectInstrument";
 export default function FrmNewStudent({ handleClick }) {
   const [student, setStudent] = useState({});
@@ -34,40 +34,39 @@ export default function FrmNewStudent({ handleClick }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="formGroup">
+    <Form submitFn={handleSubmit}>
+      <InputGroup>
         <label htmlFor="img">Photo ID: </label>
         <input type="file" name="img" accept="image/jpeg" onChange={handleImg} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="fname">First Name: </label>
         <input type="text" name="fname" onChange={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="lname">Last Name: </label>
         <input type="text" name="lname" onChange={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="phone">Phone: </label>
         <input type="text" name="phone" onChange={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="tuition">Tuition: </label>
         <input type="number" step="0.01" name="tuition" onChange={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="instrument">Instrument: </label>
         <SelectInstrument fn={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="trial">Converted Trial?: </label>
         <select name="trial" onChange={handleTrial}>
           <option>Select an Option</option>
           <option value={true}>Yes</option>
           <option value={false}>No</option>
         </select>
-      </div>
-      <Button type="submit" name={"Submit"} />
-    </form>
+      </InputGroup>
+    </Form>
   );
 }

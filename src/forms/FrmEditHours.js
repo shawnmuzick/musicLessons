@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Button } from "../components/";
+import { fetches } from "../util/";
+import { Form, InputGroup } from "../forms/";
 import moment from "moment";
 export default function FrmEditHours({ teacher }) {
   const [hours, setHours] = useState({});
@@ -19,26 +19,22 @@ export default function FrmEditHours({ teacher }) {
   };
   const subnmitHandler = (e) => {
     teacher.changeAvailability(hours);
-    axios
-      .put(`/api/teachers${teacher._id}`, { phone: teacher.phone, hours: teacher.hours })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    fetches.putTeacherById(teacher);
   };
   const renderForm = () => {
     return days.map((day) => (
-      <div className="formGroup" key={day}>
+      <InputGroup key={day}>
         <label>{moment().day(day).format("ddd")}</label>
         <input type="time" name={`${day}`} onChange={changeStart} />
         To:
         <input type="time" name={`${day}`} onChange={changeEnd} />
-      </div>
+      </InputGroup>
     ));
   };
   return (
-    <form className={"EmpForm"} onSubmit={subnmitHandler} key={teacher._id}>
+    <Form submitFn={subnmitHandler} key={teacher._id}>
       <h4>Edit Hours</h4>
       {renderForm()}
-      <Button type="submit" name={"Submit"} />
-    </form>
+    </Form>
   );
 }

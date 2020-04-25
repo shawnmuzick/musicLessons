@@ -1,17 +1,54 @@
-.MainMenu-button {
-    background-color: transparent;
-    text-align: left;
-    padding: 10px;
-    border-radius: 5px;
-    line-height: 1.5;
-  }
-  .fc-event .MainMenu-button{
-    display: flex;
-    width: 100%;
-    flex-grow: 1;
-    margin: 0px;
-  }
-  .fc-event .MainMenu-button:hover, .fc-event .MainMenu-button:focus,
-  .fc-event .MainMenu-button:active{
-    background-color: #569fff;
-  }
+button {
+  padding: 10px;
+}
+button,
+.fc-footer-toolbar button,
+.fc-header-toolbar button,
+.fc-today-button {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  margin: 10px;
+  border: 0px;
+  font-weight: bold;
+  outline: none;
+}
+.fc-footer-toolbar button,
+.fc-header-toolbar button {
+  padding: 1rem 0rem 1rem 0rem;
+}
+#extEvents button{
+  width: 100%;
+}
+#extEvents .fc-event{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.fc-event button {
+  padding: 10px;
+  width: 100%;
+  margin: 0px;
+}
+.fc-button-primary {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+button:hover,
+button:focus,
+.fc-footer-toolbar button:hover,
+.fc-header-toolbar button:hover,
+.fc-button-group button:hover,
+.fc-button-group button:active,
+.fc-today-button:active,
+.fc-button-primary:disabled,
+.fc-button-primary:not(:disabled):active,
+.fc-button-primary:not(:disabled).fc-button-active {
+  background-color: rgb(124, 122, 122) !important;
+}
+
+.fc-event button:hover,
+.fc-event button:focus,
+.fc-event button:active {
+  background-color: #569fff !important;
+}
+

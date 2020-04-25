@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { PopModal } from "../../../components/";
-import { FrmNewStudent, FrmDelete } from "../../../forms/";
-import { Teacher } from "../../../classes/classes";
-import { fetches, filters } from "../../../util/";
+import React, { useEffect } from "react";
+import { Modal } from "../../components/";
+import { FrmNewStudent, FrmDelete } from "../../forms/";
+import { fetches, filters, Teacher } from "../../util/";
 import FcDraggable from "./FcDraggable";
 export default function StuCont({ students, teacher, setTeacher }) {
   useEffect(() => {
@@ -23,7 +21,8 @@ export default function StuCont({ students, teacher, setTeacher }) {
         s.teacher.name = teacher.fname;
         s.teacher.lname = teacher.lname;
         s.teacher._id = teacher._id;
-        axios.post(`/api/students`, { s, img }).catch((err) => console.log(err));
+        s.img = img;
+        fetches.postStudent(s);
       }
     }
     return;
@@ -34,33 +33,35 @@ export default function StuCont({ students, teacher, setTeacher }) {
       setTeacher(t);
     });
   };
+  const renderProperties = (s) => {
+    return Object.keys(s).map((key) => {
+      if (key !== "lessons") {
+        return <p key={key}>{`${key}: ${s[key]}`}</p>;
+      } else {
+        return null;
+      }
+    });
+  };
   const renderStudents = () => {
     return filters.studentsByTeacher(students, teacher).map((s) => (
-      <div className="extWrapper">
+      <div className="extWrapper" key={s._id}>
         <div
           className="fc-event"
           key={s._id}
           title={`${s.fname} ${s.lname}'s ${s.instrument} lesson`}
-          key={s._id}
           id={s._id}
           instrument={s.instrument}
           rate={s.tuition}>
-          <PopModal prompt={`${s.fname} ${s.lname} `} className={"modal"} imgSrc={`/assets/img/students/${s._id}.jpg`}>
-            <div className={"modalWrapper"}>
-              {/* walk the student's properties */}
-              {Object.keys(s).map((key) => {
-                // except for the 'lessons' property
-                if (key !== "lessons") {
-                  return <p>{`${key}: ${s[key]}`}</p>;
-                } else {
-                  return null;
-                }
-              })}
-              <PopModal prompt={"Remove Student"}>
-                <FrmDelete fname={s.fname} lname={s.lname} id={s._id} fn={removeStudent} />
-              </PopModal>
-            </div>
-          </PopModal>
+          <Modal
+            managed={true}
+            btnTxt={`${s.fname} ${s.lname} `}
+            headerTxt={`${s.fname} ${s.lname} `}
+            imgSrc={`/assets/img/students/${s._id}.jpg`}>
+            {renderProperties(s)}
+            <Modal managed={true} btnTxt={"Remove Student"} headerTxt={"Remove Student"}>
+              <FrmDelete fname={s.fname} lname={s.lname} id={s._id} fn={removeStudent} />
+            </Modal>
+          </Modal>
         </div>
       </div>
     ));
@@ -68,9 +69,9 @@ export default function StuCont({ students, teacher, setTeacher }) {
   return (
     <div className={"extEvents"} id="extEvents">
       <h2>Students</h2>
-      <PopModal prompt={"Add New Student"}>
+      <Modal managed={true} btnTxt={"Add New Student"} headerTxt={"Add New Student"}>
         <FrmNewStudent handleClick={handleClick} />
-      </PopModal>
+      </Modal>
       {renderStudents()}
     </div>
   );

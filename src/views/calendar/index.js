@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { fetches, maps } from "../../../util";
-import { Header } from "../../../components/";
+import { fetches, maps } from "../../util";
+import { Header } from "../../components/";
 import ReactFullCalendar from "./ReactFullCalendar";
 import StuCont from "./stuCont";
 import "./calendar.css";

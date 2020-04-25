@@ -1,24 +1,15 @@
 import React from "react";
-import moment from "moment";
 import EmpHours from "./EmpHours";
-import PopModal from "../../PopModal";
-import {FrmDelete, FrmEditHours} from "../../../forms/";
-export default function EmpDetails({ teacher, dbDelete }) {
-  if (teacher.hours) {
-    teacher.hours.forEach(i => {
-      i.daysOfWeek = i.daysOfWeek.map(i => {
-        return (i = moment()
-          .day(i)
-          .format("ddd"));
-      });
-    });
-  }
+import { Modal } from "../../components/";
+import { FrmDelete, FrmEditHours } from "../../forms/";
+import { fetches } from "../../util/";
+export default function EmpDetails({ teacher }) {
   return (
     <div className="formsWrap">
       <div id="employees">
         <details>
           <summary>
-            <h4>{teacher.fname}</h4>
+            <h4>{` ${teacher.fname} ${teacher.lname}`}</h4>
           </summary>
           <div className={"employee"}>
             <div className={"photoID"}>
@@ -33,17 +24,12 @@ export default function EmpDetails({ teacher, dbDelete }) {
             <EmpHours teacher={teacher} />
           </div>
 
-          <PopModal prompt={"Enter New Hours"}>
+          <Modal managed={true} btnTxt={"Enter New Hours"} headerTxt={"Enter New Hours"}>
             <FrmEditHours teacher={teacher} />
-          </PopModal>
-          <PopModal prompt={"Delete Instructor"}>
-            <FrmDelete
-              fname={teacher.fname}
-              lname={teacher.lname}
-              id={teacher._id}
-              fn={dbDelete}
-            />
-          </PopModal>
+          </Modal>
+          <Modal managed={true} btnTxt={"Delete Instructor"} headerTxt={"Delete Instructor"}>
+            <FrmDelete fname={teacher.fname} lname={teacher.lname} id={teacher._id} fn={fetches.deleteTeacherById} />
+          </Modal>
         </details>
       </div>
     </div>

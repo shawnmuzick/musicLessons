@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import EmpDetails from "./EmpDetails";
-import { FrmNewTeacher } from "../../../forms/";
+import { FrmNewTeacher } from "../../forms/";
 import moment from "moment";
-import PopModal from "../../PopModal";
-import { LesIns, LesMon, StuIns, TConvIns, Charts } from "../../../charts";
-import { Header } from "../../../components/";
+import { LesIns, LesMon, StuIns, TConvIns, Charts } from "../../charts";
+import { Header, Modal } from "../../components/";
+import { fetches } from "../../util/";
 export default function DashboardView({ teachers, students }) {
   let totalLessons = 0;
   let grossIncome = 0;
@@ -59,20 +58,11 @@ export default function DashboardView({ teachers, students }) {
     if (t.name === null || t.phone === null) {
       return;
     }
-    axios
-      .post(`/api/teachers`, {
-        fname: t.fname,
-        lname: t.lname,
-        phone: t.phone,
-        img: img,
-      })
-      .catch((err) => console.log(err));
-  };
-  const dbDelete = (_id) => {
-    axios.delete(`/api/teachers${_id}`).catch((err) => console.log(err));
+    t.img = img;
+    fetches.postTeacher(t);
   };
   const renderEmployees = () => {
-    return teachers.map((teacher) => <EmpDetails key={teacher._id} teacher={teacher} dbDelete={dbDelete} />);
+    return teachers.map((teacher) => <EmpDetails key={teacher._id} teacher={teacher} />);
   };
   return (
     <div className={"view"}>
@@ -85,7 +75,6 @@ export default function DashboardView({ teachers, students }) {
           <h3>Gross Income: ${Math.round(grossIncome * 100) / 100}</h3>
           <h3>Profit: ${Math.round(profit * 100) / 100}</h3>
         </div>
-        <hr />
       </Header>
       <div className="wrapper">
         <Charts>
@@ -99,9 +88,9 @@ export default function DashboardView({ teachers, students }) {
           {renderEmployees()}
         </div>
       </div>
-      <PopModal prompt={"Enter New Teacher"}>
+      <Modal headerTxt={"Enter New Teacher"} btnTxt={"Enter New Teacher"} managed={true}>
         <FrmNewTeacher handleClick={handleClick} />
-      </PopModal>
+      </Modal>
     </div>
   );
 }

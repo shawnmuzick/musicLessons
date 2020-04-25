@@ -1,8 +1,7 @@
 import React from "react";
-import {Button} from ".";
-import { menuItems } from "./views/ViewIndex.js";
+import { Button } from ".";
 import "./mainMenu.css";
-export default function MainMenu({ setView }) {
+export default function MainMenu({ setView, menuItems }) {
   const renderMenu = () => {
     return menuItems.map((item) => <Button name={item.name} key={item.name} fn={setView} />);
   };

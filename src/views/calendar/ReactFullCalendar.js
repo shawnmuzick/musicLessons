@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
 import axios from "axios";
-import { Teacher, Event } from "../../../classes/classes";
-import Modal from "@material-ui/core/Modal";
-import { Button } from "../../../components/";
+import { Teacher, Event } from "../../util/";
+import { Button, Header, Modal } from "../../components/";
 import moment from "moment";
 export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, makeButtons, header, footer }) {
   const [open, setOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState({});
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const handleModal = () => {
+    setOpen(!open);
   };
 
-  const changeView = (args, calendarRef) => {
+  const changeView = (args) => {
     const api = calendarRef.current.getApi();
     if (api.view.type === "timeGridDay") {
       return;
@@ -61,14 +57,16 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
     return;
   };
   const eventClick = (e) => {
-    e.event.instrument = e.event.extendedProps.instrument;
-    e.event.icon = e.event.extendedProps.icon;
-    moment.utc(e.event.start).format();
-    const v = new Event(e.event);
-    handleOpen();
+    const { instrument, icon, rate } = e.extendedProps;
+    e.instrument = instrument;
+    e.icon = icon;
+    e.rate = rate;
+    moment.utc(e.start).format();
+    const v = new Event(e);
+    handleModal();
     setCurrentEvent(v);
   };
-  const newDrop = (edit, calendarRef) => {
+  const newDrop = (edit) => {
     const api = calendarRef.current.getApi();
     let e, stID;
     api.changeView("timeGridDay", edit.date);
@@ -103,12 +101,12 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
     <>
       <FullCalendar
         customButtons={makeButtons()}
-        dateClick={(args) => changeView(args, calendarRef)}
-        eventClick={(e) => eventClick(e)}
-        changeView={(args) => changeView(args, calendarRef)}
-        eventDrop={(edit) => newDrop(edit, calendarRef)}
-        drop={(edit) => newDrop(edit, calendarRef)}
-        eventResize={(edit) => newDrop(edit, calendarRef)}
+        dateClick={(args) => changeView(args)}
+        eventClick={(e) => eventClick(e.event)}
+        changeView={(args) => changeView(args)}
+        eventDrop={(edit) => newDrop(edit)}
+        drop={(edit) => newDrop(edit)}
+        eventResize={(edit) => newDrop(edit)}
         ref={calendarRef}
         footer={footer}
         header={header}
@@ -129,15 +127,12 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
       />
       <Modal open={open} className={"modal"}>
         <div className={"modalWrapper"}>
-          <div className="modalHeader">
+          <Header>
             <img src={`${currentEvent.icon}.jpg`} alt={`${currentEvent.title}`} />
             <h2>{currentEvent.title}</h2>
-            <Button name={"x"} fn={handleClose} />
-          </div>
-          {/* walk the student's properties */}
+            <Button name={"x"} fn={handleModal} />
+          </Header>
           {Object.keys(currentEvent).map((key) => {
-            // except for the 'lessons' property
-
             return <p>{`${key}: ${currentEvent[key]}`}</p>;
           })}
         </div>

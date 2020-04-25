@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "../components/";
+import { Form, InputGroup } from "../forms/";
 import { Teacher } from "../classes/classes";
 export default function FrmNewTeacher({ handleClick }) {
   const [teacher, setTeacher] = useState({});
@@ -27,24 +27,23 @@ export default function FrmNewTeacher({ handleClick }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="formGroup">
+    <Form submitFn={handleSubmit}>
+      <InputGroup>
         <label htmlFor="img">Photo ID: </label>
         <input type="file" name="img" accept="image/jpeg" onChange={handleImg} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="fname">First Name: </label>
         <input type="text" name="fname" onChange={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="lname">Last Name: </label>
         <input type="text" name="lname" onChange={handleChange} />
-      </div>
-      <div className="formGroup">
+      </InputGroup>
+      <InputGroup>
         <label htmlFor="phone">Phone: </label>
         <input type="text" name="phone" onChange={handleChange} />
-      </div>
-      <Button type="submit" name={"Submit"} />
-    </form>
+      </InputGroup>
+    </Form>
   );
 }

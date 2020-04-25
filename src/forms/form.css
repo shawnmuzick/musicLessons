@@ -1,0 +1,8 @@
+form{
+    display: flex;
+    flex-direction: column;
+}
+form input:focus, form input:active,
+form select:focus, form select:active{
+  color: black !important;
+}
