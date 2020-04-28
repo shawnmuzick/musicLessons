@@ -8,6 +8,7 @@ module.exports = passport => {
     new LocalStrategy((username, password, done) => {
       //match user
       userModel.findOne({ username: username }, (err, user) => {
+        console.log('test');
         if (err) {
           return done(err);
         }

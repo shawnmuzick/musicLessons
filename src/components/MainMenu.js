@@ -3,7 +3,7 @@ import { Button } from ".";
 import "./mainMenu.css";
 export default function MainMenu({ setView, menuItems }) {
   const renderMenu = () => {
-    return menuItems.map((item) => <Button name={item.name} key={item.name} fn={setView} />);
+    return menuItems.map((item) => <Button name={item} key={item} fn={setView} />);
   };
   return (
     <div id="MainMenu">

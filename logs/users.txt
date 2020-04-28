@@ -31,3 +31,6 @@ Added User:
 Added User: 
             "shawnmuzick"	
             {"_id":"5e7fb64d4da6a51cbc044076","username":"shawnmuzick","password":"$2b$10$hoU5QqcRdMYr7VkTpE.N1eZkYryXmJawWvtEVPihZYytezT5l1Cfe","fname":"Shawn","lname":"Matyasovszky","__v":0}
+Added User: 
+            "shawnmuzick"	
+            {"_id":"5ea7a0701cfa7a33c80d55a0","username":"shawnmuzick","password":"$2b$10$MGlFKX1azjOZ1Y07z/mrY.iMmJS0lg.PR34nSvjFgTMLbBC6ooCui","fname":"shawn","lname":"matyasovszky","role":"user","__v":0}

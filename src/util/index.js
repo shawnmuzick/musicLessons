@@ -47,6 +47,20 @@ const fetches = {
   deleteTeacherById: (id) => {
     return axios.delete(`/api/teachers${id}`).catch((err) => console.log(err));
   },
+  getUsers:()=>{
+    //placeholder for fetching user list
+  },
+  postUserLogin:(username, password)=>{
+    return fetch("/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: username, password: password }),
+    })
+      .then((res) => res.json())
+  }
 };
 const maps = {
   makeStudents: (arr) => {
