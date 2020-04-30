@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "../components";
 import { Form, InputGroup } from "../forms";
-import { fetches } from "../util";
-import axios from "axios";
 export default function Login({ setUser, setView }) {
   const [values, setValues] = useState({});
   const handleChange = (e) => {

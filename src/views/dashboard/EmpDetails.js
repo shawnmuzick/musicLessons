@@ -1,17 +1,17 @@
 import React from "react";
 import EmpHours from "./EmpHours";
-import { Modal } from "../../components/";
+import { Modal, ListContainer, ListItem } from "../../components/";
 import { FrmDelete, FrmEditHours } from "../../forms/";
 import { fetches } from "../../util/";
 export default function EmpDetails({ teacher }) {
   return (
     <div className="formsWrap">
-      <div id="employees">
+      <ListContainer>
         <details>
           <summary>
             <h4>{` ${teacher.fname} ${teacher.lname}`}</h4>
           </summary>
-          <div className={"employee"}>
+          <ListItem>
             <div className={"photoID"}>
               <img src={`/assets/img/faculty/${teacher._id}.jpg`} alt={`${teacher.fname}`} />
             </div>
@@ -22,7 +22,7 @@ export default function EmpDetails({ teacher }) {
               <p>Salary: {`$${teacher.salary} per 1/2hr`}</p>
             </div>
             <EmpHours teacher={teacher} />
-          </div>
+          </ListItem>
 
           <Modal managed={true} btnTxt={"Enter New Hours"} headerTxt={"Enter New Hours"}>
             <FrmEditHours teacher={teacher} />
@@ -31,7 +31,7 @@ export default function EmpDetails({ teacher }) {
             <FrmDelete fname={teacher.fname} lname={teacher.lname} id={teacher._id} fn={fetches.deleteTeacherById} />
           </Modal>
         </details>
-      </div>
+      </ListContainer>
     </div>
   );
 }

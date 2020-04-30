@@ -20,7 +20,6 @@ router.post(
     if (req.user) {
       const date = new Date();
       console.log(`User ID:${req.user._id} logged in at ${date}`);
-      console.log(req.user);
       res.json(req.user);
     }
   }

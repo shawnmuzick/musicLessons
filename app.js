@@ -14,9 +14,9 @@ app.use(
   })
 );
 app.use(passport.initialize());
-app.use(passport.session());
 //Passport config
 require("./config/passport.js")(passport);
+app.use(passport.session());
 app.use("/assets", express.static("public"));
 app.use("/api", apiRouter);
 app.use("/", viewRouter);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Modal } from "../../components/";
 import { FrmNewStudent, FrmDelete } from "../../forms/";
-import { fetches, filters, Teacher } from "../../util/";
+import { fetches, filters, maps, Teacher } from "../../util/";
 import FcDraggable from "./FcDraggable";
 export default function StuCont({ students, teacher, setTeacher }) {
   useEffect(() => {
@@ -33,15 +33,6 @@ export default function StuCont({ students, teacher, setTeacher }) {
       setTeacher(t);
     });
   };
-  const renderProperties = (s) => {
-    return Object.keys(s).map((key) => {
-      if (key !== "lessons") {
-        return <p key={key}>{`${key}: ${s[key]}`}</p>;
-      } else {
-        return null;
-      }
-    });
-  };
   const renderStudents = () => {
     return filters.studentsByTeacher(students, teacher).map((s) => (
       <div className="extWrapper" key={s._id}>
@@ -57,7 +48,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
             btnTxt={`${s.fname} ${s.lname} `}
             headerTxt={`${s.fname} ${s.lname} `}
             imgSrc={`/assets/img/students/${s._id}.jpg`}>
-            {renderProperties(s)}
+            {maps.iterateProps(s)}
             <Modal managed={true} btnTxt={"Remove Student"} headerTxt={"Remove Student"}>
               <FrmDelete fname={s.fname} lname={s.lname} id={s._id} fn={removeStudent} />
             </Modal>

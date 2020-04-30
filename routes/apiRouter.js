@@ -2,12 +2,12 @@ const express = require("express");
 const teacherCtrl = require('../controllers/teachers');
 const lessonsCtrl = require('../controllers/lessons');
 const studentCtrl = require('../controllers/students');
-
+const userCtrl = require('../controllers/users');
+const authCtrl = require("../controllers/auth");
 const urlEncodedParser = express.urlencoded({ extended: true, limit: "50mb" });
 const jsonParser = express.json({ limit: "50mb" });
 const apiRouter = express.Router();
-
-//Teachers-----------------------------------------------------------------------------------------
+//Teachers------------------------------------------------------------------------------
 apiRouter.get("/teachers",teacherCtrl.getTeachers);
 apiRouter.get("/teachers:id", teacherCtrl.getTeachers);
 apiRouter.post("/teachers", urlEncodedParser, jsonParser, teacherCtrl.postTeacher);
@@ -25,4 +25,11 @@ apiRouter.get("/lessons:id", lessonsCtrl.getLessons);
 apiRouter.post("/lessons", urlEncodedParser, jsonParser, lessonsCtrl.postLessons);
 apiRouter.put("/lessons", urlEncodedParser, jsonParser, lessonsCtrl.updateLessons);
 apiRouter.delete("/lessons:id", lessonsCtrl.deleteLessons);
+//users-----------------------------------------------------------------------------------
+apiRouter.get("/users", authCtrl.isLoggedIn, userCtrl.getUsers);
+// apiRouter.get();
+// apiRouter.post();
+// apiRouter.put();
+// apiRouter.delete();
+
 module.exports = apiRouter;

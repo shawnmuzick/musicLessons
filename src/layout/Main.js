@@ -3,7 +3,6 @@ import { MainMenu, Footer } from "../components";
 import ViewContainer from "./ViewContainer";
 import { Calendar, Dashboard, Login, Users, StudentRoster, menu, adminMenu } from "../views/";
 import { fetches } from "../util/";
-import Axios from "axios";
 export default function Main({ menuState }) {
   const [view, setView] = useState("Calendar");
   const [teachers, setTeachers] = useState([]);
@@ -42,7 +41,7 @@ export default function Main({ menuState }) {
           Calendar={<Calendar SRC={teachers} students={students} setStudents={setStudents} />}
           Dashboard={<Dashboard teachers={teachers} students={students} />}
           Login={<Login setUser={setUser} setView={setView} />}
-          Roster={<StudentRoster />}
+          Roster={<StudentRoster students={students} />}
           Users={<Users />}
           view={view}
         />

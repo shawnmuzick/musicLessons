@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { FullCalendar, plugins } from "./plugins";
-import axios from "axios";
-import { Teacher, Event } from "../../util/";
+import { Teacher, Event, maps, fetches } from "../../util/";
 import { Button, Header, Modal } from "../../components/";
 import moment from "moment";
 export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, makeButtons, header, footer }) {
   const [open, setOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState({});
-
   const handleModal = () => {
     setOpen(!open);
   };
-
   const changeView = (args) => {
     const api = calendarRef.current.getApi();
     if (api.view.type === "timeGridDay") {
@@ -20,41 +17,23 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
       api.changeView("timeGridDay", args.date);
     }
   };
-  const editEvent = (e, stID) => {
-    axios
-      .all([
-        axios.put(`/api/lessons`, {
-          event: e,
-          stID,
-        }),
-        axios.get(`/api/teachers${teacher._id}`),
-      ])
-      .then(
-        axios.spread((...res) => {
-          const t = new Teacher(res[1].data);
-          setTeacher(t);
-        })
-      )
+  //use to refetch teacher and rerender after posts/updates to make them immediately visible
+  const getTeacher = () => {
+    fetches
+      .getTeacherById(teacher._id)
+      .then((res) => {
+        const t = new Teacher(res.data);
+        setTeacher(t);
+      })
       .catch((err) => console.log(err));
-    return;
+  };
+  const editEvent = (e, stID) => {
+    fetches.putEvent(e, stID).catch((err) => console.log(err));
+    getTeacher();
   };
   const postEvent = (e, stID) => {
-    axios
-      .all([
-        axios.post(`/api/lessons`, {
-          event: e,
-          stID,
-        }),
-        axios.get(`/api/teachers${teacher._id}`),
-      ])
-      .then(
-        axios.spread((...res) => {
-          const t = new Teacher(res[1].data);
-          setTeacher(t);
-        })
-      )
-      .catch((err) => console.log(err));
-    return;
+    fetches.postEvent(e, stID).catch((err) => console.log(err));
+    getTeacher();
   };
   const eventClick = (e) => {
     const { instrument, icon, rate } = e.extendedProps;
@@ -132,9 +111,7 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
             <h2>{currentEvent.title}</h2>
             <Button name={"x"} fn={handleModal} />
           </Header>
-          {Object.keys(currentEvent).map((key) => {
-            return <p>{`${key}: ${currentEvent[key]}`}</p>;
-          })}
+          {maps.iterateProps(currentEvent)}
         </div>
       </Modal>
     </>
