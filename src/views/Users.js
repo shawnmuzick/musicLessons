@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { fetches, maps } from "../util";
-import { ListContainer, ListItem } from "../components";
+import { fetches, maps, filters } from "../util";
+import { ListContainer, Search } from "../components";
 export default function Users() {
-  const [users, getUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [list, setList] = useState([]);
   useEffect(() => {
     fetches.getUsers().then((res) => {
-      console.log(res);
-      getUsers(res.data);
+      setUsers(res.data);
+      setList(res.data);
     });
-  },[]);
-  const renderUsers = () => {
-    console.log(users);
-    return users.map((u) => {
-      return <ListItem key={u._id}>{maps.iterateProps(u)}</ListItem>;
-    });
-  };
+  }, []);
   return (
     <div>
       <h2>Users</h2>
-      <ListContainer>{renderUsers()}</ListContainer>
+      <Search arr={users} search={maps.search} filter={filters.filterSearch} setState={setList} />
+      <ListContainer>{maps.renderProfile(list, maps.iterateProps)}</ListContainer>
     </div>
   );
 }

@@ -1,0 +1,8 @@
+.roster{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.roster .listContainer{
+    padding: 10px;
+} 

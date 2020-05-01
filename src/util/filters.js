@@ -1,6 +1,12 @@
 const filters = {
+   search:(arr, filter, query, setState) => {
+    return setState(arr.filter(filter(query)));
+  },
   studentsByTeacher: (arr, teacher) => {
     return arr.filter((s) => s.teacher._id === teacher._id);
+  },
+  studentsByInstrument: (arr, instrument) => {
+    return arr.filter((s) => s.instrument === instrument.toLowerCase());
   },
   filterSearch: (query) => {
     if (!query || query === "") {

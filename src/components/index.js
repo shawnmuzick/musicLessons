@@ -6,4 +6,5 @@ import Modal from "./Modal";
 import ListContainer from "./ListContainer";
 import ListItem from "./ListItem";
 import Search from "./Search";
-export { Header, Footer, Button, MainMenu, Modal, ListContainer, ListItem, Search };
+import Filter from "./Filter";
+export { Header, Footer, Button, MainMenu, Modal, ListContainer, ListItem, Search, Filter };
