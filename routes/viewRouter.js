@@ -11,19 +11,18 @@ const saltRounds = 10;
 router.get("/login", (req, res) => {
   res.render("login");
 });
-router.post(
-  "/login",
-  bodyParser,
-  jsonParser,
-  passport.authenticate("local", { failureRedirect: "/login" }),
-  (req, res) => {
-    if (req.user) {
-      const date = new Date();
-      console.log(`User ID:${req.user._id} logged in at ${date}`);
-      res.json(req.user);
-    }
-  }
-);
+router.get("/logout", (req, res, next) => {
+  req.logout();
+  req.session.destroy();
+  next();
+});
+router.post("/login", bodyParser, jsonParser, passport.authenticate("local"), (req, res, next) => {
+  if (!req.user) return;
+  const date = new Date();
+  console.log(`User ID:${req.user._id} logged in at ${date}`);
+  res.json(req.user);
+  next();
+});
 router.get("/register", (req, res) => {
   res.render("register");
 });
@@ -46,9 +45,7 @@ router.post("/register", bodyParser, jsonParser, (req, res) => {
         }
         fs.appendFile(
           "./logs/users.txt",
-          `Added User: 
-            ${JSON.stringify(username)}\t
-            ${JSON.stringify(success)}\n`,
+          `Added User: ${JSON.stringify(username)}\t ${JSON.stringify(success)}\n`,
           (err) => {
             if (err) throw err;
           }

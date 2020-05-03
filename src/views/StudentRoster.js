@@ -23,7 +23,7 @@ export default function StudentRoster({ students }) {
   return (
     <div>
       <h2>Student Roster</h2>
-      <Search arr={students} search={maps.search} filter={filters.filterSearch} setState={setList} />
+      <Search arr={students} search={filters.search} filter={filters.filterSearch} setState={setList} />
       <div className={"roster"}>
         <Filter>
           <h3>Filters</h3>

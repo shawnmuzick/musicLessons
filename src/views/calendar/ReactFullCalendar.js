@@ -11,11 +11,7 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
   };
   const changeView = (args) => {
     const api = calendarRef.current.getApi();
-    if (api.view.type === "timeGridDay") {
-      return;
-    } else {
-      api.changeView("timeGridDay", args.date);
-    }
+    if (api.view.type !== "timeGridDay") return api.changeView("timeGridDay", args.date);
   };
   //use to refetch teacher and rerender after posts/updates to make them immediately visible
   const getTeacher = () => {
@@ -64,16 +60,11 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
       e = new Event(edit.event);
       stID = edit.event.extendedProps._id;
     }
-    const isAvailable = teacher.checkAvailability(e);
-    if (isAvailable === false) {
-      window.alert(`The time you have selected is outside of ${teacher.fname}'s hours!`);
-      return;
+    if (teacher.checkAvailability(e) === false) return window.alert(`Time is outside of ${teacher.fname}'s hours!`);
+    if (edit.draggedEl) {
+      postEvent(e, stID);
     } else {
-      if (edit.draggedEl) {
-        postEvent(e, stID);
-      } else {
-        editEvent(e, stID);
-      }
+      editEvent(e, stID);
     }
   };
   return (

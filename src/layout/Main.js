@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MainMenu, Footer } from "../components";
 import ViewContainer from "./ViewContainer";
-import { Calendar, Dashboard, Login, Users, StudentRoster, menu, adminMenu } from "../views/";
+import { Calendar, Dashboard, Login, Logout, Users, StudentRoster, menu, adminMenu } from "../views/";
 import { fetches } from "../util/";
 export default function Main({ menuState }) {
   const [view, setView] = useState("Calendar");
@@ -18,19 +18,12 @@ export default function Main({ menuState }) {
       .catch((err) => console.log(err));
   }, [view]);
   const renderMenu = () => {
-    console.log(user);
+    if (!menuState) return null;
     if (!user || user.role !== "admin") {
-      if (menuState) {
-        return <MainMenu view={view} setView={setView} menuItems={menu} />;
-      } else {
-        return null;
-      }
+      return <MainMenu view={view} setView={setView} menuItems={menu} />;
     } else {
-      if (menuState) {
-        return <MainMenu view={view} setView={setView} menuItems={adminMenu} />;
-      } else {
-        return null;
-      }
+      adminMenu[menu.indexOf("Login")] = "Logout";
+      return <MainMenu view={view} setView={setView} menuItems={adminMenu} />;
     }
   };
   return (
@@ -43,6 +36,7 @@ export default function Main({ menuState }) {
           Login={<Login setUser={setUser} setView={setView} />}
           Roster={<StudentRoster students={students} />}
           Users={<Users />}
+          Logout={<Logout setUser={setUser} setView={setView} />}
           view={view}
         />
         <Footer />

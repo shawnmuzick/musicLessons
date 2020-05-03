@@ -2,12 +2,13 @@ const { userModel } = require("../models");
 const fc = require("fs");
 
 const userCtrl = {
-  getUsers: (req, res) => {
+  getUsers: (req, res, next) => {
     console.log('getusers');
     if (req.params.id) {
       userModel.findOne({ _id: req.params.id }).exec((err, data) => {
         if (err) throw err;
         res.json(data);
+        return next();
       });
     } else {
       userModel.find().exec((err, data) => {
@@ -15,6 +16,7 @@ const userCtrl = {
         console.log(data);
         if (err) throw err;
         res.json(data);
+        return next();
       });
     }
   },

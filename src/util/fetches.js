@@ -77,6 +77,7 @@ const fetches = {
   },
   //user functions
   getUsers: () => {
+    console.log('requested users');
     return axios.get("/api/users");
   },
   postUserLogin: (username, password) => {

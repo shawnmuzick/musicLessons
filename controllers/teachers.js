@@ -2,7 +2,6 @@ const { teacherModel } = require("../models");
 const fs = require("fs");
 const teacherCtrl = {
   getTeachers: (req, res) => {
-    console.log(req.params.id);
     if (req.params.id) {
       teacherModel.findOne({ _id: req.params.id }).exec((err, data) => {
         if (err) throw err;

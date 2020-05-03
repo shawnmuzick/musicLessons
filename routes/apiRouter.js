@@ -7,6 +7,10 @@ const authCtrl = require("../controllers/auth");
 const urlEncodedParser = express.urlencoded({ extended: true, limit: "50mb" });
 const jsonParser = express.json({ limit: "50mb" });
 const apiRouter = express.Router();
+const logger = (req,res,next) =>{
+    console.log("/users requester");
+    next();
+}
 //Teachers------------------------------------------------------------------------------
 apiRouter.get("/teachers",teacherCtrl.getTeachers);
 apiRouter.get("/teachers:id", teacherCtrl.getTeachers);
@@ -26,7 +30,7 @@ apiRouter.post("/lessons", urlEncodedParser, jsonParser, lessonsCtrl.postLessons
 apiRouter.put("/lessons", urlEncodedParser, jsonParser, lessonsCtrl.updateLessons);
 apiRouter.delete("/lessons:id", lessonsCtrl.deleteLessons);
 //users-----------------------------------------------------------------------------------
-apiRouter.get("/users", authCtrl.isLoggedIn, userCtrl.getUsers);
+apiRouter.get("/users", logger, authCtrl.isLoggedIn, logger, userCtrl.getUsers);
 // apiRouter.get();
 // apiRouter.post();
 // apiRouter.put();

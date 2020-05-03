@@ -10,22 +10,13 @@ export default function StuCont({ students, teacher, setTeacher }) {
   }, []);
 
   const handleClick = (s, img) => {
-    if (!teacher.fname) {
-      window.alert("Please select an instructor below");
-      return;
-    } else {
-      if (s.fname === "DEFAULT" || s.fname === null) {
-        window.alert("Please fill out all fields as prompted");
-        return;
-      } else {
-        s.teacher.name = teacher.fname;
-        s.teacher.lname = teacher.lname;
-        s.teacher._id = teacher._id;
-        s.img = img;
-        fetches.postStudent(s);
-      }
-    }
-    return;
+    if (!teacher.fname) return window.alert("Please select an instructor below");
+    if (s.fname === "" || s.fname === null) return window.alert("Please fill out all fields as prompted");
+    s.teacher.name = teacher.fname;
+    s.teacher.lname = teacher.lname;
+    s.teacher._id = teacher._id;
+    s.img = img;
+    fetches.postStudent(s);
   };
   const removeStudent = (_id) => {
     fetches.deleteStudentById(_id).then(() => {

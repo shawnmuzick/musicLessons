@@ -4,6 +4,7 @@ export default function Search({ arr, filter, search, setState }) {
   const [query, setQuery] = useState("");
 
   const handleInput = (e) => {
+    console.log(search);
     const value = e.target.value;
     setQuery(value);
     search(arr, filter, value, setState);

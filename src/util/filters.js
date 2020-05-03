@@ -1,5 +1,6 @@
 const filters = {
    search:(arr, filter, query, setState) => {
+     console.log(query);
     return setState(arr.filter(filter(query)));
   },
   studentsByTeacher: (arr, teacher) => {

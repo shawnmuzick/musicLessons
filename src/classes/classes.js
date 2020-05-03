@@ -8,7 +8,7 @@ class Person {
     this.phone = phone || window.prompt("Enter phone number: ");
   }
   getFullName() {
-    return this.name + " " + this.lname;
+    return `${this.name} ${this.lname}`;
   }
 }
 
@@ -33,6 +33,12 @@ export class Teacher extends Person {
   }
   getConvRate() {
     return (this.trConv / (this.trConv + this.trFail)) * 100;
+  }
+  getGrossIncome(){
+    if(this.lessons === []) return;
+    return this.lessons.reduce((total,lesson)=>{
+      return total+= lesson.rate;
+    },0)
   }
   changeAvailability(hours) {
     let newHours = Object.keys(hours).map((key) => {
@@ -86,6 +92,5 @@ export class Event {
     this.instrument = instrument;
     this.icon = icon || `/img/${instrument}`;
     this.rate = rate;
-    console.log(this);
   }
 }

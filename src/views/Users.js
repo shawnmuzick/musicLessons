@@ -13,7 +13,7 @@ export default function Users() {
   return (
     <div>
       <h2>Users</h2>
-      <Search arr={users} search={maps.search} filter={filters.filterSearch} setState={setList} />
+      <Search arr={users} search={filters.search} filter={filters.filterSearch} setState={setList} />
       <ListContainer>{maps.renderProfile(list, maps.iterateProps)}</ListContainer>
     </div>
   );
