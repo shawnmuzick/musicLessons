@@ -1,4 +1,4 @@
-import moment from "moment";
+const moment = require("moment");
 
 class Person {
   constructor(_id, fname, lname, phone) {
@@ -8,11 +8,11 @@ class Person {
     this.phone = phone || window.prompt("Enter phone number: ");
   }
   getFullName() {
-    return `${this.name} ${this.lname}`;
+    return `${this.fname} ${this.lname}`;
   }
 }
 
-export class Teacher extends Person {
+class Teacher extends Person {
   constructor({ _id, fname, lname, phone, lessons, hours, salary }) {
     super(_id, fname, lname, phone);
     this.lessons = lessons || [];
@@ -35,9 +35,9 @@ export class Teacher extends Person {
     return (this.trConv / (this.trConv + this.trFail)) * 100;
   }
   getGrossIncome(){
-    if(this.lessons === []) return;
+    if(this.lessons === []) return 0;
     return this.lessons.reduce((total,lesson)=>{
-      return total+= lesson.rate;
+      return total+= this.salary;
     },0)
   }
   changeAvailability(hours) {
@@ -71,7 +71,7 @@ export class Teacher extends Person {
     return isAvailable;
   }
 }
-export class Student extends Person {
+class Student extends Person {
   constructor({ _id, fname, lname, phone, trial, lessons, instrument, teacher, tuition }) {
     super(_id, fname, lname, phone);
     this.trial = trial || { trDate: "", trConv: true, trConvF: "" };
@@ -81,7 +81,7 @@ export class Student extends Person {
     this.tuition = tuition || 30.0;
   }
 }
-export class Event {
+class Event {
   constructor({ title, start, end, id, backgroundColor, borderColor, instrument, icon, rate }) {
     this.title = title || window.prompt("Name this event: ");
     this.start = moment.utc(start).format();
@@ -94,3 +94,4 @@ export class Event {
     this.rate = rate;
   }
 }
+module.exports = {Teacher, Student, Event};
