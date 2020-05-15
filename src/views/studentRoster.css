@@ -1,8 +1,28 @@
-.roster{
+.roster {
     padding: 10px;
     display: flex;
     flex-direction: row;
 }
-.roster .listContainer{
+.roster .listContainer {
     padding: 10px;
-} 
+}
+details{
+    padding: 10px;
+    margin: 10px;
+}
+@media screen and (max-width: 1100px) {
+    .listItem {
+        flex-direction: row;
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+    }
+    .listItem .photoID {
+        display: flex;
+        margin: auto;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -106,8 +106,8 @@ test("properly update and read availability, returning false", () => {
         })
     ).toBe(false);
 });
-
 test("properly return 0 income if no lessons in array", () => {
-    guy.lessons = [];
-    expect(guy.getGrossIncome()).toBe(0);
+    const guy2 = new Teacher(obj);
+    guy2.lessons = [];
+    expect(guy2.getGrossIncome()).toEqual(0);
 });

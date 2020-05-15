@@ -19,3 +19,7 @@ Updated ID: "c26921c0-a06d-4d0e-975d-699b30312805"	{"n":1,"nModified":1,"ok":1}
 Updated ID: "5e5b1fe6-02ba-4d69-a68c-6e5a985bde56"	{"n":1,"nModified":1,"ok":1}
  Added ID: undefined	{"n":1,"nModified":1,"ok":1}
  Added ID: undefined	{"n":1,"nModified":1,"ok":1}
+ Added ID: undefined	{"n":1,"nModified":1,"ok":1}
+Updated ID: "c44e5da1-09a7-4371-a11a-f84c5690ff31"	{"n":1,"nModified":1,"ok":1}
+Updated ID: "c44e5da1-09a7-4371-a11a-f84c5690ff31"	{"n":1,"nModified":1,"ok":1}
+Deleted Lesson ID: "c44e5da1-09a7-4371-a11a-f84c5690ff31"	{"n":1,"nModified":1,"ok":1}
