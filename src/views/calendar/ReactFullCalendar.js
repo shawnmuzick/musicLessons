@@ -52,6 +52,7 @@ export default function ReactFullCalendar({
         setCurrentEvent(v);
     };
     const newDrop = (edit) => {
+        console.log(edit);
         const api = calendarRef.current.getApi();
         let e, stID;
         api.changeView("timeGridDay", edit.date);
