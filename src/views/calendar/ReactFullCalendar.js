@@ -82,7 +82,7 @@ export default function ReactFullCalendar({
     return (
         <>
             <FullCalendar
-                customButtons={makeButtons()}
+                customButtons={makeButtons}
                 dateClick={(args) => changeView(args)}
                 eventClick={(e) => eventClick(e.event)}
                 changeView={(args) => changeView(args)}

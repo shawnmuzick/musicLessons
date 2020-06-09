@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { fetches, maps } from "../../util";
 import { Header } from "../../components/";
 import ReactFullCalendar from "./ReactFullCalendar";
@@ -12,9 +12,15 @@ export default function Calendar({ SRC, students, setStudents }) {
         center: "title",
         right: "dayGridMonth,timeGridWeek,timeGridDay",
     };
-    const footer = {
-        center: "",
-    };
+    const footer = {}
+    footer.center = useMemo(() => {
+        console.log("usememo footer ran")
+        let string = "";
+        SRC.forEach((t) => {
+            string += `${t.lname},`;
+        });
+        return string;
+    }, [SRC]);
 
     useEffect(() => {
         //whenever the current teacher changes, rerender, fetch students, clean lessons array
@@ -24,20 +30,20 @@ export default function Calendar({ SRC, students, setStudents }) {
             .then((res) => setStudents(res))
             .catch((err) => console.log(err));
     }, [teacher, setStudents]);
-    const makeButtons = () => {
+    maps.addTeacherLessons(students, teacher);
+    const makeButtons = useMemo(() => {
+        console.log("usememo makebuttons ran");
         //This links students and their teachers
-        maps.addTeacherLessons(students, teacher);
         let obj = SRC.reduce((obj, item) => {
             obj[item.lname] = item;
             item.click = function () {
                 item.lessons = [];
                 setTeacher(item);
             };
-            footer.center += `${item.lname},`;
             return obj;
         }, {});
         return obj;
-    };
+    }, [SRC]);
     return (
         <div className="view">
             <Header>

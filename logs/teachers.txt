@@ -1,0 +1,3 @@
+Added Teacher: 
+          "Test"	
+          {"lessons":[],"hours":[],"_id":"5edf0757cca20020881f2c84","fname":"Test","lname":"This","phone":"1231231234","__v":0}
