@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, InputGroup } from "../forms";
+import {postUserLogin, fetches} from '../util/';
 export default function Login({ setUser, setView }) {
   const [values, setValues] = useState({});
   const handleChange = (e) => {
@@ -10,15 +11,7 @@ export default function Login({ setUser, setView }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: values.username, password: values.password }),
-    })
-      .then((res) => res.json())
+    fetches.postUserLogin(values.username, values.password)
       .then((data) => {
         setUser(data);
         if (data.role === "admin") {

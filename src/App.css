@@ -137,9 +137,6 @@ summary h4 {
   -ms-user-select: none;
   user-select: none;
 }
-details{
-  width: 100%;
-}
 #employees{
   width: 100%;
 }

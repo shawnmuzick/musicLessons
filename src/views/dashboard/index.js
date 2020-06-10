@@ -14,6 +14,7 @@ export default function DashboardView({ teachers, students }) {
             t.nStu = 0;
         });
     });
+    
     for (let i = 0; i < 12; i++) {
         arr[i] = {
             name: moment().month(i).format("MMM"),

@@ -30,7 +30,9 @@ export default function Calendar({ SRC, students, setStudents }) {
             .then((res) => setStudents(res))
             .catch((err) => console.log(err));
     }, [teacher, setStudents]);
+
     maps.addTeacherLessons(students, teacher);
+
     const makeButtons = useMemo(() => {
         console.log("usememo makebuttons ran");
         //This links students and their teachers
@@ -44,6 +46,7 @@ export default function Calendar({ SRC, students, setStudents }) {
         }, {});
         return obj;
     }, [SRC]);
+    
     return (
         <div className="view">
             <Header>
