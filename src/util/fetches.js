@@ -84,7 +84,7 @@ const fetches = {
     return axios.post("/login", {
       username,
       password,
-    });
+    }).then(res =>res.data);
   },
 };
 export { fetches };
