@@ -14,7 +14,7 @@ export default function DashboardView({ teachers, students }) {
             t.nStu = 0;
         });
     });
-    
+
     for (let i = 0; i < 12; i++) {
         arr[i] = {
             name: moment().month(i).format("MMM"),
@@ -39,12 +39,14 @@ export default function DashboardView({ teachers, students }) {
     };
     const getTotalNetIncome = () => {
         return teachers.reduce((total, t) => {
-            return (total += t.getGrossIncome() - t.salary * t.lessons.length);
+            return (total += t.getGrossIncome());
         }, 0);
     };
     const getTotalGrossIncome = () => {
         return teachers.reduce((total, teacher) => {
-            return (total += teacher.getGrossIncome());
+            return (total += teacher.lessons.reduce((acc, lesson) => {
+                return (acc += lesson.rate);
+            }, 0));
         }, 0);
     };
     teachers.forEach((t) => {
@@ -71,6 +73,7 @@ export default function DashboardView({ teachers, students }) {
     const renderEmployees = () => {
         return teachers.map((teacher) => <EmpDetails key={teacher._id} teacher={teacher} />);
     };
+    console.log(getTotalNetIncome());
     return (
         <div className={"view"}>
             <Header>
@@ -80,7 +83,10 @@ export default function DashboardView({ teachers, students }) {
                     <h3>Total Students: {students.length}</h3>
                     <h3>Conversion Rate: {conversionRate}%</h3>
                     <h3>Gross Income: ${Math.round(getTotalGrossIncome() * 100) / 100}</h3>
-                    <h3>Profit: ${Math.round(getTotalNetIncome() * 100) / 100}</h3>
+                    <h3>
+                        Profit: $
+                        {Math.round((getTotalGrossIncome() - getTotalNetIncome()) * 100) / 100}
+                    </h3>
                 </div>
             </Header>
             <div className="wrapper">

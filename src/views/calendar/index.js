@@ -62,7 +62,7 @@ export default function Calendar({ SRC, students, setStudents }) {
                     ) : (
                         <>
                             <br />
-                            <h1 style={{ margin: "auto" }}>Welcome</h1>}
+                            <h1 style={{ margin: "auto" }}>Welcome</h1>
                         </>
                     )}
                 </div>

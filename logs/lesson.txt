@@ -24,3 +24,5 @@ Updated ID: "c44e5da1-09a7-4371-a11a-f84c5690ff31"	{"n":1,"nModified":1,"ok":1}
 Updated ID: "c44e5da1-09a7-4371-a11a-f84c5690ff31"	{"n":1,"nModified":1,"ok":1}
 Deleted Lesson ID: "c44e5da1-09a7-4371-a11a-f84c5690ff31"	{"n":1,"nModified":1,"ok":1}
 Updated ID: "cb253a02-7f18-400f-a8b1-9559cf85a17b"	{"n":1,"nModified":1,"ok":1}
+ Added ID: undefined	{"n":1,"nModified":1,"ok":1}
+Updated ID: "7ef8d310-15b9-46e9-b8f9-2782a5bb4b04"	{"n":1,"nModified":1,"ok":1}

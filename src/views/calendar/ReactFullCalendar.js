@@ -51,26 +51,32 @@ export default function ReactFullCalendar({
         handleModal();
         setCurrentEvent(v);
     };
+    const calendar_event_create_new = (edit) => {
+        edit.title = edit.draggedEl.title;
+        edit.instrument = edit.draggedEl.attributes[3].value;
+        edit.rate = parseFloat(edit.draggedEl.attributes[4].value);
+        edit.start = edit.date;
+        return new Event(edit);
+    };
+    const calender_event_edit = (edit) => {
+        edit.event.instrument = edit.event.extendedProps.instrument;
+        edit.event.icon = edit.event.extendedProps.icon;
+        edit.event.rate = parseFloat(edit.event.extendedProps.rate);
+        return new Event(edit.event);
+    };
     const newDrop = (edit) => {
-        console.log(edit);
         const api = calendarRef.current.getApi();
         let e, stID;
         api.changeView("timeGridDay", edit.date);
         //if the source is an externally dragged in event
         if (edit.draggedEl) {
-            edit.title = edit.draggedEl.title;
-            edit.instrument = edit.draggedEl.attributes[3].value;
-            edit.rate = parseFloat(edit.draggedEl.attributes[4].value);
             stID = edit.draggedEl.id;
-            edit.start = edit.date;
-            e = new Event(edit);
+            e = calendar_event_create_new(edit);
         } else {
-            edit.event.instrument = edit.event.extendedProps.instrument;
-            edit.event.icon = edit.event.extendedProps.icon;
-            edit.event.rate = parseFloat(edit.event.extendedProps.rate);
-            e = new Event(edit.event);
             stID = edit.event.extendedProps._id;
+            e = calender_event_edit(edit);
         }
+
         if (teacher.checkAvailability(e) === false)
             return window.alert(`Time is outside of ${teacher.fname}'s hours!`);
         if (edit.draggedEl) {
