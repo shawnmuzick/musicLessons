@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MainMenu, Footer } from "../components";
 import ViewContainer from "./ViewContainer";
-import { Calendar, Dashboard, Login, Logout, Users, StudentRoster, menu, adminMenu } from "../views/";
+import { Calendar, Dashboard, Login, Logout, Users, StudentRoster, menu, adminMenu, Preferences } from "../views/";
 import { fetches } from "../util/";
 export default function Main({ menuState }) {
   const [view, setView] = useState("Calendar");
@@ -37,6 +37,7 @@ export default function Main({ menuState }) {
           Roster={<StudentRoster students={students} />}
           Users={<Users />}
           Logout={<Logout setUser={setUser} setView={setView} />}
+          Preferences={<Preferences />}
           view={view}
         />
         <Footer />

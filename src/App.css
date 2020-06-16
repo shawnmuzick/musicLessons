@@ -163,6 +163,15 @@ summary h4 {
 .postedHours {
   margin: 5px;
 }
+select, select option, select:focus{
+  color: black;
+}
+select{
+  display: flex;
+  flex-grow: 1;
+  padding: 5px;
+  margin: 5px;
+}
 
 @media screen and (min-width: 1200px) {
   #CalendarWrap .spacer {

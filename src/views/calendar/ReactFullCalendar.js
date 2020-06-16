@@ -33,15 +33,15 @@ export default function ReactFullCalendar({
             })
             .catch((err) => console.log(err));
     };
-    const editEvent = (e, stID) => {
+    const calendar_event_post_edit = (e, stID) => {
         fetches.putEvent(e, stID).catch((err) => console.log(err));
         getTeacher();
     };
-    const postEvent = (e, stID) => {
+    const calendar_event_post_new = (e, stID) => {
         fetches.postEvent(e, stID).catch((err) => console.log(err));
         getTeacher();
     };
-    const eventClick = (e) => {
+    const calendar_event_handle_click = (e) => {
         const { instrument, icon, rate } = e.extendedProps;
         e.instrument = instrument;
         e.icon = icon;
@@ -76,13 +76,12 @@ export default function ReactFullCalendar({
             stID = edit.event.extendedProps._id;
             e = calender_event_edit(edit);
         }
-
         if (teacher.checkAvailability(e) === false)
             return window.alert(`Time is outside of ${teacher.fname}'s hours!`);
         if (edit.draggedEl) {
-            postEvent(e, stID);
+            calendar_event_post_new(e, stID);
         } else {
-            editEvent(e, stID);
+            calendar_event_post_edit(e, stID);
         }
     };
     return (
@@ -90,7 +89,7 @@ export default function ReactFullCalendar({
             <FullCalendar
                 customButtons={makeButtons}
                 dateClick={(args) => changeView(args)}
-                eventClick={(e) => eventClick(e.event)}
+                eventClick={(e) => calendar_event_handle_click(e.event)}
                 changeView={(args) => changeView(args)}
                 eventDrop={(edit) => newDrop(edit)}
                 drop={(edit) => newDrop(edit)}
