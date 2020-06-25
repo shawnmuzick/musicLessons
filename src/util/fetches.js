@@ -76,6 +76,9 @@ const fetches = {
     return axios.delete(`/api/lessons${id}`);
   },
   //user functions
+  init:()=>{
+    return axios.get("/api/init");
+  },
   getUsers: () => {
     console.log('requested users');
     return axios.get("/api/users");

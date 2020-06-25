@@ -14,8 +14,8 @@ export default function ReactFullCalendar({
 }) {
     const [open, setOpen] = useState(false);
     const [currentEvent, setCurrentEvent] = useState({});
-    const dayStart = "10:00:00";
-    const dayEnd = "22:00:00";
+   // const dayStart = "10:00:00";
+    //const dayEnd = "22:00:00";
     const handleModal = () => {
         setOpen(!open);
     };

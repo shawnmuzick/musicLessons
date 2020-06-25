@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, InputGroup } from "../forms";
-import {postUserLogin, fetches} from '../util/';
+import { fetches} from '../util/';
 export default function Login({ setUser, setView }) {
   const [values, setValues] = useState({});
   const handleChange = (e) => {

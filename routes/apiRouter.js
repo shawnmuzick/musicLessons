@@ -1,18 +1,18 @@
 const express = require("express");
-const teacherCtrl = require('../controllers/teachers');
-const lessonsCtrl = require('../controllers/lessons');
-const studentCtrl = require('../controllers/students');
-const userCtrl = require('../controllers/users');
+const teacherCtrl = require("../controllers/teachers");
+const lessonsCtrl = require("../controllers/lessons");
+const studentCtrl = require("../controllers/students");
+const userCtrl = require("../controllers/users");
 const authCtrl = require("../controllers/auth");
 const urlEncodedParser = express.urlencoded({ extended: true, limit: "50mb" });
 const jsonParser = express.json({ limit: "50mb" });
 const apiRouter = express.Router();
-const logger = (req,res,next) =>{
+const logger = (req, res, next) => {
     console.log("/users requester");
     next();
-}
+};
 //Teachers------------------------------------------------------------------------------
-apiRouter.get("/teachers",teacherCtrl.getTeachers);
+apiRouter.get("/teachers", teacherCtrl.getTeachers);
 apiRouter.get("/teachers:id", teacherCtrl.getTeachers);
 apiRouter.post("/teachers", urlEncodedParser, jsonParser, teacherCtrl.postTeacher);
 apiRouter.put("/teachers:id", urlEncodedParser, jsonParser, teacherCtrl.updateTeacher);
@@ -31,6 +31,10 @@ apiRouter.put("/lessons", urlEncodedParser, jsonParser, lessonsCtrl.updateLesson
 apiRouter.delete("/lessons:id", lessonsCtrl.deleteLessons);
 //users-----------------------------------------------------------------------------------
 apiRouter.get("/users", logger, authCtrl.isLoggedIn, logger, userCtrl.getUsers);
+apiRouter.get("/init", authCtrl.isLoggedIn, (req, res) => {
+    console.log(req.user);
+    res.send(req.user);
+});
 // apiRouter.get();
 // apiRouter.post();
 // apiRouter.put();
