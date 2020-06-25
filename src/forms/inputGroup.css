@@ -1,0 +1,18 @@
+.inputGroup {
+    display: flex;
+    text-align: left;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    width: 50vw;
+    overflow-wrap: break-word;
+  }
+  .inputGroup label {
+    width: 100px;
+  }
+  .inputGroup input, .formGroup select {
+    flex-grow: 1;
+    padding: 5px;
+    margin: 5px;
+  }

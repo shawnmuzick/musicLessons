@@ -1,14 +1,12 @@
 import React from "react";
-import icon from "./icons/menu-24px.svg";
-export default function Header({menuState,setMenu }) {
+export default function Header({children }) {
+  const renderChildren = () => {
+    return React.Children.map(children, (child) => <>{child}</>);
+  };
+
   return (
     <header className="App-header">
-      <div id="App-header-wrapper">
-        <button id="MainMenuIconWrapper"onClick={()=>setMenu(!menuState)}>
-          <img id="MainMenuIcon"src={icon} alt="" />
-        </button>
-        <h1>Music Lessons</h1>
-      </div>
+        {renderChildren()}
     </header>
   );
 }

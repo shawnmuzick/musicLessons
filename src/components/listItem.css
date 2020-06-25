@@ -1,0 +1,13 @@
+.listItem{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0px;
+    flex-wrap: wrap;
+    max-height: 200px;
+    text-align: left;
+}
+.listItem p {
+    padding: 10px;
+    margin: 0px;
+}

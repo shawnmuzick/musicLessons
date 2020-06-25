@@ -17,7 +17,7 @@ footer {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box;
-  text-align: left;
+
   background-color: #202124;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,7 @@ footer {
   padding: 0.5rem;
 }
 #App-header-wrapper {
+  text-align: left;
   display: flex;
   flex-direction: row;
 }
@@ -81,26 +82,7 @@ footer {
   margin: 0px;
 }
 
-/*Buttons------------------------------------------------------------------------------------------------------------*/
-.MainMenu-button,
-.fc-footer-toolbar button,
-.fc-header-toolbar button {
-  color: rgba(255, 255, 255, 0.7);
-  border-radius: 5px;
-  margin: 10px;
-  padding: 1rem 0rem 1rem 0rem;
-  background-color: transparent;
-  border: 0px;
-  font-weight: bold;
-  outline: none;
-}
-.MainMenu-button:hover,
-.fc-footer-toolbar button:hover,
-.fc-header-toolbar button:hover,
-.MainMenu-button:focus {
-  background-color: rgb(124, 122, 122);
-  box-shadow: 0 0 0px 0px rgb(124, 122, 122);
-}
+
 :focus{
   color:white;
 }
@@ -116,6 +98,7 @@ footer {
   flex-shrink: 0;
 }
 .dashHeader {
+  text-align: center;
   display: flex;
   justify-content: space-evenly;
 }
@@ -143,24 +126,6 @@ summary h4 {
   flex-direction: column;
   align-items: flex-start;
 }
-.formGroup {
-  display: flex;
-  text-align: left;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  align-content: center;
-  width: 50vw;
-  overflow-wrap: break-word;
-}
-.formGroup label {
-  width: 100px;
-}
-.formGroup input, .formGroup select {
-  flex-grow: 1;
-  padding: 5px;
-  margin: 5px;
-}
 .container {
   display: block;
   position: relative;
@@ -171,9 +136,6 @@ summary h4 {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-details{
-  width: 100%;
 }
 #employees{
   width: 100%;
@@ -201,12 +163,15 @@ details{
 .postedHours {
   margin: 5px;
 }
-
-form input:focus, form input:active,
-form select:focus, form select:active{
-  color: black !important;
+select, select option, select:focus{
+  color: black;
 }
-
+select{
+  display: flex;
+  flex-grow: 1;
+  padding: 5px;
+  margin: 5px;
+}
 
 @media screen and (min-width: 1200px) {
   #CalendarWrap .spacer {
