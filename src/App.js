@@ -1,8 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Main, AppHeader } from "./layout/";
+import { ThemeContext } from "./ThemeContext";
 import "./App.css";
 export default function App() {
     const [menuState, setMenu] = useState(true);
+    const [theme, setTheme] = useState("Dark");
+    if (document.cookie) {
+        console.log(document.cookie);
+    }
+    useEffect(() => {
+        if (theme === "Light") {
+            document.documentElement.style.setProperty("--ui-background-color", "white");
+            document.documentElement.style.setProperty("--ui-text-color", "black");
+            document.documentElement.style.setProperty("--main-background-color", "#eee");
+            document.documentElement.style.setProperty("--main-text-color", "black");
+        } else {
+            document.documentElement.style.setProperty("--ui-background-color", "");
+            document.documentElement.style.setProperty("--ui-text-color", "");
+            document.documentElement.style.setProperty("--main-background-color", "");
+            document.documentElement.style.setProperty("--main-text-color", "");
+        }
+    });
+
+    /*
     if (!document.cookie) {
         let today = new Date();
         let tomorrow = new Date(`${today.getFullYear()} ${today.getDate() + 1}`);
@@ -15,11 +35,13 @@ export default function App() {
     } else {
         console.log("there was a cookie, here it is!");
         console.log(document.cookie);
-    }
+    }*/
     return (
         <div className="App">
-            <AppHeader menuState={menuState} setMenu={setMenu} />
-            <Main menuState={menuState} />
+            <ThemeContext.Provider value={{ theme, setTheme }}>
+                <AppHeader menuState={menuState} setMenu={setMenu} />
+                <Main menuState={menuState} />
+            </ThemeContext.Provider>
         </div>
     );
 }

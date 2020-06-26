@@ -6,8 +6,8 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    background:#202124;
-    color: rgba(255,255,255,0.70);
+    background:var(--ui-background-color);
+    color: var(--ui-text-color);
     min-width: 200px;
     max-width: 200px;
     min-height: 100%;
@@ -17,7 +17,7 @@
     padding: 10px;
     margin: 0px 10px 0px 10px;
     border: none;
-    background-color: #202124;
+    background-color: var(--ui-background-color);
     border-radius: 50%;
     outline: none;
   }

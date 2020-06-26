@@ -1,5 +1,5 @@
 .filter{
-    background-color: #202124;
+    background-color: var(--ui-background-color);
     padding: 10px;
     text-align: left;
     display: flex;
