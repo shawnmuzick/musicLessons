@@ -6,6 +6,7 @@ import {
     Dashboard,
     Login,
     Logout,
+    Register,
     Users,
     StudentRoster,
     menu,
@@ -48,6 +49,7 @@ export default function Main({ menuState }) {
                     Calendar={
                         <Calendar SRC={teachers} students={students} setStudents={setStudents} />
                     }
+                    Register={<Register setView={setView} />}
                     Dashboard={<Dashboard teachers={teachers} students={students} />}
                     Login={<Login setUser={setUser} setView={setView} />}
                     Roster={<StudentRoster students={students} />}

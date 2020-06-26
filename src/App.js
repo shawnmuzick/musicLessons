@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Main, AppHeader } from "./layout/";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext } from "./contexts/ThemeContext";
 import "./App.css";
 export default function App() {
     const [menuState, setMenu] = useState(true);

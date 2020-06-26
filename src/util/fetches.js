@@ -83,6 +83,11 @@ const fetches = {
     console.log('requested users');
     return axios.get("/api/users");
   },
+  postUserRegister:(username, password)=>{
+    return axios.post("/register",{
+      username,password
+    }).then()
+  },
   postUserLogin: (username, password) => {
     return axios.post("/login", {
       username,

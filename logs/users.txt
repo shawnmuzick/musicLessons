@@ -1,0 +1,4 @@
+Added User: "bob"	 {"_id":"5ef633949c08b5221001f1f4","username":"bob","password":"$2b$10$JOwSFRF1UPYx0VeECR585O6HMEQqtMLuS9I.c4Uh0zAz/tEIWfylC","role":"user","__v":0}
+Added User: "bob"	 {"_id":"5ef6339a9c08b5221001f1f5","username":"bob","password":"$2b$10$UxzwDCOWvTzN2irVaDiQYe8MMmDGiBuE0gBjMGmrHQ2El3QzFI6Vu","role":"user","__v":0}
+Added User: "bob"	 {"_id":"5ef634255d18c9401c36381c","username":"bob","password":"$2b$10$amHawp3yGDbjiO9f9uZiSuMnnQkRCUE30x9/9Lb1ihHkvlBkEBrN6","role":"user","__v":0}
+Added User: "bob"	 {"_id":"5ef634875d13dc22d4caa50c","username":"bob","password":"$2b$10$Gmh4PBPHUDty/xTAe3HFzeIDuBfs4DSTOrTU/zOgCsD6u7mKEvuxO","role":"user","__v":0}

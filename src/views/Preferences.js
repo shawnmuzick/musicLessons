@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { ThemeContext } from "../ThemeContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 export default function Preferences() {
     const { theme, setTheme } = useContext(ThemeContext);
     const toggle_theme = (e) => {
