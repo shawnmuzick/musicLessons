@@ -1,6 +1,3 @@
-@import "~@fullcalendar/core/main.css";
-@import "~@fullcalendar/daygrid/main.css";
-@import "~@fullcalendar/timegrid/main.css";
 .fc-button,
 .fc-button-primary {
     border-radius: 5px;

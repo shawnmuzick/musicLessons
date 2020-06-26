@@ -90,23 +90,23 @@ export default function ReactFullCalendar({
                 customButtons={makeButtons}
                 dateClick={(args) => changeView(args)}
                 eventClick={(e) => calendar_event_handle_click(e.event)}
-                changeView={(args) => changeView(args)}
+                //changeView={(args) => changeView(args)}
                 eventDrop={(edit) => newDrop(edit)}
                 drop={(edit) => newDrop(edit)}
                 eventResize={(edit) => newDrop(edit)}
                 ref={calendarRef}
-                footer={footer}
-                header={header}
+                footerToolbar={footer}
+                headerToolbar={header}
                 plugins={plugins}
                 events={teacher.lessons}
                 droppable={true}
                 businessHours={teacher.hours}
-                eventLimit={3}
+                dayMaxEventRows={3}
                 eventDurationEditable={true}
                 eventStartEditable={true}
                 eventOverlap={false}
                 editable={true}
-                allDayDefault={false}
+                defaultAllDay={false}
                 // minTime={dayStart}
                 // maxTime={dayEnd}
                 timeZone={"UTC"}

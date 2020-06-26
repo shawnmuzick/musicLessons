@@ -94,4 +94,4 @@ class Event {
         this.rate = rate;
     }
 }
-module.exports = { Teacher, Student, Event };
+export { Teacher, Student, Event };
