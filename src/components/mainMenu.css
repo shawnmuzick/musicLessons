@@ -1,36 +1,50 @@
 /* Main Menu -----------------------------------------------------------------------------------------------------------*/
 #MainMenu {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background:var(--ui-background-color);
-    color: var(--ui-text-color);
-    min-width: 200px;
-    max-width: 200px;
-    min-height: 100%;
-    max-height: 100%;
-  }
-  #MainMenuIconWrapper {
-    padding: 10px;
-    margin: 0px 10px 0px 10px;
-    border: none;
-    background-color: var(--ui-background-color);
-    border-radius: 50%;
-    outline: none;
-  }
-  #MainMenuIconWrapper img{
-      /* swap icon color */
-    filter: invert(100%) sepia(8%) saturate(2%) hue-rotate(230deg) brightness(107%) contrast(101%);
-  }
-  #MainMenuIconWrapper:hover {
-    background-color: rgb(124, 122, 122);
-  }
-  #MainMenuIconWrapper:focus {
-    box-shadow: 0 0 3px 2px #3788d852;
-  }
-  #MainMenuIcon {
-    outline: none;
-  }
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	background: var(--ui-background-color);
+	color: var(--ui-text-color);
+	min-width: 200px;
+	max-width: 200px;
+	min-height: 100%;
+	max-height: 100%;
+}
+#MainMenuIconWrapper {
+	padding: 10px;
+	margin: 0px 10px 0px 10px;
+	border: none;
+	background-color: var(--ui-background-color);
+	border-radius: 50%;
+	outline: none;
+}
+#MainMenuIconWrapper img {
+	/* swap icon color */
+	filter: invert(100%) sepia(8%) saturate(2%) hue-rotate(230deg) brightness(107%) contrast(101%);
+}
+#MainMenuIconWrapper:hover {
+	background-color: rgb(124, 122, 122);
+}
+#MainMenuIconWrapper:focus {
+	box-shadow: 0 0 3px 2px #3788d852;
+}
+#MainMenuIcon {
+	outline: none;
+}
+.menuHeaderContainer {
+	display: flex;
+	flex-direction: row;
+	font-size: 1em;
+	justify-content: center;
+	align-items: center;
+}
+.menuHeaderContainer h2{
+  margin: auto;
+  text-decoration: underline;
+  text-decoration-color: white;
+  font-size: 1em;
+  text-decoration-style: double;
+}

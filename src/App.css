@@ -1,197 +1,254 @@
 /* Variables */
 :root {
-    --ui-background-color: #202124;
-    --ui-text-color: rgba(255, 255, 255, 0.753);
-    --main-background-color: black;
-    --main-text-color:white;
+	--ui-background-color: #202124;
+	--ui-text-color: rgba(255, 255, 255, 0.753);
+	--main-background-color: black;
+	--main-text-color: white;
 }
 
 /*Containers----------------------------------------------------------------------------------------------*/
 .App {
-    text-align: center;
-    display: grid;
-    grid-template-rows: 60px 95fr;
-    min-height: 100vh;
-    max-height: 100vh;
-    color: var(--ui-text-color);
-    background-color: var(--ui-background-color);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100vw;
+	color: var(--ui-text-color);
+	background-color: var(--ui-background-color);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+		'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 .App-header,
 header,
 footer {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-
-    background-color: var(--ui-background-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0px;
-    padding: 0.5rem;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	background-color: var(--ui-background-color);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0px;
+	padding: 0.5rem;
+	width: 100vw;
+	height: 10vh;
 }
 #App-header-wrapper {
-    text-align: left;
-    display: flex;
-    flex-direction: row;
+	text-align: left;
+	display: flex;
+	flex-direction: row;
 }
 .main {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	height: 90vh;
 }
 .inner {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-    display: grid;
-    grid-template-rows: 95fr 50px;
-    width: 100%;
-    background-color: var(--main-background-color);
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	display: grid;
+	grid-template-rows: 95fr 50px;
+	width: 100%;
+	background-color: var(--main-background-color);
 }
 .view {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-    padding: 1rem;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	padding: 1rem;
 }
 /*Enable space for external events */
 #CalendarWrap {
-    display: grid;
-    grid-template-columns: 200px 80fr;
+	display: grid;
 }
 #CalendarWrap .spacer {
-    display: none;
+	display: none;
 }
 .wrapper {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-    width: 100%;
-    flex-grow: 8;
-    height: 80%;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	width: 100%;
+	flex-grow: 8;
+	height: 80%;
 }
 .col {
-    flex: 0 0 20%;
+	flex: 0 0 20%;
 }
 .colInn {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
 }
 .App-header h1 {
-    margin: 0px;
+	margin: 0px;
 }
 
 :focus {
-    color: white;
+	color: white;
 }
 
 /* Dashboard ------------------------------------------------------------------------------------------------- */
 .metrics,
 .forms {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    min-height: 400px;
-    flex-grow: 1;
-    flex-shrink: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	min-height: 400px;
+	flex-grow: 1;
+	flex-shrink: 0;
 }
 .dashHeader {
-    text-align: center;
-    display: flex;
-    justify-content: space-evenly;
+	text-align: center;
+	display: flex;
+	justify-content: space-evenly;
 }
 .metrics {
-    flex: 1 1 25%;
-    max-width: 100%;
+	flex: 1 1 25%;
+	max-width: 100%;
 }
 .chartWrap {
-    display: block;
-    height: 300px;
+	display: block;
+	height: 300px;
 }
 .formsWrap {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
 }
 summary h4 {
-    margin: 0px;
-    display: inline;
+	margin: 0px;
+	display: inline;
 }
 .EmpForm {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
 .container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 #employees {
-    width: 100%;
+	width: 100%;
 }
 .employee {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    margin: 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	margin: 0px;
 }
 .photoId,
 .photoID img {
-    width: 200px;
-    height: 200px;
-    padding: auto;
-    background-color: grey;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
+	width: 200px;
+	height: 200px;
+	padding: auto;
+	background-color: grey;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
 }
 .phone {
-    margin: 5px;
+	margin: 5px;
 }
 .postedHours {
-    margin: 5px;
+	margin: 5px;
 }
 select,
 select option,
 select:focus {
-    color: black;
+	color: black;
 }
 select {
-    display: flex;
-    flex-grow: 1;
-    padding: 5px;
-    margin: 5px;
+	display: flex;
+	flex-grow: 1;
+	padding: 5px;
+	margin: 5px;
 }
 
 @media screen and (min-width: 1200px) {
-    #CalendarWrap .spacer {
-        display: block;
-    }
-    #CalendarWrap {
-        display: grid;
-        grid-template-columns: 300px 100px 80fr 100px;
-        padding: 0rem 1rem 1rem 1rem;
-    }
-    .calendarHeader {
-        margin: 1rem 1rem 0rem 1rem;
-    }
+	#CalendarWrap .spacer {
+		display: block;
+	}
+	#CalendarWrap {
+		display: grid;
+		grid-template-columns: 300px 100px 80fr 100px;
+		padding: 0rem 1rem 1rem 1rem;
+	}
+	.calendarHeader {
+		margin: 1rem 1rem 0rem 1rem;
+	}
+}
+@media screen and (min-width: 320px) {
+	#MainMenu {
+		position: fixed;
+		left: 0px;
+		z-index: 3;
+	}
+	.spacer {
+		display: none;
+	}
+	#CalendarWrap {
+		display: flex;
+        flex-direction: column;
+        padding: 10px;
+	}
+	.view {
+        padding: 0px;
+        background-color: black;
+	}
+	.fc .fc-toolbar.fc-footer-toolbar {
+		margin: 0px;
+		background-color: black;
+	}
+	.calendarHeader {
+		height: 10vh;
+	}
+	.calendarHeader img {
+		display: none;
+	}
+	.calendarHeader h1 {
+		font-size: 1.2em;
+		margin: auto;
+	}
+	.extEvents {
+		padding: 0px;
+	}
+	.fc,
+	.fc thead tbody {
+		background-color: black;
+	}
+	.modal .App-header {
+		width: auto;
+		font-size: 0.8em;
+	}
+	.modal .App-header img {
+		display: none;
+	}
+	.modal .form .inputGroup,
+	.modal {
+		width: 100%;
+		justify-content: end;
+	}
+	.inputGroup input,
+	.inputGroup select {
+        width: 150px;
+	}
 }
