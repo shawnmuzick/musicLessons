@@ -10,9 +10,11 @@ details{
     padding: 10px;
     margin: 10px;
 }
+.roster .listItem{
+    flex-direction: row;
+}
 @media screen and (max-width: 1100px) {
     .listItem {
-        flex-direction: row;
         display: flex;
         margin: auto;
         justify-content: center;
