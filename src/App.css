@@ -93,7 +93,35 @@ footer {
 :focus {
 	color: white;
 }
-
+.extEvents-title {
+	display: none;
+}
+.extEvents-title-mobile {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.extEvents-inner {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	transition: 0.5s;
+	max-height: 0px;
+	overflow: hidden;
+}
+.show {
+	display: flex;
+	height: auto;
+	max-height: 50vh;
+	transition: max-height 1s;
+	overflow: scroll;
+	scrollbar-width: none;
+}
+.show::-webkit-scrollbar {
+	display: none;
+}
 /* Dashboard ------------------------------------------------------------------------------------------------- */
 .metrics,
 .forms {
@@ -207,12 +235,12 @@ select {
 	}
 	#CalendarWrap {
 		display: flex;
-        flex-direction: column;
-        padding: 10px;
+		flex-direction: column;
+		padding: 10px;
 	}
 	.view {
-        padding: 0px;
-        background-color: black;
+		padding: 0px;
+		background-color: black;
 	}
 	.fc .fc-toolbar.fc-footer-toolbar {
 		margin: 0px;
@@ -244,11 +272,25 @@ select {
 	}
 	.modal .form .inputGroup,
 	.modal {
-		width: 100%;
 		justify-content: end;
+		width: auto;
 	}
 	.inputGroup input,
 	.inputGroup select {
-        width: 150px;
+		width: 150px;
+	}
+	#view_login .inputGroup,
+	#view_register .inputGroup {
+		width: auto;
+	}
+	#view_dashboard .App-header {
+		height: auto;
+	}
+	#view_dashboard .listItem {
+		flex-direction: row;
+		max-height: unset;
+	}
+	.dashHeader {
+		flex-direction: column;
 	}
 }

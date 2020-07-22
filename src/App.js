@@ -25,10 +25,11 @@ export default function App() {
 			document.documentElement.style.setProperty('--main-text-color', '');
 		}
 	});
-
 	const renderMenu = () => {
 		console.log(user);
-		if (!menuState) return null;
+		if (!menuState) {
+			return null;
+		}
 		if (!user || user.role !== 'admin') {
 			return (
 				<MainMenu

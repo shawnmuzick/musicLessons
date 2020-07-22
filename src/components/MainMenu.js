@@ -9,7 +9,7 @@ export default function MainMenu({ setView, menuItems, setMenu, menuState }) {
 		<div id="MainMenu">
 			<div className="menuHeaderContainer">
 				<h2>Main Menu</h2>
-				<Button fn={setMenu} name={'x'} value={!menuState}/>
+				<Button fn={setMenu} name={'x'} value={!menuState} />
 			</div>
 			{renderMenu()}
 		</div>
