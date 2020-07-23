@@ -16,7 +16,7 @@ export default function Main({ setUser, setView, view }) {
 	}, [view]);
 	useEffect(() => {
 		fetches.init().then((res) => setUser(res.data));
-	}, []);
+	}, [setUser]);
 	return (
 		<main className="main">
 			<div className="inner">

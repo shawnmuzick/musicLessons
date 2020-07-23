@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from '../components/';
 import icon from '../icons/menu-24px.svg';
-export default function AppHeader({ setMenu }) {
+export default function AppHeader() {
 	const showMenu = () => {
 		const mainMenu = document.getElementById('MainMenu');
 		mainMenu.classList.remove('MainMenu-hide');

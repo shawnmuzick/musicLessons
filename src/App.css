@@ -248,6 +248,9 @@ select {
 	.dashHeader {
 		flex-direction: column;
 	}
+	.main {
+		height: auto;
+	}
 }
 
 @media screen and (min-width: 800px) {

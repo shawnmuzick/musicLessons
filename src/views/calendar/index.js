@@ -14,7 +14,6 @@ export default function Calendar({ SRC, students, setStudents }) {
 	};
 	const footer = {};
 	footer.center = useMemo(() => {
-		console.log('usememo footer ran');
 		let string = '';
 		SRC.forEach((t) => {
 			string += `${t.lname},`;
@@ -33,7 +32,6 @@ export default function Calendar({ SRC, students, setStudents }) {
 	maps.addTeacherLessons(students, teacher);
 
 	const makeButtons = useMemo(() => {
-		console.log('usememo makebuttons ran');
 		//This links students and their teachers
 		let obj = SRC.reduce((obj, item) => {
 			obj[item.lname] = item;
@@ -45,27 +43,29 @@ export default function Calendar({ SRC, students, setStudents }) {
 		}, {});
 		return obj;
 	}, [SRC]);
-
+	const renderHeader = () => {
+		return (
+			<div className="calendarHeader">
+				{teacher._id ? (
+					<>
+						<img
+							src={`/assets/img/faculty/${teacher._id}.jpg`}
+							alt={`${teacher.fname} ${teacher.lname}`}
+						/>
+						<h1>{`${teacher.fname} ${teacher.lname}`}</h1>
+					</>
+				) : (
+					<>
+						<br />
+						<h1 style={{ margin: 'auto' }}>Welcome</h1>
+					</>
+				)}
+			</div>
+		);
+	};
 	return (
 		<div className="view">
-			<Header>
-				<div className="calendarHeader">
-					{teacher._id ? (
-						<>
-							<img
-								src={`/assets/img/faculty/${teacher._id}.jpg`}
-								alt={`${teacher.fname} ${teacher.lname}`}
-							/>
-							<h1>{`${teacher.fname} ${teacher.lname}`}</h1>
-						</>
-					) : (
-						<>
-							<br />
-							<h1 style={{ margin: 'auto' }}>Welcome</h1>
-						</>
-					)}
-				</div>
-			</Header>
+			<Header>{renderHeader()}</Header>
 			<div className="wrapper" id="CalendarWrap">
 				<StuCont students={students} teacher={teacher} setTeacher={setTeacher} />
 				<div className="spacer" />

@@ -1,14 +1,19 @@
-.filter{
-    background-color: var(--ui-background-color);
-    padding: 10px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+.filter {
+	background-color: var(--ui-background-color);
+	padding: 10px;
+	height: 10vh;
+	text-align: left;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
 }
-.filter .inputGroup{
-    justify-content: start;
-    align-items: flex-start;
-    width: auto;
-} 
+.filter .inputGroup {
+	justify-content: start;
+	align-items: flex-start;
+	width: auto;
+}
+.filter .inputGroup input {
+	width: auto;
+}
