@@ -4,6 +4,12 @@
 	--ui-text-color: rgba(255, 255, 255, 0.753);
 	--main-background-color: black;
 	--main-text-color: white;
+	--highlight-color: white;
+	--input-text-color: black;
+	--border-rounded-corners: 0.2em;
+	--modal-backdrop-color: rgba(0, 0, 0, 0.5);
+	--menu-toggle-button-color: invert(100%) sepia(8%) saturate(2%) hue-rotate(230deg) brightness(107%)
+		contrast(101%);
 }
 
 /*Containers----------------------------------------------------------------------------------------------*/
@@ -30,7 +36,7 @@ footer {
 	justify-content: center;
 	margin: 0px;
 	padding: 0.5rem;
-	width: 100vw;
+	width: 100%;
 	height: 10vh;
 }
 #App-header-wrapper {
@@ -39,50 +45,28 @@ footer {
 	flex-direction: row;
 }
 .main {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
-	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
 	height: 90vh;
 }
 .inner {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
-	box-sizing: border-box;
-	display: grid;
-	grid-template-rows: 95fr 50px;
 	width: 100%;
 	background-color: var(--main-background-color);
 }
 .view {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
-	box-sizing: border-box;
+	height: 100%;
 	padding: 1rem;
+	background-color: var(--main-background-color);
 }
 /*Enable space for external events */
-#CalendarWrap {
-	display: grid;
-}
+
 #CalendarWrap .spacer {
 	display: none;
-}
-.wrapper {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
-	box-sizing: border-box;
-	width: 100%;
-	flex-grow: 8;
-	height: 80%;
 }
 .col {
 	flex: 0 0 20%;
 }
 .colInn {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
-	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 }
@@ -91,36 +75,7 @@ footer {
 }
 
 :focus {
-	color: white;
-}
-.extEvents-title {
-	display: none;
-}
-.extEvents-title-mobile {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-.extEvents-inner {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	transition: 0.5s;
-	max-height: 0px;
-	overflow: hidden;
-}
-.show {
-	display: flex;
-	height: auto;
-	max-height: 50vh;
-	transition: max-height 1s;
-	overflow: scroll;
-	scrollbar-width: none;
-}
-.show::-webkit-scrollbar {
-	display: none;
+	color: var(--highlight-color);
 }
 /* Dashboard ------------------------------------------------------------------------------------------------- */
 .metrics,
@@ -188,7 +143,7 @@ summary h4 {
 	width: 200px;
 	height: 200px;
 	padding: auto;
-	background-color: grey;
+	background-color: var(--main-background-color);
 	justify-content: center;
 	text-align: center;
 	align-items: center;
@@ -202,7 +157,7 @@ summary h4 {
 select,
 select option,
 select:focus {
-	color: black;
+	color: var(--input-text-color);
 }
 select {
 	display: flex;
@@ -210,7 +165,14 @@ select {
 	padding: 5px;
 	margin: 5px;
 }
+.fc,
+.fc thead tbody {
+	background-color: var(--main-background-color);
+}
 
+.fc .fc-toolbar.fc-footer-toolbar {
+	background-color: var(--main-background-color);
+}
 @media screen and (min-width: 1200px) {
 	#CalendarWrap .spacer {
 		display: block;
@@ -236,15 +198,12 @@ select {
 	#CalendarWrap {
 		display: flex;
 		flex-direction: column;
-		padding: 10px;
 	}
 	.view {
 		padding: 0px;
-		background-color: black;
 	}
 	.fc .fc-toolbar.fc-footer-toolbar {
 		margin: 0px;
-		background-color: black;
 	}
 	.calendarHeader {
 		height: 10vh;
@@ -258,10 +217,6 @@ select {
 	}
 	.extEvents {
 		padding: 0px;
-	}
-	.fc,
-	.fc thead tbody {
-		background-color: black;
 	}
 	.modal .App-header {
 		width: auto;
@@ -292,5 +247,11 @@ select {
 	}
 	.dashHeader {
 		flex-direction: column;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.view {
+		padding: 1rem;
 	}
 }

@@ -66,19 +66,17 @@ export default function Calendar({ SRC, students, setStudents }) {
 					)}
 				</div>
 			</Header>
-			<div>
+			<div className="wrapper" id="CalendarWrap">
 				<StuCont students={students} teacher={teacher} setTeacher={setTeacher} />
 				<div className="spacer" />
-				<div className="wrapper" id="CalendarWrap">
-					<ReactFullCalendar
-						calendarRef={calendarRef}
-						teacher={teacher}
-						setTeacher={setTeacher}
-						makeButtons={makeButtons}
-						header={header}
-						footer={footer}
-					/>
-				</div>
+				<ReactFullCalendar
+					calendarRef={calendarRef}
+					teacher={teacher}
+					setTeacher={setTeacher}
+					makeButtons={makeButtons}
+					header={header}
+					footer={footer}
+				/>
 			</div>
 		</div>
 	);

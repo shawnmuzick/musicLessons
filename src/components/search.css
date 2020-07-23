@@ -1,3 +1,3 @@
 #search {
-  color: black;
+	color: var(--input-text-color);
 }
