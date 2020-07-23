@@ -5,7 +5,6 @@ import { MainMenu } from './components';
 import { ThemeContext } from './contexts/ThemeContext';
 import './App.css';
 export default function App() {
-	const [menuState, setMenu] = useState(false);
 	const [user, setUser] = useState();
 	const [view, setView] = useState('Calendar');
 	const [theme, setTheme] = useState('Dark');
@@ -13,6 +12,8 @@ export default function App() {
 		console.log(document.cookie);
 	}
 	useEffect(() => {
+		const mainMenu = document.getElementById('MainMenu');
+		mainMenu.classList.add('MainMenu-hide');
 		if (theme === 'Light') {
 			document.documentElement.style.setProperty('--ui-background-color', 'white');
 			document.documentElement.style.setProperty('--ui-text-color', 'black');
@@ -27,30 +28,11 @@ export default function App() {
 	});
 	const renderMenu = () => {
 		console.log(user);
-		if (!menuState) {
-			return null;
-		}
 		if (!user || user.role !== 'admin') {
-			return (
-				<MainMenu
-					menuState={menuState}
-					setMenu={setMenu}
-					view={view}
-					setView={setView}
-					menuItems={menu}
-				/>
-			);
+			return <MainMenu view={view} setView={setView} menuItems={menu} />;
 		} else {
 			adminMenu[menu.indexOf('Login')] = 'Logout';
-			return (
-				<MainMenu
-					menuState={menuState}
-					setMenu={setMenu}
-					view={view}
-					setView={setView}
-					menuItems={adminMenu}
-				/>
-			);
+			return <MainMenu view={view} setView={setView} menuItems={adminMenu} />;
 		}
 	};
 	/*
@@ -71,8 +53,8 @@ export default function App() {
 		<div className="App">
 			{renderMenu()}
 			<ThemeContext.Provider value={{ theme, setTheme }}>
-				<AppHeader menuState={menuState} setMenu={setMenu} />
-				<Main view={view} menuState={menuState} setUser={setUser} setView={setView} />
+				<AppHeader />
+				<Main view={view} setUser={setUser} setView={setView} />
 			</ThemeContext.Provider>
 		</div>
 	);
