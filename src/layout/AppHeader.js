@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from '../components/';
 import icon from '../icons/menu-24px.svg';
+import './appHeader.css';
 export default function AppHeader() {
 	const showMenu = () => {
 		const mainMenu = document.getElementById('MainMenu');

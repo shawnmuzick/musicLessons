@@ -66,7 +66,7 @@ export default function StuCont({ students, teacher, setTeacher }) {
 	};
 	return (
 		<div className={'extEvents'} id="extEvents">
-			<h2 class="extEvents-title">Students</h2>
+			<h2 className="extEvents-title">Students</h2>
 
 			<div className="extEvents-title-mobile">
 				<Button name="View Students" fn={openList} />

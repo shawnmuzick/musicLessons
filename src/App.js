@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Main, AppHeader } from './layout/';
 import { menu, adminMenu } from './views';
-import { MainMenu } from './components';
+import { MainMenu, Footer } from './components';
 import { ThemeContext } from './contexts/ThemeContext';
 import './App.css';
 export default function App() {
@@ -56,6 +56,7 @@ export default function App() {
 				<AppHeader />
 				<Main view={view} setUser={setUser} setView={setView} />
 			</ThemeContext.Provider>
+			<Footer />
 		</div>
 	);
 }

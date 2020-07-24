@@ -1,0 +1,17 @@
+.success, .error, .warning, .notification{
+	border-radius: var(--border-rounded-corners);
+	padding: 5px;
+	font-weight: bold;
+}
+.success {
+	background-color: green;
+}
+.error {
+	background-color: red;
+}
+.warning {
+	background-color: yellow;
+}
+.notification {
+	background-color: blue;
+}

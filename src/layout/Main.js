@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Footer } from '../components';
 import ViewContainer from './ViewContainer';
 import { Calendar, Dashboard, Login, Logout, Register, Users, StudentRoster, Preferences } from '../views/';
 import { fetches } from '../util/';
+import './main.css';
 export default function Main({ setUser, setView, view }) {
 	const [teachers, setTeachers] = useState([]);
 	const [students, setStudents] = useState([]);
@@ -37,7 +37,6 @@ export default function Main({ setUser, setView, view }) {
 					Preferences={<Preferences />}
 					view={view}
 				/>
-				<Footer />
 			</div>
 		</main>
 	);
