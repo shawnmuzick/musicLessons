@@ -36,3 +36,4 @@ Updated ID: "7ef8d310-15b9-46e9-b8f9-2782a5bb4b04"	{"n":1,"nModified":1,"ok":1}
 Updated ID: "7ef8d310-15b9-46e9-b8f9-2782a5bb4b04"	{"n":1,"nModified":1,"ok":1}
  Added ID: undefined	{"n":1,"nModified":1,"ok":1}
 Updated ID: "e7d0e315-9257-409a-b041-77d96282dde8"	{"n":1,"nModified":1,"ok":1}
+Deleted Lesson ID: "a6958bdb-6258-4ca6-952e-8d2fce7917de"	{"n":1,"nModified":1,"ok":1}

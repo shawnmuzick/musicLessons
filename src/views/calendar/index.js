@@ -18,6 +18,10 @@ export default function Calendar({ SRC, students, setStudents }) {
 		SRC.forEach((t) => {
 			string += `${t.lname},`;
 		});
+		//remove ending comma, would otherwise generate an empty right side button
+		if (string) {
+			string = string.slice(0, -1);
+		}
 		return string;
 	}, [SRC]);
 

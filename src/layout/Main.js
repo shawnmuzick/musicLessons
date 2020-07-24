@@ -15,7 +15,7 @@ export default function Main({ setUser, setView, view }) {
 			.catch((err) => console.log(err));
 	}, [view]);
 	useEffect(() => {
-		fetches.init().then((res) => setUser(res.data));
+		fetches.init().then((res) => setUser(res.data).catch((err) => console.log(err)));
 	}, [setUser]);
 	return (
 		<main className="main">

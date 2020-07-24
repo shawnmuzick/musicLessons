@@ -64,7 +64,7 @@
 	justify-content: space-evenly;
 	padding: 10px;
 }
-.dashHeader h3{
+.dashHeader h3 {
 	margin: 0px;
 }
 .metrics {
@@ -123,7 +123,8 @@ summary h4 {
 	text-align: center;
 	align-items: center;
 }
-.phone {
+.phone,
+.salary {
 	margin: 5px;
 }
 .postedHours {
@@ -232,8 +233,23 @@ select {
 	.view {
 		padding: 1rem;
 	}
-	.dashHeader{
+	.dashHeader {
 		flex-direction: row;
 		align-items: center;
+	}
+	.modal {
+		justify-content: center;
+	}
+	.listContainer details {
+		width: 100%;
+	}
+	.listItem .student-details {
+		max-height: 200px;
+		flex-wrap: wrap;
+		display: flex;
+		flex-direction: column;
+	}
+	#CalendarWrap{
+		padding: 10px;
 	}
 }

@@ -16,7 +16,7 @@ export default function DeleteLesson({fn, id}) {
     return (
         <Form submitFn={handleSubmit}>
             <InputGroup>
-                <p>{`Are you SURE you want to this lesson?`}</p>
+                <p>{`Are you SURE you want to cancel this lesson?`}</p>
             </InputGroup>
             <InputGroup>
                 <p>Type DELETE to Confirm</p>

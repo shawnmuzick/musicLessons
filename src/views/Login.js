@@ -7,6 +7,8 @@ export default function Login({ setUser, setView }) {
 	const [messageType, setMessageType] = useState(null);
 	const [message, setMessage] = useState(null);
 	const handleChange = (e) => {
+		console.log('hi');
+		console.log(values);
 		const { name, value } = e.target;
 		let obj = values;
 		obj[name] = value;
@@ -33,6 +35,7 @@ export default function Login({ setUser, setView }) {
 			.catch((err) => {
 				renderMessage('error', err.message);
 				setValues({});
+				document.getElementById('form-login').reset();
 			});
 	};
 	return (
@@ -42,21 +45,11 @@ export default function Login({ setUser, setView }) {
 				<h2>Login</h2>
 				<InputGroup>
 					<label htmlFor="username">Username:</label>
-					<input
-						type="text"
-						name="username"
-						value={values.username}
-						onChange={handleChange}
-					/>
+					<input type="text" name="username" onChange={handleChange} />
 				</InputGroup>
 				<InputGroup>
 					<label htmlFor="password">Password:</label>
-					<input
-						type="text"
-						name="password"
-						value={values.password}
-						onChange={handleChange}
-					/>
+					<input type="text" name="password" onChange={handleChange} />
 				</InputGroup>
 			</Form>
 		</div>
