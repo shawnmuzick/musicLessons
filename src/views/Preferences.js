@@ -1,25 +1,12 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { cookie } from '../util';
 export default function Preferences() {
 	const { theme, setTheme } = useContext(ThemeContext);
 	const toggle_theme = (e) => {
+		cookie.set('theme', e.target.value);
 		setTheme(e.target.value);
 	};
-	useEffect(() => {
-		if (theme === 'Light') {
-			document.documentElement.style.setProperty('--ui-background-color', 'white');
-			document.documentElement.style.setProperty('--ui-text-color', 'black');
-			document.documentElement.style.setProperty('--main-background-color', '#eee');
-			document.documentElement.style.setProperty('--main-text-color', 'black');
-			document.documentElement.style.setProperty('--menu-toggle-button-color', 'black');
-		} else {
-			document.documentElement.style.setProperty('--ui-background-color', '');
-			document.documentElement.style.setProperty('--ui-text-color', '');
-			document.documentElement.style.setProperty('--main-background-color', '');
-			document.documentElement.style.setProperty('--main-text-color', '');
-			document.documentElement.style.setProperty('--menu-toggle-button-color', '');
-		}
-	});
 	return (
 		<div className={'view'} id={'view_preferences'}>
 			<h2>Preferences</h2>

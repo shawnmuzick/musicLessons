@@ -3,15 +3,20 @@ import { Main, AppHeader } from './layout/';
 import { menu, adminMenu } from './views';
 import { MainMenu, Footer } from './components';
 import { ThemeContext } from './contexts/ThemeContext';
+import { cookie } from './util';
 import './App.css';
 export default function App() {
 	const [user, setUser] = useState();
 	const [view, setView] = useState('Calendar');
 	const [theme, setTheme] = useState('Dark');
-	if (document.cookie) {
-		console.log(document.cookie);
-	}
 	useEffect(() => {
+		let browser_cookies = cookie.parse();
+		console.log(browser_cookies);
+		if (browser_cookies.theme) {
+			setTheme(browser_cookies.theme);
+		} else {
+			console.log('no theme found!');
+		}
 		const mainMenu = document.getElementById('MainMenu');
 		mainMenu.classList.add('MainMenu-hide');
 		if (theme === 'Light') {
@@ -19,13 +24,15 @@ export default function App() {
 			document.documentElement.style.setProperty('--ui-text-color', 'black');
 			document.documentElement.style.setProperty('--main-background-color', '#eee');
 			document.documentElement.style.setProperty('--main-text-color', 'black');
+			document.documentElement.style.setProperty('--menu-toggle-button-color', 'black');
 		} else {
 			document.documentElement.style.setProperty('--ui-background-color', '');
 			document.documentElement.style.setProperty('--ui-text-color', '');
 			document.documentElement.style.setProperty('--main-background-color', '');
 			document.documentElement.style.setProperty('--main-text-color', '');
+			document.documentElement.style.setProperty('--menu-toggle-button-color', '');
 		}
-	});
+	}, [theme]);
 	const renderMenu = () => {
 		console.log(user);
 		if (!user || user.role !== 'admin') {
@@ -35,20 +42,6 @@ export default function App() {
 			return <MainMenu view={view} setView={setView} menuItems={adminMenu} />;
 		}
 	};
-	/*
-    if (!document.cookie) {
-        let today = new Date();
-        let tomorrow = new Date(`${today.getFullYear()} ${today.getDate() + 1}`);
-        console.log("current status:");
-        console.log(document.cookie);
-        console.log("no cookie present, setting cookie");
-        document.cookie = `testCookie = This is a test; expires ${tomorrow}`;
-        console.log("new status");
-        console.log(document.cookie);
-    } else {
-        console.log("there was a cookie, here it is!");
-        console.log(document.cookie);
-    }*/
 	return (
 		<div className="App">
 			{renderMenu()}
