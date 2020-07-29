@@ -3,7 +3,7 @@ import { Main, AppHeader } from './layout/';
 import { menu, adminMenu } from './views';
 import { MainMenu, Footer } from './components';
 import { ThemeContext } from './contexts/ThemeContext';
-import { cookie } from './util';
+import { cookie, theme_settings } from './util';
 import './App.css';
 export default function App() {
 	const [user, setUser] = useState();
@@ -11,7 +11,6 @@ export default function App() {
 	const [theme, setTheme] = useState('Dark');
 	useEffect(() => {
 		let browser_cookies = cookie.parse();
-		console.log(browser_cookies);
 		if (browser_cookies.theme) {
 			setTheme(browser_cookies.theme);
 		} else {
@@ -20,17 +19,9 @@ export default function App() {
 		const mainMenu = document.getElementById('MainMenu');
 		mainMenu.classList.add('MainMenu-hide');
 		if (theme === 'Light') {
-			document.documentElement.style.setProperty('--ui-background-color', 'white');
-			document.documentElement.style.setProperty('--ui-text-color', 'black');
-			document.documentElement.style.setProperty('--main-background-color', '#eee');
-			document.documentElement.style.setProperty('--main-text-color', 'black');
-			document.documentElement.style.setProperty('--menu-toggle-button-color', 'black');
+			theme_settings.set_light();
 		} else {
-			document.documentElement.style.setProperty('--ui-background-color', '');
-			document.documentElement.style.setProperty('--ui-text-color', '');
-			document.documentElement.style.setProperty('--main-background-color', '');
-			document.documentElement.style.setProperty('--main-text-color', '');
-			document.documentElement.style.setProperty('--menu-toggle-button-color', '');
+			theme_settings.set_dark();
 		}
 	}, [theme]);
 	const renderMenu = () => {
