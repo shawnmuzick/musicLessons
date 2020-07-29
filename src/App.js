@@ -9,21 +9,20 @@ export default function App() {
 	const [user, setUser] = useState();
 	const [view, setView] = useState('Calendar');
 	const [theme, setTheme] = useState('Dark');
+	const hide_menu = () => {
+		const mainMenu = document.getElementById('MainMenu');
+		mainMenu.classList.add('MainMenu-hide');
+	};
 	useEffect(() => {
 		let browser_cookies = cookie.parse();
 		if (browser_cookies.theme) {
 			setTheme(browser_cookies.theme);
-		} else {
-			console.log('no theme found!');
-		}
-		const mainMenu = document.getElementById('MainMenu');
-		mainMenu.classList.add('MainMenu-hide');
-		if (theme === 'Light') {
-			theme_settings.set_light();
-		} else {
-			theme_settings.set_dark();
+			theme_settings.set(browser_cookies.theme);
 		}
 	}, [theme]);
+	useEffect(() => {
+		hide_menu();
+	}, [view]);
 	const renderMenu = () => {
 		console.log(user);
 		if (!user || user.role !== 'admin') {
