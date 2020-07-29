@@ -116,3 +116,28 @@
 	max-height: 200px;
 	max-width: 200px;
 }
+.fc-footer-toolbar button,
+.fc-header-toolbar button {
+	padding: 1rem 0rem 1rem 0rem;
+}
+#extEvents button {
+	width: 100%;
+}
+#extEvents .fc-event {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+.fc-event button {
+	padding: 10px;
+	width: 100%;
+	margin: 0px;
+}
+.fc-button-primary {
+	background-color: transparent !important;
+	border-color: transparent !important;
+}
+.fc-event button:hover,
+.fc-event button:focus,
+.fc-event button:active {
+	background-color: #569fff !important;
+}

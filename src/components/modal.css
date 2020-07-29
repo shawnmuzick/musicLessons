@@ -6,7 +6,6 @@
 	align-items: center;
 	justify-content: center;
 	display: flex;
-	background-color: rgba(207, 207, 207, 0.7);
 }
 .modalWrapper {
 	max-width: 100%;
@@ -14,7 +13,8 @@
 	flex-direction: column;
 	flex-wrap: wrap;
 	padding: 10px;
-	background-color: rgb(85, 84, 84);
+	background-color: var(--ui-background-color);
+	color: var(--main-text-color);
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .modal header {
@@ -25,6 +25,7 @@
 	border-bottom: solid 1px var(--highlight-color);
 	margin-bottom: 10px;
 	padding: 10px;
+	color: var(--main-text-color);
 	background-color: var(--ui-background-color);
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
