@@ -5,7 +5,7 @@ const filters = {
 	},
 
 	studentsByTeacher: (arr, teacher) => {
-		return arr.filter((s) => s.teacher._id === teacher._id);
+		return [];
 	},
 
 	studentsByInstrument: (arr, instrument) => {

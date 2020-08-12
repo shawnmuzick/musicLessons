@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FullCalendar, plugins } from './plugins';
-import { Teacher, Event, maps, fetches } from '../../util/';
+import { Teacher, Lesson, maps, fetches } from '../../util/';
 import { Button, Header, Modal } from '../../components/';
 import moment from 'moment';
 import DeleteLesson from '../../forms/DeleteLesson';
-export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, makeButtons, header, footer }) {
+export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, makeButtons, header, footer, lessons }) {
 	const [open, setOpen] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState({});
 	// const dayStart = "10:00:00";
@@ -39,7 +39,7 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
 		e.icon = icon;
 		e.rate = rate;
 		moment.utc(e.start).format();
-		const v = new Event(e);
+		const v = new Lesson(e);
 		handleModal();
 		setCurrentEvent(v);
 	};
@@ -48,13 +48,13 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
 		edit.instrument = edit.draggedEl.attributes[3].value;
 		edit.rate = parseFloat(edit.draggedEl.attributes[4].value);
 		edit.start = edit.date;
-		return new Event(edit);
+		return new Lesson(edit);
 	};
 	const calender_event_edit = (edit) => {
 		edit.event.instrument = edit.event.extendedProps.instrument;
 		edit.event.icon = edit.event.extendedProps.icon;
 		edit.event.rate = parseFloat(edit.event.extendedProps.rate);
-		return new Event(edit.event);
+		return new Lesson(edit.event);
 	};
 	const newDrop = (edit) => {
 		const api = calendarRef.current.getApi();
@@ -90,7 +90,7 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
 				footerToolbar={footer}
 				headerToolbar={header}
 				plugins={plugins}
-				events={teacher.lessons}
+				events={lessons}
 				droppable={true}
 				businessHours={teacher.hours}
 				dayMaxEventRows={3}

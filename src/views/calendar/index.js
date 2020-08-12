@@ -4,7 +4,7 @@ import { Header } from '../../components/';
 import ReactFullCalendar from './ReactFullCalendar';
 import StuCont from './stuCont';
 import './calendar.css';
-export default function Calendar({ SRC, students, setStudents }) {
+export default function Calendar({ SRC, students, setStudents, lessons }) {
 	const calendarRef = React.createRef();
 	const [teacher, setTeacher] = useState({});
 	const header = {
@@ -77,6 +77,7 @@ export default function Calendar({ SRC, students, setStudents }) {
 					calendarRef={calendarRef}
 					teacher={teacher}
 					setTeacher={setTeacher}
+					lessons={lessons}
 					makeButtons={makeButtons}
 					header={header}
 					footer={footer}

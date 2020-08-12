@@ -3,13 +3,16 @@ import { maps } from './maps';
 const fetches = {
 	//get all students and teachers
 	getAll: () => {
-		return axios.all([axios.get('/api/teachers'), axios.get('/api/students')]).then(
-			axios.spread((...res) => {
-				const a = maps.makeTeachers(res[0].data);
-				const b = maps.makeStudents(res[1].data);
-				return [a, b];
-			})
-		);
+		return axios
+			.all([axios.get('/api/teachers'), axios.get('/api/students'), axios.get('/api/lessons')])
+			.then(
+				axios.spread((...res) => {
+					const a = maps.makeTeachers(res[0].data);
+					const b = maps.makeStudents(res[1].data);
+					const c = maps.makeLessons(res[2].data);
+					return [a, b, c];
+				})
+			);
 	},
 
 	//student functions

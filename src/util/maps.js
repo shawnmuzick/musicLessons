@@ -1,5 +1,5 @@
 import React from 'react';
-import { Student, Teacher } from './classes';
+import { Student, Teacher, Lesson } from './classes';
 import { InputGroup } from '../forms/';
 import { ListItem } from '../components/';
 const maps = {
@@ -11,7 +11,14 @@ const maps = {
 
 	makeTeachers: (arr) => {
 		return arr.map((s) => {
+			console.log(s);
 			return new Teacher(s);
+		});
+	},
+
+	makeLessons: (arr) => {
+		return arr.map((l) => {
+			return new Lesson(l);
 		});
 	},
 
@@ -56,13 +63,7 @@ const maps = {
 	},
 
 	addTeacherLessons: (students, teacher) => {
-		students.forEach((s) => {
-			if (teacher._id === s.teacher._id) {
-				s.lessons.forEach((l) => {
-					teacher.lessons.push(l);
-				});
-			}
-		});
+		return;
 	},
 };
 export { maps };

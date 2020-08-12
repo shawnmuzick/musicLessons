@@ -6,11 +6,13 @@ import './main.css';
 export default function Main({ setUser, setView, view }) {
 	const [teachers, setTeachers] = useState([]);
 	const [students, setStudents] = useState([]);
+	const [lessons, setLessons] = useState([]);
 	useEffect(() => {
 		fetches.getAll()
 			.then((res) => {
 				setTeachers(res[0]);
 				setStudents(res[1]);
+				setLessons(res[2]);
 			})
 			.catch((err) => console.log(err));
 	}, [view]);
@@ -26,6 +28,7 @@ export default function Main({ setUser, setView, view }) {
 							SRC={teachers}
 							students={students}
 							setStudents={setStudents}
+							lessons={lessons}
 						/>
 					}
 					Register={<Register setView={setView} />}
