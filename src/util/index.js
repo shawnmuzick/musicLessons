@@ -1,4 +1,4 @@
-import { Student, Teacher, Event } from '../classes/classes';
+import { Student, Teacher, Lesson, Invoice, User } from './classes';
 import { fetches } from './fetches';
 import { filters } from './filters';
 import { maps } from './maps';
@@ -22,4 +22,4 @@ const cookie = {
 	},
 };
 
-export { fetches, maps, filters, cookie, theme_settings, Student, Teacher, Event };
+export { fetches, maps, filters, cookie, theme_settings, Student, Teacher, Lesson, Invoice, User };

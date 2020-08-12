@@ -11,29 +11,37 @@ const fetches = {
 			})
 		);
 	},
+
 	//student functions
 	getStudents: () => {
 		return axios.get('/api/students').then((res) => maps.makeStudents(res.data));
 	},
+
 	getStudentById: (id) => {
 		return axios.get(`/api/students${id}`).catch((err) => console.log(err));
 	},
+
 	postStudent: (s) => {
 		axios.post(`/api/students`, { s, img: s.img }).catch((err) => console.log(err));
 	},
+
 	putStudent: (s) => {
 		//placeholder
 	},
+
 	deleteStudentById: (id) => {
 		return axios.delete(`/api/students${id}`).catch((err) => console.log(err));
 	},
+
 	//teacher functions
 	getTeachers: () => {
 		return axios.get('/api/teachers').then((res) => maps.makeTeachers(res.data));
 	},
+
 	getTeacherById: (id) => {
 		return axios.get(`/api/teachers${id}`);
 	},
+
 	postTeacher: (t) => {
 		return axios
 			.post(`/api/teachers`, {
@@ -44,45 +52,55 @@ const fetches = {
 			})
 			.catch((err) => console.log(err));
 	},
+
 	putTeacherById: (teacher) => {
 		return axios
 			.put(`/api/teachers${teacher._id}`, { phone: teacher.phone, hours: teacher.hours })
 			.then((res) => console.log(res))
 			.catch((err) => console.log(err));
 	},
+
 	deleteTeacherById: (id) => {
 		return axios.delete(`/api/teachers${id}`).catch((err) => console.log(err));
 	},
+
 	//event functions
 	getEvents: () => {
 		return axios.get('/lessons');
 	},
+
 	getEventById: (id) => {
 		return axios.get(`/lessons${id}`);
 	},
+
 	postEvent: (e, stID) => {
 		return axios.post(`/api/lessons`, {
 			event: e,
 			stID,
 		});
 	},
+
 	putEvent: (e, stID) => {
 		return axios.put(`/api/lessons`, {
 			event: e,
 			stID,
 		});
 	},
+
 	deleteEventById: (id) => {
 		return axios.delete(`/api/lessons${id}`);
 	},
+
 	//user functions
 	init: () => {
 		return axios.get('/api/init');
 	},
+
 	getUsers: () => {
 		console.log('requested users');
 		return axios.get('/api/users');
 	},
+
 	postUserRegister: (username, password, fname, lname) => {
 		return axios
 			.post('/register', {
@@ -93,6 +111,7 @@ const fetches = {
 			})
 			.then();
 	},
+
 	postUserLogin: (username, password) => {
 		return axios
 			.post('/login', {
