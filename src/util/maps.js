@@ -10,9 +10,8 @@ const maps = {
 	},
 
 	makeTeachers: (arr) => {
-		return arr.map((s) => {
-			console.log(s);
-			return new Teacher(s);
+		return arr.map((t) => {
+			return new Teacher(t);
 		});
 	},
 
@@ -62,7 +61,7 @@ const maps = {
 		});
 	},
 
-	addTeacherLessons: (students, teacher) => {
+	addTeacherLessons: (teacher, lessons) => {
 		return;
 	},
 };

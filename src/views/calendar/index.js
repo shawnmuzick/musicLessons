@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { fetches, maps } from '../../util';
+import { filters } from '../../util';
 import { Header } from '../../components/';
 import ReactFullCalendar from './ReactFullCalendar';
 import StuCont from './stuCont';
 import './calendar.css';
-export default function Calendar({ SRC, students, setStudents, lessons }) {
+export default function Calendar({ SRC, students, lessons }) {
 	const calendarRef = React.createRef();
 	const [teacher, setTeacher] = useState({});
+	const [events, setEvents] = useState([]);
 	const header = {
 		left: 'prev,next, today',
 		center: 'title',
 		right: 'dayGridMonth,timeGridWeek,timeGridDay',
 	};
+
 	const footer = {};
 	footer.center = useMemo(() => {
-		let string = '';
+		let string = 'All,';
 		SRC.forEach((t) => {
 			string += `${t.lname},`;
 		});
@@ -25,28 +27,39 @@ export default function Calendar({ SRC, students, setStudents, lessons }) {
 		return string;
 	}, [SRC]);
 
+	//rerender if lessons changes
 	useEffect(() => {
-		//whenever the current teacher changes, rerender, fetch students, clean lessons array
-		teacher.lessons = [];
-		fetches.getStudents()
-			.then((res) => setStudents(res))
-			.catch((err) => console.log(err));
-	}, [teacher, setStudents]);
+		setEvents(lessons);
+	}, [lessons]);
 
-	maps.addTeacherLessons(students, teacher);
+	useEffect(() => {
+		if (!teacher._id) {
+			setEvents(lessons);
+			console.log('empty teacher check');
+		} else {
+			console.log('defined teacher check');
+			setEvents(filters.lessonsByTeacher(lessons, teacher));
+		}
+	}, [teacher, lessons]);
 
 	const makeButtons = useMemo(() => {
 		//This links students and their teachers
-		let obj = SRC.reduce((obj, item) => {
-			obj[item.lname] = item;
-			item.click = function () {
-				item.lessons = [];
-				setTeacher(item);
+		let obj = SRC.reduce((obj, t) => {
+			obj[t.lname] = t;
+			t.click = function () {
+				setTeacher(t);
 			};
 			return obj;
 		}, {});
+		obj.All = {
+			text: 'All',
+			click: function () {
+				setTeacher({});
+			},
+		};
 		return obj;
 	}, [SRC]);
+
 	const renderHeader = () => {
 		return (
 			<div className="calendarHeader">
@@ -67,6 +80,7 @@ export default function Calendar({ SRC, students, setStudents, lessons }) {
 			</div>
 		);
 	};
+
 	return (
 		<div className="view">
 			<Header>{renderHeader()}</Header>
@@ -77,7 +91,7 @@ export default function Calendar({ SRC, students, setStudents, lessons }) {
 					calendarRef={calendarRef}
 					teacher={teacher}
 					setTeacher={setTeacher}
-					lessons={lessons}
+					lessons={events}
 					makeButtons={makeButtons}
 					header={header}
 					footer={footer}

@@ -12,6 +12,10 @@ const filters = {
 		return arr.filter((s) => s.instrument === instrument.toLowerCase());
 	},
 
+	lessonsByTeacher: (lessons, teacher) => {
+		return lessons.filter((l) => l.teacher_id === teacher._id);
+	},
+
 	filterSearch: (query) => {
 		if (!query || query === '') {
 			return function (i) {
