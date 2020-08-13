@@ -85,7 +85,12 @@ export default function Calendar({ SRC, students, lessons }) {
 		<div className="view">
 			<Header>{renderHeader()}</Header>
 			<div className="wrapper" id="CalendarWrap">
-				<StuCont students={students} teacher={teacher} setTeacher={setTeacher} />
+				<StuCont
+					students={students}
+					lessons={lessons}
+					teacher={teacher}
+					setTeacher={setTeacher}
+				/>
 				<div className="spacer" />
 				<ReactFullCalendar
 					calendarRef={calendarRef}

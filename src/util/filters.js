@@ -1,21 +1,55 @@
+const lessonsByTeacher = (lessons = [], teacher_id) => {
+	return lessons.filter((l) => l.teacher_id === teacher_id);
+};
+
+const lessonsByStudent = (lessons = [], student) => {
+	return lessons.filter((l) => l.student_id === student._id);
+};
+
+const lessonsByInstrument = (lessons = [], instrument) => {
+	return lessons.filter((l) => l.instrument === instrument);
+};
+
+const lessonsByAttendanceCode = (lessons = [], code) => {
+	return lessons.filter((l) => l.attendance_code === code);
+};
+
+const lessonsByMonth = () => {
+	return;
+};
+
+const lessonsByYear = () => {
+	return;
+};
+
+const studentsByInstrument = (arr, instrument) => {
+	return arr.filter((s) => s.instrument === instrument.toLowerCase());
+};
+
+const studentsByTeacher = (students = [], lessons = [], teacher_id) => {
+	let arr = lessonsByTeacher(lessons, teacher_id);
+	let result = [...new Set(arr)];
+	console.log(result);
+	return result;
+};
+
+const studentsByAccount = () => {
+	return;
+};
+
 const filters = {
+	lessonsByStudent,
+	lessonsByTeacher,
+	lessonsByInstrument,
+	lessonsByMonth,
+	lessonsByYear,
+	lessonsByAttendanceCode,
+	studentsByTeacher,
+	studentsByInstrument,
+	studentsByAccount,
 	search: (arr, filter, query, setState) => {
-		console.log(query);
 		return setState(arr.filter(filter(query)));
 	},
-
-	studentsByTeacher: (arr, teacher) => {
-		return [];
-	},
-
-	studentsByInstrument: (arr, instrument) => {
-		return arr.filter((s) => s.instrument === instrument.toLowerCase());
-	},
-
-	lessonsByTeacher: (lessons, teacher) => {
-		return lessons.filter((l) => l.teacher_id === teacher._id);
-	},
-
 	filterSearch: (query) => {
 		if (!query || query === '') {
 			return function (i) {

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { LesIns, LesMon, StuIns, TConvIns, Charts } from '../../charts';
 import { Header, Modal } from '../../components/';
 import { fetches } from '../../util/';
-export default function DashboardView({ teachers, students }) {
+export default function DashboardView({ teachers, students, lessons }) {
 	let arr = [];
 	useEffect(() => {
 		//clean lessons array on each render
@@ -21,43 +21,34 @@ export default function DashboardView({ teachers, students }) {
 			value: 0,
 		};
 	}
-	//link student lessons with teachers---------------------------------------
-	students.forEach((s) => {
-		teachers.forEach((t) => {
-			if (t._id === s.teacher._id) {
-				s.lessons.forEach((l) => {
-					t.lessons.push(l);
-				});
-				t.nStu++;
-			}
-		});
-	});
+
 	const getTotalLessons = () => {
-		return students.reduce((total, s) => {
-			return (total += s.lessons.length);
-		}, 0);
+		return lessons.length;
 	};
+
 	const getTotalNetIncome = () => {
 		return teachers.reduce((total, t) => {
 			return (total += t.getGrossIncome());
 		}, 0);
 	};
+
 	const getTotalGrossIncome = () => {
-		return teachers.reduce((total, teacher) => {
-			return (total += teacher.lessons.reduce((acc, lesson) => {
-				return (acc += lesson.rate);
-			}, 0));
-		}, 0);
+		//search lessons array and find lessons for each teacher
+		return 0;
 	};
+
 	teachers.forEach((t) => {
 		let arr2 = t.lessonsPerMonth();
 		for (let i = 0; i < 12; i++) {
 			arr[i].value += arr2[i];
 		}
 	});
-	let conv = students.map((s) => {
-		return s.trial.trConv;
+
+	let conv = lessons.map((l) => {
+		//look for lessons on an account with date later than lesson marked trial
+		return l;
 	});
+
 	let conversionRate = Math.round(
 		(conv.reduce((x, y) => {
 			return Number(x) + Number(y);
@@ -65,15 +56,17 @@ export default function DashboardView({ teachers, students }) {
 			conv.length) *
 			100
 	);
+
 	const handleClick = (t, img) => {
 		if (t.name === null || t.phone === null) return;
 		t.img = img;
 		fetches.postTeacher(t);
 	};
+
 	const renderEmployees = () => {
 		return teachers.map((teacher) => <EmpDetails key={teacher._id} teacher={teacher} />);
 	};
-	console.log(getTotalNetIncome());
+
 	return (
 		<div className={'view'} id="view_dashboard">
 			<Header>
@@ -91,9 +84,9 @@ export default function DashboardView({ teachers, students }) {
 			</Header>
 			<div className="wrapper">
 				<Charts>
-					<LesIns arr={arr} teachers={teachers} students={students} />
+					<LesIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
 					<LesMon arr={arr} teachers={teachers} students={students} />
-					<StuIns arr={arr} teachers={teachers} students={students} />
+					<StuIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
 					<TConvIns arr={arr} teachers={teachers} students={students} />
 				</Charts>
 				<div className={'forms'}>

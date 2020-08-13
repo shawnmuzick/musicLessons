@@ -32,7 +32,9 @@ export default function Main({ setUser, setView, view }) {
 						/>
 					}
 					Register={<Register setView={setView} />}
-					Dashboard={<Dashboard teachers={teachers} students={students} />}
+					Dashboard={
+						<Dashboard teachers={teachers} students={students} lessons={lessons} />
+					}
 					Login={<Login setUser={setUser} setView={setView} />}
 					Roster={<StudentRoster students={students} />}
 					Users={<Users />}

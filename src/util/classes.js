@@ -33,20 +33,13 @@ class Teacher extends Person {
 	}
 	lessonsPerMonth() {
 		let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		this.lessons.forEach((item) => {
-			const d = new Date(item.start);
-			arr[d.getUTCMonth()]++;
-		});
 		return arr;
 	}
 	getConvRate() {
 		return (this.trConv / (this.trConv + this.trFail)) * 100;
 	}
 	getGrossIncome() {
-		if (this.lessons === []) return 0;
-		return this.lessons.reduce((total, lesson) => {
-			return (total += this.salary);
-		}, 0);
+		return 0;
 	}
 	changeAvailability(hours) {
 		let newHours = Object.keys(hours).map((key) => {
@@ -90,7 +83,7 @@ class Student extends Person {
 
 class Lesson {
 	constructor({
-		id,
+		_id,
 		title,
 		start,
 		end,
@@ -104,7 +97,7 @@ class Lesson {
 		student_id,
 		teacher_id,
 	}) {
-		this._id = id;
+		this._id = _id;
 		this.title = title;
 		this.start = moment.utc(start).format();
 		this.end = end ? moment.utc(end).format() : moment.utc(start).add(30, 'm').format();
