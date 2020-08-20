@@ -22,6 +22,23 @@ const lessonsByYear = () => {
 	return;
 };
 
+const getTrialLessons = (lessons = []) => {
+	return lessons.filter((l) => l.isTrial === true);
+};
+
+const conversionsTotal = (lessons = []) => {
+	let success = lessons.filter((l) => l.isTrial === true && l.trialConverted === true);
+	return (success.length / lessons.length) * 100;
+};
+
+const conversionsByTeacher = (lessons = [], teacher_id) => {
+	let success = lessons
+		.filter((l) => l.isTrial === true && l.trialConverted === true)
+		.filter((l) => l.teacher_id === teacher_id);
+	let instructorTotal = lessonsByTeacher(lessons, teacher_id).length;
+	return (success.length / instructorTotal) * 100;
+};
+
 const studentsByInstrument = (arr, instrument) => {
 	return arr.filter((s) => s.instrument === instrument.toLowerCase());
 };
@@ -46,6 +63,9 @@ const filters = {
 	studentsByTeacher,
 	studentsByInstrument,
 	studentsByAccount,
+	conversionsTotal,
+	conversionsByTeacher,
+	getTrialLessons,
 	search: (arr, filter, query, setState) => {
 		return setState(arr.filter(filter(query)));
 	},

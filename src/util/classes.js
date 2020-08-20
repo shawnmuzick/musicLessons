@@ -90,6 +90,7 @@ class Lesson {
 		instrument,
 		rate,
 		isTrial,
+		trialConverted,
 		label_color,
 		attendance_code,
 		attendance_note,
@@ -104,6 +105,7 @@ class Lesson {
 		this.instrument = instrument;
 		this.rate = rate;
 		this.isTrial = isTrial;
+		this.trialConverted = trialConverted;
 		this.backgroundColor = label_color;
 		this.borderColor = label_color;
 		this.attendance_code = attendance_code;

@@ -1,24 +1,21 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import { filters } from '../util/';
 
-export default function TConvIns({ teachers, students }) {
-	let a = students.map((s) => {
-		return s;
-	});
-
-	a.forEach((i) => {
-		return;
+export default function TConvIns({ teachers, students, lessons }) {
+	let arr = teachers.map((t) => {
+		return { name: t.fname, value: filters.conversionsByTeacher(lessons, t._id) };
 	});
 
 	let data = {
-		labels: teachers.map((t) => {
-			return t.fname || '';
+		labels: arr.map((t) => {
+			return t.name || '';
 		}),
 		datasets: [
 			{
 				label: 'Instructors',
-				data: teachers.map((t) => {
-					return 0;
+				data: arr.map((t) => {
+					return t.value;
 				}),
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',

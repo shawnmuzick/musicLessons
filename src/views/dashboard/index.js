@@ -4,7 +4,7 @@ import { FrmNewTeacher } from '../../forms/';
 import moment from 'moment';
 import { LesIns, LesMon, StuIns, TConvIns, Charts } from '../../charts';
 import { Header, Modal } from '../../components/';
-import { fetches } from '../../util/';
+import { fetches, filters } from '../../util/';
 export default function DashboardView({ teachers, students, lessons }) {
 	let arr = [];
 	useEffect(() => {
@@ -37,25 +37,7 @@ export default function DashboardView({ teachers, students, lessons }) {
 		return 0;
 	};
 
-	teachers.forEach((t) => {
-		let arr2 = t.lessonsPerMonth();
-		for (let i = 0; i < 12; i++) {
-			arr[i].value += arr2[i];
-		}
-	});
-
-	let conv = lessons.map((l) => {
-		//look for lessons on an account with date later than lesson marked trial
-		return l;
-	});
-
-	let conversionRate = Math.round(
-		(conv.reduce((x, y) => {
-			return Number(x) + Number(y);
-		}, 0) /
-			conv.length) *
-			100
-	);
+	let conversionRate = filters.conversionsTotal(lessons);
 
 	const handleClick = (t, img) => {
 		if (t.name === null || t.phone === null) return;

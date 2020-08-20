@@ -40,6 +40,7 @@ const lessonSchema = new Schema(
 		instrument: String,
 		rate: Number,
 		isTrial: Boolean,
+		trialConverted: Boolean,
 		label_color: String,
 		attendance_code: String,
 		attendance_note: String,
