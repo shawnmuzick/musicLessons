@@ -26,10 +26,9 @@ const studentsByInstrument = (arr, instrument) => {
 	return arr.filter((s) => s.instrument === instrument.toLowerCase());
 };
 
-const studentsByTeacher = (students = [], lessons = [], teacher_id) => {
+const studentsByTeacher = (lessons = [], teacher_id) => {
 	let arr = lessonsByTeacher(lessons, teacher_id);
 	let result = [...new Set(arr)];
-	console.log(result);
 	return result;
 };
 

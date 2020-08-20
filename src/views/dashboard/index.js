@@ -85,9 +85,9 @@ export default function DashboardView({ teachers, students, lessons }) {
 			<div className="wrapper">
 				<Charts>
 					<LesIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
-					<LesMon arr={arr} teachers={teachers} students={students} />
+					<LesMon arr={arr} teachers={teachers} lessons={lessons} students={students} />
 					<StuIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
-					<TConvIns arr={arr} teachers={teachers} students={students} />
+					<TConvIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
 				</Charts>
 				<div className={'forms'}>
 					<h3>Faculty</h3>

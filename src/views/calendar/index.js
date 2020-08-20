@@ -38,7 +38,7 @@ export default function Calendar({ SRC, students, lessons }) {
 			console.log('empty teacher check');
 		} else {
 			console.log('defined teacher check');
-			setEvents(filters.lessonsByTeacher(lessons, teacher));
+			setEvents(filters.lessonsByTeacher(lessons, teacher._id));
 		}
 	}, [teacher, lessons]);
 
