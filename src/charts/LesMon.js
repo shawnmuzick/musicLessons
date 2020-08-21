@@ -2,7 +2,16 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
 //Lessons by Instructor
-export default function LesMon({ arr, lessons }) {
+export default function LessonsPerMonth({ lessons }) {
+	let arr = [];
+
+	for (let i = 0; i < 12; i++) {
+		arr[i] = {
+			name: moment().month(i).format('MMM'),
+			value: 0,
+		};
+	}
+
 	//check lessons and log add increment the month's value where match
 	for (let i = 0; i < arr.length; i++) {
 		for (let j = 0; j < lessons.length; j++) {

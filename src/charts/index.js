@@ -1,12 +1,6 @@
-import LesIns from "./LesIns";
-import LesMon from "./LesMon";
-import StuIns from "./StuIns";
-import TConvIns from "./TConvIns";
-import Charts from "./Charts";
-export {
-  Charts,
-  LesIns,
-  LesMon,
-  StuIns,
-  TConvIns
-};
+import LessonsPerInstructor from './LesIns';
+import LessonsPerMonth from './LesMon';
+import StuIns from './StuIns';
+import TConvIns from './TConvIns';
+import Charts from './Charts';
+export { Charts, LessonsPerInstructor, LessonsPerMonth, StuIns, TConvIns };

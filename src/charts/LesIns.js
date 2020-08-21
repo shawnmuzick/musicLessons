@@ -2,7 +2,7 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { filters } from '../util/';
 //Lessons by Instructor
-export default function LesIns({ teachers, lessons }) {
+export default function LessonsPerInstructor({ teachers, lessons }) {
 	let data = {
 		labels: teachers.map((t) => {
 			return t.fname || '';

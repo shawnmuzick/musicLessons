@@ -1,43 +1,39 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import EmpDetails from './EmpDetails';
 import { FrmNewTeacher } from '../../forms/';
-import moment from 'moment';
-import { LesIns, LesMon, StuIns, TConvIns, Charts } from '../../charts';
+import { LessonsPerInstructor, StuIns, TConvIns, Charts, LessonsPerMonth } from '../../charts';
 import { Header, Modal } from '../../components/';
 import { fetches, filters } from '../../util/';
 export default function DashboardView({ teachers, students, lessons }) {
-	let arr = [];
-	useEffect(() => {
-		//clean lessons array on each render
-		teachers.forEach((t) => {
-			t.lessons = [];
-			t.nStu = 0;
-		});
-	});
-
-	for (let i = 0; i < 12; i++) {
-		arr[i] = {
-			name: moment().month(i).format('MMM'),
-			value: 0,
-		};
-	}
-
-	const getTotalLessons = () => {
+	const getTotalLessons = (lessons = []) => {
 		return lessons.length;
 	};
 
-	const getTotalNetIncome = () => {
+	const getTotalNetIncome = (lessons = [], teachers = []) => {
 		return teachers.reduce((total, t) => {
-			return (total += t.getGrossIncome());
+			return (
+				total +
+				filters.lessonsByTeacher(lessons, t._id).reduce((teacherTotal, l) => {
+					return teacherTotal + l.rate - t.salary;
+				}, 0)
+			);
 		}, 0);
 	};
 
-	const getTotalGrossIncome = () => {
-		//search lessons array and find lessons for each teacher
-		return 0;
+	const getTotalGrossIncome = (lessons = [], teachers = []) => {
+		return teachers.reduce((total, t) => {
+			return (
+				total +
+				filters.lessonsByTeacher(lessons, t._id).reduce((teacherTotal, l) => {
+					return teacherTotal + l.rate;
+				}, 0)
+			);
+		}, 0);
 	};
 
-	let conversionRate = filters.conversionsTotal(lessons);
+	const getConversionRate = (lessons = []) => {
+		return filters.conversionsTotal(lessons);
+	};
 
 	const handleClick = (t, img) => {
 		if (t.name === null || t.phone === null) return;
@@ -54,22 +50,19 @@ export default function DashboardView({ teachers, students, lessons }) {
 			<Header>
 				<h2>Dashboard</h2>
 				<div className="dashHeader">
-					<h3>Total Lessons: {getTotalLessons()}</h3>
+					<h3>Total Lessons: {getTotalLessons(lessons)}</h3>
 					<h3>Total Students: {students.length}</h3>
-					<h3>Conversion Rate: {conversionRate}%</h3>
-					<h3>Gross Income: ${Math.round(getTotalGrossIncome() * 100) / 100}</h3>
-					<h3>
-						Profit: $
-						{Math.round((getTotalGrossIncome() - getTotalNetIncome()) * 100) / 100}
-					</h3>
+					<h3>Conversion Rate: {getConversionRate(lessons)}%</h3>
+					<h3>Gross Income: ${Math.round(getTotalGrossIncome(lessons, teachers))}</h3>
+					<h3>Profit: ${Math.round(getTotalNetIncome(lessons, teachers))}</h3>
 				</div>
 			</Header>
 			<div className="wrapper">
 				<Charts>
-					<LesIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
-					<LesMon arr={arr} teachers={teachers} lessons={lessons} students={students} />
-					<StuIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
-					<TConvIns arr={arr} teachers={teachers} lessons={lessons} students={students} />
+					<LessonsPerInstructor teachers={teachers} lessons={lessons} />
+					<LessonsPerMonth lessons={lessons} />
+					<StuIns teachers={teachers} lessons={lessons} students={students} />
+					<TConvIns teachers={teachers} lessons={lessons} students={students} />
 				</Charts>
 				<div className={'forms'}>
 					<h3>Faculty</h3>
