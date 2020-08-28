@@ -1,23 +1,18 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import { filters } from '../util/';
+import { filters } from '../util';
+import { instrumentList } from '../forms/instrumentList';
 
 //Lessons by Instructor
-export default function StuIns({ teachers, lessons, students }) {
-	let studentsByTeacher = teachers.map((t) => {
-		return filters.studentsByTeacher(students, lessons, t._id);
-	});
-
+export default function LessonsPerInstrument({ lessons }) {
 	let data = {
-		labels: teachers.map((t) => {
-			return t.fname || '';
-		}),
-
+		labels: instrumentList,
 		datasets: [
 			{
-				data: studentsByTeacher.map((t) => {
-					return t.length;
+				data: instrumentList.map((i) => {
+					return filters.lessonsByInstrument(lessons, i).length;
 				}),
+
 				backgroundColor: [
 					'rgba(255, 99, 132, 0.2)',
 					'rgba(54, 162, 235, 0.2)',

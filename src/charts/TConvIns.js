@@ -2,7 +2,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { filters } from '../util/';
 
-export default function TConvIns({ teachers, students, lessons }) {
+export default function TConvIns({ teachers, lessons }) {
 	let arr = teachers.map((t) => {
 		return { name: t.fname, value: filters.conversionsByTeacher(lessons, t._id) };
 	});
