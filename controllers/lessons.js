@@ -1,5 +1,4 @@
 const { studentModel, lessonModel } = require('../models');
-const uuidv4 = require('uuid');
 const fs = require('fs');
 const lessonsCtrl = {
 	getLessons: (req, res) => {
@@ -15,8 +14,17 @@ const lessonsCtrl = {
 	},
 	postLessons: (req, res) => {
 		const { event, stID } = req.body;
-		const { start, end, id, title, backgroundColor, borderColor, instrument, icon, rate } = event;
-		let newid = uuidv4.v4();
+		const {
+			start,
+			end,
+			id,
+			title,
+			backgroundColor,
+			borderColor,
+			instrument,
+			icon,
+			rate,
+		} = event;
 		studentModel
 			.updateOne(
 				//find where lessons's child element that matches id
@@ -25,7 +33,7 @@ const lessonsCtrl = {
 					$push: {
 						lessons: {
 							title,
-							id: newid,
+							id: id,
 							start,
 							end,
 							backgroundColor,
@@ -44,7 +52,9 @@ const lessonsCtrl = {
 				}
 				fs.appendFile(
 					'./logs/lesson.txt',
-					` Added ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
+					` Added ID: ${JSON.stringify(id)}\t${JSON.stringify(
+						success
+					)}\n`,
 					(err) => {
 						if (err) throw err;
 					}
@@ -54,7 +64,17 @@ const lessonsCtrl = {
 			});
 	},
 	updateLessons: (req, res) => {
-		const { start, end, id, title, backgroundColor, borderColor, instrument, icon, rate } = req.body.event;
+		const {
+			start,
+			end,
+			id,
+			title,
+			backgroundColor,
+			borderColor,
+			instrument,
+			icon,
+			rate,
+		} = req.body.event;
 		studentModel
 			.updateOne(
 				//find where lessons's child element that matches id
@@ -83,7 +103,9 @@ const lessonsCtrl = {
 				}
 				fs.appendFile(
 					'./logs/lesson.txt',
-					`Updated ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
+					`Updated ID: ${JSON.stringify(id)}\t${JSON.stringify(
+						success
+					)}\n`,
 					(err) => {
 						if (err) throw err;
 					}
@@ -109,7 +131,9 @@ const lessonsCtrl = {
 				}
 				fs.appendFile(
 					'./logs/lesson.txt',
-					`Deleted Lesson ID: ${JSON.stringify(id)}\t${JSON.stringify(success)}\n`,
+					`Deleted Lesson ID: ${JSON.stringify(id)}\t${JSON.stringify(
+						success
+					)}\n`,
 					(err) => {
 						if (err) throw err;
 					}
