@@ -14,7 +14,18 @@ class Person {
 }
 
 class User extends Person {
-	constructor({ _id, fname, lname, username, phone, email, password, role, studentAccounts, invoices }) {
+	constructor({
+		_id,
+		fname,
+		lname,
+		username,
+		phone,
+		email,
+		password,
+		role,
+		studentAccounts,
+		invoices,
+	}) {
 		super(_id, fname, lname, phone, email);
 		this.username = username;
 		this.password = password;
@@ -94,7 +105,6 @@ class Lesson {
 		label_color,
 		attendance_code,
 		attendance_note,
-		invoice_id,
 		student_id,
 		teacher_id,
 	}) {
@@ -110,7 +120,6 @@ class Lesson {
 		this.borderColor = label_color;
 		this.attendance_code = attendance_code;
 		this.attendance_note = attendance_note;
-		this.invoice_id = invoice_id;
 		this.student_id = student_id;
 		this.teacher_id = teacher_id;
 	}
