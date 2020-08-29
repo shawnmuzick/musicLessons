@@ -1,4 +1,4 @@
-const { lessonModel } = require('../models');
+const { lessonModel, invoiceModel } = require('../models');
 const fs = require('fs');
 
 const lessonsCtrl = {
@@ -22,11 +22,24 @@ const lessonsCtrl = {
 
 	postLessons: async (req, res) => {
 		try {
+			const user = req.user;
+			if (!user) res.json({ message: 'You must be logged in!' });
 			const { lesson } = req.body;
 			const newLesson = new lessonModel(lesson);
 			newLesson.save((err, success) => {
 				if (err) throw err;
 				res.json(success);
+				const invoice = new invoiceModel({
+					date: new Date(),
+					account_id: req.user._id,
+					items: [success._id],
+					total_sale: success.rate,
+					balance: success.rate,
+				});
+				invoice.save((err, success) => {
+					if (err) throw err;
+					console.log(success);
+				});
 			});
 		} catch (err) {
 			throw err;
