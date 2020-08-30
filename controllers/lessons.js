@@ -22,8 +22,7 @@ const lessonsCtrl = {
 
 	postLessons: async (req, res) => {
 		try {
-			const user = req.user;
-			if (!user) res.json({ message: 'You must be logged in!' });
+			if (!req.user) res.json({ message: 'You must be logged in!' });
 			const { lesson } = req.body;
 			const newLesson = new lessonModel(lesson);
 			newLesson.save((err, success) => {
@@ -46,16 +45,13 @@ const lessonsCtrl = {
 		}
 	},
 
-	updateLessons: (req, res) => {
+	updateLessons: async (req, res) => {
 		try {
 			const { lesson } = req.body;
 			lessonModel
 				.findByIdAndUpdate({ _id: lesson._id }, { lesson })
 				.exec((err, success) => {
 					if (err) throw err;
-					if (!fs.existsSync('./logs')) {
-						fs.mkdirSync('./logs');
-					}
 					fs.appendFile(
 						'./logs/lesson.txt',
 						`${JSON.stringify(success)}\n`,

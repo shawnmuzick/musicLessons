@@ -1,22 +1,21 @@
 const { userModel } = require('../models');
 
 const userCtrl = {
-	getUsers: (req, res, next) => {
-		console.log('getusers');
-		if (req.params.id) {
-			userModel.findOne({ _id: req.params.id }).exec((err, data) => {
-				if (err) throw err;
-				res.json(data);
-				return next();
-			});
-		} else {
-			userModel.find().exec((err, data) => {
-				console.log('find');
-				console.log(data);
-				if (err) throw err;
-				res.json(data);
-				return next();
-			});
+	getUsers: async (req, res) => {
+		try {
+			if (req.params.id) {
+				userModel.findOne({ _id: req.params.id }).exec((err, data) => {
+					if (err) throw err;
+					res.json(data);
+				});
+			} else {
+				userModel.find().exec((err, data) => {
+					if (err) throw err;
+					res.json(data);
+				});
+			}
+		} catch (err) {
+			throw err;
 		}
 	},
 	postUsers: (req, res) => {},
