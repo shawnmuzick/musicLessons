@@ -1,22 +1,22 @@
 module.exports = {
 	isLoggedIn: (req, res, next) => {
-		console.log('checking is logged in');
 		if (req.isAuthenticated()) {
-			//hangs
-			console.log('check passed');
+			console.log('login check passed');
 			return next(); //non-negotiable
 		} else {
-			console.log('check failed');
-			res.status(400).send({ message: 'this is an error' });
+			console.log('login check failed');
+			res.status(400).send({ message: 'You must be logged in!' });
 			return;
 		}
 	},
 
 	isAdmin: (req, res, next) => {
 		if (req.user.role !== 'admin') {
-			res.redirect('/login');
-		} else {
 			return next();
+		} else {
+			console.log('not an admin');
+			res.status(400).send({ message: 'You must be an admin!' });
+			return;
 		}
 	},
 };

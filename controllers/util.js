@@ -18,7 +18,7 @@ const build_file_system = async (req, res, next) => {
 
 const logger = async (req, res, next) => {
 	try {
-		console.log('/users requester');
+		console.log(`request made to: ${req.originalUrl} `);
 	} catch (err) {
 		throw err;
 	}

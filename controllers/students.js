@@ -24,6 +24,9 @@ const studentCtrl = {
 		try {
 			const { s, img } = req.body;
 			delete s._id;
+			s.user_id = `${req.user._id}`;
+			console.log(req.user._id);
+			console.log(s);
 			const newStudent = new studentModel(s);
 			newStudent.save((err, success) => {
 				if (err) throw err;

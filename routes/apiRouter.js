@@ -17,7 +17,13 @@ apiRouter.delete('/teachers:id', teacherCtrl.deleteTeacher);
 //Students-------------------------------------------------------------------------------
 apiRouter.get('/students', studentCtrl.getStudents);
 apiRouter.get('/students:id', studentCtrl.getStudents);
-apiRouter.post('/students', urlEncodedParser, jsonParser, studentCtrl.postStudents);
+apiRouter.post(
+	'/students',
+	urlEncodedParser,
+	jsonParser,
+	authCtrl.isLoggedIn,
+	studentCtrl.postStudents
+);
 apiRouter.put('/students', studentCtrl.updateStudents);
 apiRouter.delete('/students:id', studentCtrl.deleteStudents);
 //Lessons--------------------------------------------------------------------------------

@@ -10,13 +10,9 @@ export default function StuCont({ students, teacher, lessons, setTeacher }) {
 	}, []);
 
 	const handleClick = (s, img) => {
-		if (!teacher.fname) return window.alert('Please select an instructor below');
-		if (s.fname === '' || s.fname === null) return window.alert('Please fill out all fields as prompted');
-		s.teacher.name = teacher.fname;
-		s.teacher.lname = teacher.lname;
-		s.teacher._id = teacher._id;
-		s.img = img;
-		fetches.postStudent(s);
+		if (s.fname === '' || s.fname === null)
+			return window.alert('Please fill out all fields as prompted');
+		fetches.postStudent(s, img);
 	};
 	const removeStudent = (_id) => {
 		fetches.deleteStudentById(_id).then(() => {
@@ -72,7 +68,10 @@ export default function StuCont({ students, teacher, lessons, setTeacher }) {
 				<Button name="View Students" fn={openList} />
 			</div>
 			<div className="extEvents-inner" id="extEvents-inner">
-				<Modal managed={true} btnTxt={'Add New Student'} headerTxt={'Add New Student'}>
+				<Modal
+					managed={true}
+					btnTxt={'Add New Student'}
+					headerTxt={'Add New Student'}>
 					<FrmNewStudent handleClick={handleClick} />
 				</Modal>
 				{renderStudents()}

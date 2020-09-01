@@ -4,7 +4,11 @@ const fetches = {
 	//get all students and teachers
 	getAll: () => {
 		return axios
-			.all([axios.get('/api/teachers'), axios.get('/api/students'), axios.get('/api/lessons')])
+			.all([
+				axios.get('/api/teachers'),
+				axios.get('/api/students'),
+				axios.get('/api/lessons'),
+			])
 			.then(
 				axios.spread((...res) => {
 					const a = maps.makeTeachers(res[0].data);
@@ -16,55 +20,76 @@ const fetches = {
 	},
 
 	//student functions
-	getStudents: () => {
-		return axios.get('/api/students').then((res) => maps.makeStudents(res.data));
+	getStudents: async () => {
+		const res = await axios.get('/api/students');
+		return maps.makeStudents(res.data);
 	},
 
-	getStudentById: (id) => {
-		return axios.get(`/api/students${id}`).catch((err) => console.log(err));
+	getStudentById: async (id) => {
+		try {
+			return axios.get(`/api/students${id}`);
+		} catch (err) {
+			return console.log(err);
+		}
 	},
 
-	postStudent: (s) => {
-		axios.post(`/api/students`, { s, img: s.img }).catch((err) => console.log(err));
+	postStudent: (s, img) => {
+		axios.post(`/api/students`, { s, img }).catch((err) => console.log(err));
 	},
 
 	putStudent: (s) => {
 		//placeholder
 	},
 
-	deleteStudentById: (id) => {
-		return axios.delete(`/api/students${id}`).catch((err) => console.log(err));
+	deleteStudentById: async (id) => {
+		try {
+			return axios.delete(`/api/students${id}`);
+		} catch (err) {
+			return console.log(err);
+		}
 	},
 
 	//teacher functions
-	getTeachers: () => {
-		return axios.get('/api/teachers').then((res) => maps.makeTeachers(res.data));
+	getTeachers: async () => {
+		const res = await axios.get('/api/teachers');
+		return maps.makeTeachers(res.data);
 	},
 
 	getTeacherById: (id) => {
 		return axios.get(`/api/teachers${id}`);
 	},
 
-	postTeacher: (t) => {
-		return axios
-			.post(`/api/teachers`, {
+	postTeacher: async (t) => {
+		try {
+			return axios.post(`/api/teachers`, {
 				fname: t.fname,
 				lname: t.lname,
 				phone: t.phone,
 				img: t.img,
-			})
-			.catch((err) => console.log(err));
+			});
+		} catch (err) {
+			return console.log(err);
+		}
 	},
 
-	putTeacherById: (teacher) => {
-		return axios
-			.put(`/api/teachers${teacher._id}`, { phone: teacher.phone, hours: teacher.hours })
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+	putTeacherById: async (teacher) => {
+		try {
+			const res = await axios.put(`/api/teachers${teacher._id}`, {
+				phone: teacher.phone,
+				hours: teacher.hours,
+			});
+			return console.log(res);
+		} catch (err) {
+			return console.log(err);
+		}
 	},
 
-	deleteTeacherById: (id) => {
-		return axios.delete(`/api/teachers${id}`).catch((err) => console.log(err));
+	deleteTeacherById: async (id) => {
+		try {
+			return axios.delete(`/api/teachers${id}`);
+		} catch (err) {
+			return console.log(err);
+		}
 	},
 
 	//event functions
@@ -104,24 +129,18 @@ const fetches = {
 		return axios.get('/api/users');
 	},
 
-	postUserRegister: (username, password, fname, lname) => {
-		return axios
-			.post('/register', {
-				username,
-				password,
-				fname,
-				lname,
-			})
-			.then();
-	},
+	postUserRegister: async (username, password, fname, lname) => {},
 
-	postUserLogin: (username, password) => {
-		return axios
-			.post('/login', {
+	postUserLogin: async (username, password) => {
+		try {
+			const res = await axios.post('/login', {
 				username,
 				password,
-			})
-			.then((res) => res.data);
+			});
+			return res.data;
+		} catch (err) {
+			throw err;
+		}
 	},
 };
 export { fetches };
