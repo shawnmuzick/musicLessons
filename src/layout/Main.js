@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ViewContainer from './ViewContainer';
 import {
 	Calendar,
@@ -10,16 +10,21 @@ import {
 	StudentRoster,
 	Preferences,
 } from '../views/';
-import { fetches } from '../util/';
+import { fetches, User } from '../util/';
+import { UserContext } from '../contexts/Contexts';
 import './main.css';
-export default function Main({ setUser, setView, view }) {
+export default function Main({ setView, view }) {
+	const { user, setUser } = useContext(UserContext);
 	const [teachers, setTeachers] = useState([]);
 	const [students, setStudents] = useState([]);
 	const [lessons, setLessons] = useState([]);
 
 	useEffect(() => {
 		fetches.init()
-			.then((res) => setUser(res.data))
+			.then((res) => {
+				const u = new User(res.data);
+				setUser(u);
+			})
 			.catch((err) => console.log(err));
 	}, [setUser]);
 
@@ -43,6 +48,7 @@ export default function Main({ setUser, setView, view }) {
 							students={students}
 							setStudents={setStudents}
 							lessons={lessons}
+							user={user}
 						/>
 					}
 					Register={<Register setView={setView} />}

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { ThemeContext } from '../contexts/Contexts';
 import { cookie } from '../util';
 export default function Preferences() {
 	const { theme, setTheme } = useContext(ThemeContext);
@@ -13,7 +13,11 @@ export default function Preferences() {
 			<p>Edit your preferences below:</p>
 			<div className="inputGroup">
 				Theme:
-				<select name="theme" id="theme" value={theme} onChange={toggle_theme}>
+				<select
+					name="theme"
+					id="theme"
+					value={theme}
+					onChange={toggle_theme}>
 					<option value="Dark">Dark</option>
 					<option value="Light">Light</option>
 				</select>

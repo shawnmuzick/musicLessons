@@ -49,8 +49,16 @@ const studentsByTeacher = (lessons = [], teacher_id) => {
 	return result;
 };
 
-const studentsByAccount = () => {
-	return;
+const studentsByAccount = (students = [], userStudentAccounts = []) => {
+	let arr = [];
+	for (let i = 0; i < students.length; i++) {
+		for (let j = 0; j < userStudentAccounts.length; j++) {
+			if (students[i]._id === userStudentAccounts[j]) {
+				arr.push(students[i]);
+			}
+		}
+	}
+	return arr;
 };
 
 const filters = {

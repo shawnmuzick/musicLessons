@@ -15,3 +15,5 @@ Added Teacher:
           {"hours":[],"_id":"5f4f20204b6ddc3d647c9eff","__v":0}
 Added Teacher: 
           {"hours":[],"_id":"5f4f2052635f7821881b2f69","fname":"3","lname":"3","phone":"3","email":"3","salary":3,"__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f20dcb334113e982c3694","fname":"9","lname":"9","phone":"9","email":"9","salary":9,"__v":0}

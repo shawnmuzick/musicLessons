@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Main, AppHeader } from './layout/';
 import { menu, adminMenu } from './views';
 import { MainMenu, Footer } from './components';
-import { ThemeContext } from './contexts/ThemeContext';
+import { ThemeContext, UserContext } from './contexts/Contexts';
 import { cookie, theme_settings } from './util';
 import './App.css';
 export default function App() {
-	const [user, setUser] = useState();
+	const [user, setUser] = useState({});
 	const [view, setView] = useState('Calendar');
 	const [theme, setTheme] = useState('Dark');
 	const hide_menu = () => {
@@ -24,7 +24,6 @@ export default function App() {
 		hide_menu();
 	}, [view]);
 	const renderMenu = () => {
-		console.log(user);
 		if (!user || user.role !== 'admin') {
 			return <MainMenu view={view} setView={setView} menuItems={menu} />;
 		} else {
@@ -36,8 +35,10 @@ export default function App() {
 		<div className="App">
 			{renderMenu()}
 			<ThemeContext.Provider value={{ theme, setTheme }}>
-				<AppHeader />
-				<Main view={view} setUser={setUser} setView={setView} />
+				<UserContext.Provider value={{ user, setUser }}>
+					<AppHeader />
+					<Main view={view} setView={setView} />
+				</UserContext.Provider>
 			</ThemeContext.Provider>
 			<Footer />
 		</div>

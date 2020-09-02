@@ -4,7 +4,7 @@ import { Header } from '../../components/';
 import ReactFullCalendar from './ReactFullCalendar';
 import StuCont from './stuCont';
 import './calendar.css';
-export default function Calendar({ SRC, students, lessons }) {
+export default function Calendar({ SRC, students, lessons, user }) {
 	const calendarRef = React.createRef();
 	const [teacher, setTeacher] = useState({});
 	const [events, setEvents] = useState([]);
@@ -90,6 +90,7 @@ export default function Calendar({ SRC, students, lessons }) {
 					lessons={lessons}
 					teacher={teacher}
 					setTeacher={setTeacher}
+					user={user}
 				/>
 				<div className="spacer" />
 				<ReactFullCalendar

@@ -3,7 +3,7 @@ import { Modal, Button } from '../../components/';
 import { FrmNewStudent, FrmDelete } from '../../forms/';
 import { fetches, filters, maps, Teacher } from '../../util/';
 import FcDraggable from './FcDraggable';
-export default function StuCont({ students, teacher, lessons, setTeacher }) {
+export default function StuCont({ students, teacher, setTeacher, user }) {
 	useEffect(() => {
 		FcDraggable();
 		//leave the empty array in the dependencies or you'll get infinite postings
@@ -21,7 +21,8 @@ export default function StuCont({ students, teacher, lessons, setTeacher }) {
 		});
 	};
 	const renderStudents = () => {
-		return filters.studentsByTeacher(students, lessons, teacher._id).map((s) => (
+		if (!user.studentAccounts) user.studentAccounts = [];
+		return filters.studentsByAccount(students, user.studentAccounts).map((s) => (
 			<div className="extWrapper" key={s._id}>
 				<div
 					className="fc-event"

@@ -7,8 +7,6 @@ export default function Login({ setUser, setView }) {
 	const [messageType, setMessageType] = useState(null);
 	const [message, setMessage] = useState(null);
 	const handleChange = (e) => {
-		console.log('hi');
-		console.log(values);
 		const { name, value } = e.target;
 		let obj = values;
 		obj[name] = value;
@@ -23,7 +21,10 @@ export default function Login({ setUser, setView }) {
 		fetches.postUserLogin(values.username, values.password)
 			.then((data) => {
 				setUser(data);
-				renderMessage('success', 'You have successfully logged in! Redirecting...');
+				renderMessage(
+					'success',
+					'You have successfully logged in! Redirecting...'
+				);
 				setTimeout(() => {
 					if (data.role === 'admin') {
 						setView('Dashboard');
@@ -45,11 +46,19 @@ export default function Login({ setUser, setView }) {
 				<h2>Login</h2>
 				<InputGroup>
 					<label htmlFor="username">Username:</label>
-					<input type="text" name="username" onChange={handleChange} />
+					<input
+						type="text"
+						name="username"
+						onChange={handleChange}
+					/>
 				</InputGroup>
 				<InputGroup>
 					<label htmlFor="password">Password:</label>
-					<input type="text" name="password" onChange={handleChange} />
+					<input
+						type="text"
+						name="password"
+						onChange={handleChange}
+					/>
 				</InputGroup>
 			</Form>
 		</div>
