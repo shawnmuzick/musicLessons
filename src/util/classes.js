@@ -2,7 +2,7 @@ const moment = require('moment');
 
 class Person {
 	constructor(_id, fname, lname, phone, email) {
-		this._id = _id || '';
+		this._id = _id;
 		this.fname = fname;
 		this.lname = lname;
 		this.phone = phone;
@@ -38,7 +38,7 @@ class User extends Person {
 class Teacher extends Person {
 	constructor({ _id, fname, lname, phone, email, hours, salary }) {
 		super(_id, fname, lname, phone, email);
-		this.hours = hours;
+		this.hours = hours || [];
 		this.text = fname;
 		this.salary = salary;
 	}

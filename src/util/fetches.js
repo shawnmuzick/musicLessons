@@ -59,14 +59,9 @@ const fetches = {
 		return axios.get(`/api/teachers${id}`);
 	},
 
-	postTeacher: async (t) => {
+	postTeacher: async (teacher, img) => {
 		try {
-			return axios.post(`/api/teachers`, {
-				fname: t.fname,
-				lname: t.lname,
-				phone: t.phone,
-				img: t.img,
-			});
+			return axios.post(`/api/teachers`, { teacher, img });
 		} catch (err) {
 			return console.log(err);
 		}

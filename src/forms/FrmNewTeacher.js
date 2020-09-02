@@ -30,7 +30,12 @@ export default function FrmNewTeacher({ handleClick }) {
 		<Form submitFn={handleSubmit}>
 			<InputGroup>
 				<label htmlFor="img">Photo ID: </label>
-				<input type="file" name="img" accept="image/jpeg" onChange={handleImg} />
+				<input
+					type="file"
+					name="img"
+					accept="image/jpeg"
+					onChange={handleImg}
+				/>
 			</InputGroup>
 			<InputGroup>
 				<label htmlFor="fname">First Name: </label>
@@ -43,6 +48,21 @@ export default function FrmNewTeacher({ handleClick }) {
 			<InputGroup>
 				<label htmlFor="phone">Phone: </label>
 				<input type="text" name="phone" onChange={handleChange} />
+			</InputGroup>
+
+			<InputGroup>
+				<label htmlFor="email">Email: </label>
+				<input type="text" name="email" onChange={handleChange} />
+			</InputGroup>
+
+			<InputGroup>
+				<label htmlFor="salary">Salary: </label>
+				<input
+					type="number"
+					step="0.01"
+					name="salary"
+					onChange={handleChange}
+				/>
 			</InputGroup>
 		</Form>
 	);

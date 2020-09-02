@@ -1,3 +1,17 @@
 Added Teacher: 
           "Test"	
           {"lessons":[],"hours":[],"_id":"5edf0757cca20020881f2c84","fname":"Test","lname":"This","phone":"1231231234","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f1eb258197e0c80ebf0ac","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f1ef9ee270838fc237037","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f1f41c21ca419ccb5c0eb","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f1f8720f00a2b44e06228","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f1ffee080483c8c97e104","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f20204b6ddc3d647c9eff","__v":0}
+Added Teacher: 
+          {"hours":[],"_id":"5f4f2052635f7821881b2f69","fname":"3","lname":"3","phone":"3","email":"3","salary":3,"__v":0}

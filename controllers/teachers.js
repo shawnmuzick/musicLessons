@@ -23,7 +23,8 @@ const teacherCtrl = {
 	postTeacher: async (req, res) => {
 		try {
 			const { teacher, img } = req.body;
-			const newTeacher = new teacherModel({ teacher });
+			delete teacher.text;
+			const newTeacher = new teacherModel(teacher);
 			newTeacher.save((err, success) => {
 				if (err) throw err;
 				fs.writeFile(

@@ -47,8 +47,7 @@ export default function DashboardView({ teachers, students, lessons }) {
 
 	const handleClick = (t, img) => {
 		if (t.name === null || t.phone === null) return;
-		t.img = img;
-		fetches.postTeacher(t);
+		fetches.postTeacher(t, img);
 	};
 
 	const renderEmployees = () => {
