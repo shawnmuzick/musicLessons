@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { FullCalendar, plugins } from './plugins';
-import { Teacher, Lesson, maps, fetches } from '../../util/';
+import { Teacher, Lesson, fetches } from '../../util/';
 import { Button, Header, Modal } from '../../components/';
 import moment from 'moment';
 import DeleteLesson from '../../forms/DeleteLesson';
-export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, makeButtons, header, footer, lessons }) {
+export default function ReactFullCalendar({
+	calendarRef,
+	teacher,
+	setTeacher,
+	makeButtons,
+	header,
+	footer,
+	lessons,
+}) {
 	const [open, setOpen] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState({});
 	// const dayStart = "10:00:00";
@@ -14,7 +22,8 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
 	};
 	const changeView = (args) => {
 		const api = calendarRef.current.getApi();
-		if (api.view.type !== 'timeGridDay') return api.changeView('timeGridDay', args.date);
+		if (api.view.type !== 'timeGridDay')
+			return api.changeView('timeGridDay', args.date);
 	};
 	//use to refetch teacher and rerender after posts/updates to make them immediately visible
 	const getTeacher = () => {
@@ -45,14 +54,11 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
 	};
 	const calendar_event_create_new = (edit) => {
 		edit.title = edit.draggedEl.title;
-		edit.instrument = edit.draggedEl.attributes[3].value;
 		edit.rate = parseFloat(edit.draggedEl.attributes[4].value);
 		edit.start = edit.date;
 		return new Lesson(edit);
 	};
 	const calender_event_edit = (edit) => {
-		edit.event.instrument = edit.event.extendedProps.instrument;
-		edit.event.icon = edit.event.extendedProps.icon;
 		edit.event.rate = parseFloat(edit.event.extendedProps.rate);
 		return new Lesson(edit.event);
 	};
@@ -108,12 +114,17 @@ export default function ReactFullCalendar({ calendarRef, teacher, setTeacher, ma
 			<Modal open={open} className={'modal'}>
 				<div className={'modalWrapper'}>
 					<Header>
-						<img src={`${currentEvent.icon}.jpg`} alt={`${currentEvent.title}`} />
+						<img
+							src={`${currentEvent.icon}.jpg`}
+							alt={`${currentEvent.title}`}
+						/>
 						<h2>{currentEvent.title}</h2>
 						<Button name={'x'} fn={handleModal} />
 					</Header>
-					{maps.iterateProps(currentEvent)}
-					<DeleteLesson fn={fetches.deleteEventById} id={currentEvent.id} />
+					<DeleteLesson
+						fn={fetches.deleteEventById}
+						id={currentEvent.id}
+					/>
 				</div>
 			</Modal>
 		</>

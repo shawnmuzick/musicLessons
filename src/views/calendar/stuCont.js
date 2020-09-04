@@ -27,9 +27,8 @@ export default function StuCont({ students, teacher, setTeacher, user }) {
 				<div
 					className="fc-event"
 					key={s._id}
-					title={`${s.fname} ${s.lname}'s ${s.instrument} lesson`}
+					title={`${s.fname} ${s.lname}`}
 					id={s._id}
-					instrument={s.instrument}
 					rate={s.tuition}>
 					<Modal
 						managed={true}
@@ -66,14 +65,14 @@ export default function StuCont({ students, teacher, setTeacher, user }) {
 			<h2 className="extEvents-title">Students</h2>
 
 			<div className="extEvents-title-mobile">
-				<Button name="View Students" fn={openList} />
+				<Button name="My Students" fn={openList} />
 			</div>
 			<div className="extEvents-inner" id="extEvents-inner">
 				<Modal
 					managed={true}
 					btnTxt={'Add New Student'}
 					headerTxt={'Add New Student'}>
-					<FrmNewStudent handleClick={handleClick} />
+					<FrmNewStudent handleClick={handleClick} user={user} />
 				</Modal>
 				{renderStudents()}
 			</div>

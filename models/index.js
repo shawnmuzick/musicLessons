@@ -16,7 +16,8 @@ const teacherSchema = new Schema(
 		lname: String,
 		phone: String,
 		email: String,
-		hours: [],
+		hours: Array,
+		instruments: Array,
 		salary: Number,
 	},
 	{ collection: 'teachers' }

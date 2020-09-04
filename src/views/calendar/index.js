@@ -4,10 +4,12 @@ import { Header } from '../../components/';
 import ReactFullCalendar from './ReactFullCalendar';
 import StuCont from './stuCont';
 import './calendar.css';
-export default function Calendar({ SRC, students, lessons, user }) {
+export default function Calendar({ teachers, students, lessons, user }) {
 	const calendarRef = React.createRef();
+
 	const [teacher, setTeacher] = useState({});
 	const [events, setEvents] = useState([]);
+
 	const header = {
 		left: 'prev,next, today',
 		center: 'title',
@@ -17,7 +19,7 @@ export default function Calendar({ SRC, students, lessons, user }) {
 	const footer = {};
 	footer.center = useMemo(() => {
 		let string = 'All,';
-		SRC.forEach((t) => {
+		teachers.forEach((t) => {
 			string += `${t.lname},`;
 		});
 		//remove ending comma, would otherwise generate an empty right side button
@@ -25,7 +27,7 @@ export default function Calendar({ SRC, students, lessons, user }) {
 			string = string.slice(0, -1);
 		}
 		return string;
-	}, [SRC]);
+	}, [teachers]);
 
 	//rerender if lessons changes
 	useEffect(() => {
@@ -35,16 +37,14 @@ export default function Calendar({ SRC, students, lessons, user }) {
 	useEffect(() => {
 		if (!teacher._id) {
 			setEvents(lessons);
-			console.log('empty teacher check');
 		} else {
-			console.log('defined teacher check');
 			setEvents(filters.lessonsByTeacher(lessons, teacher._id));
 		}
 	}, [teacher, lessons]);
 
 	const makeButtons = useMemo(() => {
 		//This links students and their teachers
-		let obj = SRC.reduce((obj, t) => {
+		let obj = teachers.reduce((obj, t) => {
 			obj[t.lname] = t;
 			t.click = function () {
 				setTeacher(t);
@@ -58,7 +58,7 @@ export default function Calendar({ SRC, students, lessons, user }) {
 			},
 		};
 		return obj;
-	}, [SRC]);
+	}, [teachers]);
 
 	const renderHeader = () => {
 		return (

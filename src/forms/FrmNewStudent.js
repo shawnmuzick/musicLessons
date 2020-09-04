@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Student } from '../util/';
 import { Form, InputGroup } from '../forms/';
 
-export default function FrmNewStudent({ handleClick }) {
+export default function FrmNewStudent({ handleClick, user }) {
 	const [student, setStudent] = useState({});
 
 	const handleChange = (e) => {
@@ -26,43 +26,46 @@ export default function FrmNewStudent({ handleClick }) {
 		const s = new Student(student);
 		handleClick(s, img);
 	};
-
-	return (
-		<Form submitFn={handleSubmit}>
-			<InputGroup>
-				<label htmlFor="img">Photo ID: </label>
-				<input
-					type="file"
-					name="img"
-					accept="image/jpeg"
-					onChange={handleImg}
-				/>
-			</InputGroup>
-			<InputGroup>
-				<label htmlFor="fname">First Name: </label>
-				<input type="text" name="fname" onChange={handleChange} />
-			</InputGroup>
-			<InputGroup>
-				<label htmlFor="lname">Last Name: </label>
-				<input type="text" name="lname" onChange={handleChange} />
-			</InputGroup>
-			<InputGroup>
-				<label htmlFor="phone">Phone: </label>
-				<input type="text" name="phone" onChange={handleChange} />
-			</InputGroup>
-			<InputGroup>
-				<label htmlFor="email">Email: </label>
-				<input type="text" name="phone" onChange={handleChange} />
-			</InputGroup>
-			<InputGroup>
-				<label htmlFor="tuition">Tuition: </label>
-				<input
-					type="number"
-					step="0.01"
-					name="tuition"
-					onChange={handleChange}
-				/>
-			</InputGroup>
-		</Form>
-	);
+	if (!user._id) {
+		return <div>You must be logged in!</div>;
+	} else {
+		return (
+			<Form submitFn={handleSubmit}>
+				<InputGroup>
+					<label htmlFor="img">Photo ID: </label>
+					<input
+						type="file"
+						name="img"
+						accept="image/jpeg"
+						onChange={handleImg}
+					/>
+				</InputGroup>
+				<InputGroup>
+					<label htmlFor="fname">First Name: </label>
+					<input type="text" name="fname" onChange={handleChange} />
+				</InputGroup>
+				<InputGroup>
+					<label htmlFor="lname">Last Name: </label>
+					<input type="text" name="lname" onChange={handleChange} />
+				</InputGroup>
+				<InputGroup>
+					<label htmlFor="phone">Phone: </label>
+					<input type="text" name="phone" onChange={handleChange} />
+				</InputGroup>
+				<InputGroup>
+					<label htmlFor="email">Email: </label>
+					<input type="text" name="phone" onChange={handleChange} />
+				</InputGroup>
+				<InputGroup>
+					<label htmlFor="tuition">Tuition: </label>
+					<input
+						type="number"
+						step="0.01"
+						name="tuition"
+						onChange={handleChange}
+					/>
+				</InputGroup>
+			</Form>
+		);
+	}
 }

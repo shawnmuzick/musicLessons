@@ -36,21 +36,12 @@ class User extends Person {
 }
 
 class Teacher extends Person {
-	constructor({ _id, fname, lname, phone, email, hours, salary }) {
+	constructor({ _id, fname, lname, phone, email, instruments, hours, salary }) {
 		super(_id, fname, lname, phone, email);
+		this.instruments = instruments;
 		this.hours = hours;
 		this.text = fname;
 		this.salary = salary;
-	}
-	lessonsPerMonth() {
-		let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		return arr;
-	}
-	getConvRate() {
-		return (this.trConv / (this.trConv + this.trFail)) * 100;
-	}
-	getGrossIncome() {
-		return 0;
 	}
 	changeAvailability(hours) {
 		let newHours = Object.keys(hours).map((key) => {

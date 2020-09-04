@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ViewContainer from './ViewContainer';
 import {
-	Calendar,
+	//Calendar,
 	Dashboard,
 	Login,
 	Logout,
@@ -13,6 +13,8 @@ import {
 import { fetches, User } from '../util/';
 import { UserContext } from '../contexts/Contexts';
 import './main.css';
+import { NewCalendar as Calendar } from '../views/NewCalendar';
+
 export default function Main({ setView, view }) {
 	const { user, setUser } = useContext(UserContext);
 	const [teachers, setTeachers] = useState([]);
@@ -44,9 +46,8 @@ export default function Main({ setView, view }) {
 				<ViewContainer
 					Calendar={
 						<Calendar
-							SRC={teachers}
+							teachers={teachers}
 							students={students}
-							setStudents={setStudents}
 							lessons={lessons}
 							user={user}
 						/>
