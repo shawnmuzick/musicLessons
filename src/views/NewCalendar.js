@@ -5,7 +5,7 @@ import { FullCalendar, plugins } from './calendar/plugins';
 import moment from 'moment';
 import { DeleteLesson, Form, InputGroup } from '../forms/';
 
-export function NewCalendar({ teachers, students, lessons, user }) {
+export default function NewCalendar({ teachers, students, lessons, user }) {
 	const calendarRef = React.createRef();
 	const [selectedTeacher, setSelectedTeacher] = useState({});
 	const [events, setEvents] = useState([]);
