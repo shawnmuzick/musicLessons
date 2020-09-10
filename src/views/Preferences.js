@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from '../contexts/Contexts';
-import { cookie } from '../util';
+import React from 'react';
+import { useThemeUpdate, useTheme } from '../contexts/Contexts';
+
 export default function Preferences() {
-	const { theme, setTheme } = useContext(ThemeContext);
+	const setTheme = useThemeUpdate();
+	const theme = useTheme();
+
 	const toggle_theme = (e) => {
-		cookie.set('theme', e.target.value);
 		setTheme(e.target.value);
 	};
+
 	return (
 		<div className={'view'} id={'view_preferences'}>
 			<h2>Preferences</h2>

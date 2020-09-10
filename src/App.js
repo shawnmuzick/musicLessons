@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Main, AppHeader } from './layout/';
 import { MainMenu, Footer } from './components';
-import { ThemeContext, UserContext } from './contexts/Contexts';
-import { cookie, theme_settings, fetches, User } from './util';
+import { ThemeProvider, UserContext } from './contexts/Contexts';
+import { fetches, User } from './util';
 import {
 	NewCalendar as Calendar,
 	Dashboard,
@@ -20,7 +20,6 @@ import './App.css';
 export default function App() {
 	const [user, setUser] = useState({});
 	const [view, setView] = useState('Calendar');
-	const [theme, setTheme] = useState('Dark');
 
 	const [teachers, setTeachers] = useState([]);
 	const [students, setStudents] = useState([]);
@@ -46,14 +45,6 @@ export default function App() {
 	}, [view]);
 
 	useEffect(() => {
-		let browser_cookies = cookie.parse();
-		if (browser_cookies.theme) {
-			setTheme(browser_cookies.theme);
-			theme_settings.set(browser_cookies.theme);
-		}
-	}, [theme]);
-
-	useEffect(() => {
 		hide_menu();
 	}, [view]);
 
@@ -73,7 +64,7 @@ export default function App() {
 	return (
 		<div className="App">
 			{renderMenu()}
-			<ThemeContext.Provider value={{ theme, setTheme }}>
+			<ThemeProvider>
 				<UserContext.Provider value={{ user, setUser }}>
 					<AppHeader />
 					<Main
@@ -112,7 +103,7 @@ export default function App() {
 						Preferences={<Preferences />}
 					/>
 				</UserContext.Provider>
-			</ThemeContext.Provider>
+			</ThemeProvider>
 			<Footer />
 		</div>
 	);

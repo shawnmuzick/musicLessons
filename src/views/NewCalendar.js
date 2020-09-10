@@ -14,19 +14,6 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 	const [lessonModal, setLessonModal] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState({});
 	const [lessonModalValues, setLessonModalValues] = useState({});
-	const handleModal = () => {
-		setOpen(!open);
-	};
-	const handleNewLessonModal = () => {
-		setLessonModal(!lessonModal);
-	};
-
-	const handleNewLessonModalChange = (e) => {
-		const { name, value } = e.target;
-		const obj = lessonModalValues;
-		obj[name] = value;
-		setLessonModalValues(obj);
-	};
 	//rerender if lessons changes
 	useEffect(() => {
 		setEvents(lessons);
@@ -40,6 +27,19 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 		}
 	}, [selectedTeacher._id, lessons]);
 
+	const handleModal = () => {
+		setOpen(!open);
+	};
+	const handleNewLessonModal = () => {
+		setLessonModal(!lessonModal);
+	};
+
+	const handleNewLessonModalChange = (e) => {
+		const { name, value } = e.target;
+		const obj = lessonModalValues;
+		obj[name] = value;
+		setLessonModalValues(obj);
+	};
 	const calendar_event_post_edit = (e, stID) => {
 		fetches.putEvent(e, stID).catch((err) => console.log(err));
 	};
@@ -66,6 +66,7 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 		handleNewLessonModal();
 		setLessonModalValues({
 			date: moment.utc(e.dateStr).format(moment.HTML5_FMT.DATETIME_LOCAL),
+			teacher: selectedTeacher,
 		});
 	};
 	const submitNewLesson = () => {};
@@ -80,7 +81,15 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 		setCurrentEvent(v);
 	};
 	const handleTeacherFilter = (e) => {
-		setSelectedTeacher(e.target.value);
+		if (e.target.value === '') {
+			setSelectedTeacher({});
+			setBusinessHours([]);
+		}
+		for (let i = 0; i < teachers.length; i++) {
+			if (teachers[i]._id === e.target.value) {
+				setSelectedTeacher(teachers[i]);
+			}
+		}
 		setEvents(filters.lessonsByTeacher(lessons, e.target.value));
 		for (let i = 0; i < teachers.length; i++) {
 			if (teachers[i]._id === e.target.value) {
@@ -91,9 +100,11 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 	const renderTeachers = () => {
 		return (
 			<select name="" id="" onChange={handleTeacherFilter}>
+				<option value={''}>Select a Teacher:</option>
 				{teachers.map((t) => {
 					return (
 						<option
+							key={t._id}
 							value={
 								t._id
 							}>{`${t.fname} ${t.lname}`}</option>
@@ -144,36 +155,17 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 						<h2>Book a Lesson</h2>
 						<Button name={'x'} fn={handleNewLessonModal} />
 					</Header>
-					<Form submitFn={submitNewLesson}>
+					<Form submitFn={submitNewLesson} id="bookingForm">
 						<InputGroup>
 							<label htmlFor="date">Date/Time:</label>
-							<input
-								type="datetime-local"
-								name="date"
-								value={lessonModalValues.date}
-								onChange={
-									handleNewLessonModalChange
-								}
-							/>
+							<p>{`${lessonModalValues.date}`}</p>
 						</InputGroup>
 						<InputGroup>
 							<label htmlFor="teacher">Teacher:</label>
-							<select
-								name="teacher"
-								id=""
-								onChange={
-									handleNewLessonModalChange
-								}>
-								{teachers.map((t) => {
-									return (
-										<option
-											value={`${t._id}`}
-											key={t._id}>
-											{`${t.fname} ${t.lname}`}
-										</option>
-									);
-								})}
-							</select>
+							<p>{`${
+								selectedTeacher.fname ||
+								'Please Select a Teacher'
+							} ${selectedTeacher.lname || ''}`}</p>
 						</InputGroup>
 					</Form>
 				</div>
