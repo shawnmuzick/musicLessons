@@ -89,18 +89,15 @@ const fetches = {
 
 	//event functions
 	getEvents: () => {
-		return axios.get('/lessons');
+		return axios.get('/api/lessons');
 	},
 
 	getEventById: (id) => {
-		return axios.get(`/lessons${id}`);
+		return axios.get(`/api/lessons${id}`);
 	},
 
-	postEvent: (e, stID) => {
-		return axios.post(`/api/lessons`, {
-			event: e,
-			stID,
-		});
+	postEvent: (lesson) => {
+		return axios.post(`/api/lessons`, { lesson });
 	},
 
 	putEvent: (e, stID) => {
@@ -110,8 +107,24 @@ const fetches = {
 		});
 	},
 
-	deleteEventById: (id) => {
-		return axios.delete(`/api/lessons${id}`);
+	//invoice functions
+	getInvoices: () => {
+		return axios.get('/api/invoices');
+	},
+
+	getinvoiceById: (id) => {
+		return axios.get(`/api/invoices${id}`);
+	},
+
+	postInvoice: (invoice) => {
+		return axios.post(`/api/invoices`, { invoice });
+	},
+
+	putInvoice: (invoice) => {
+		return axios.put(`/api/invoices`, { invoice });
+	},
+	deleteInvoiceById: (id) => {
+		return axios.delete(`/api/invoices${id}`);
 	},
 
 	//user functions

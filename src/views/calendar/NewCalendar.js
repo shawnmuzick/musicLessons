@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { filters, fetches, Lesson } from '../util';
-import { Header, Modal, Button } from '../components';
-import { FullCalendar, plugins } from './calendar/plugins';
+import { filters, fetches, Lesson, Invoice } from '../../util';
+import { Header, Modal, Button } from '../../components';
+import { FullCalendar, plugins } from './plugins';
 import moment from 'moment';
-import { DeleteLesson, Form, InputGroup } from '../forms/';
-
+import { DeleteLesson } from '../../forms';
+import NewLessonModal from './NewLessonModal';
+import './calendar.css';
 export default function NewCalendar({ teachers, students, lessons, user }) {
 	const calendarRef = React.createRef();
 	const [selectedTeacher, setSelectedTeacher] = useState({});
+	const [selectedStudent, setSelectedStudent] = useState({});
+	const [selectedInstrument, setSelectedInstrument] = useState('');
+	const [isTrial, setIsTrial] = useState(false);
+	const [date, setDate] = useState('');
 	const [events, setEvents] = useState([]);
 	const [businessHours, setBusinessHours] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [lessonModal, setLessonModal] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState({});
-	const [lessonModalValues, setLessonModalValues] = useState({});
 	//rerender if lessons changes
 	useEffect(() => {
 		setEvents(lessons);
@@ -30,17 +34,7 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 	const handleModal = () => {
 		setOpen(!open);
 	};
-	const handleNewLessonModal = () => {
-		setLessonModal(!lessonModal);
-	};
-
-	const handleNewLessonModalChange = (e) => {
-		const { name, value } = e.target;
-		const obj = lessonModalValues;
-		obj[name] = value;
-		setLessonModalValues(obj);
-	};
-	const calendar_event_post_edit = (e, stID) => {
+	const calendar_event_put = (e, stID) => {
 		fetches.putEvent(e, stID).catch((err) => console.log(err));
 	};
 
@@ -56,20 +50,49 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 
 		if (selectedTeacher.checkAvailability(e) === false)
 			return window.alert(`Time is outside of ${selectedTeacher.fname}'s hours!`);
-		calendar_event_post_edit(e, stID);
+		calendar_event_put(e, stID);
 	};
 	const dateClick = (e) => {
 		const api = calendarRef.current.getApi();
 		if (api.view.type !== 'timeGridDay') {
 			return api.changeView('timeGridDay', e.date);
 		}
-		handleNewLessonModal();
-		setLessonModalValues({
-			date: moment.utc(e.dateStr).format(moment.HTML5_FMT.DATETIME_LOCAL),
-			teacher: selectedTeacher,
-		});
+		setLessonModal(!lessonModal);
+		setDate(moment.utc(e.dateStr).format(moment.HTML5_FMT.DATETIME_LOCAL));
 	};
-	const submitNewLesson = () => {};
+	const calendar_event_post = () => {
+		const lesson = new Lesson({
+			_id: '',
+			title: `${selectedStudent.fname} ${selectedStudent.lname}'s ${selectedInstrument} lesson`,
+			start: date,
+			end: null,
+			instrument: selectedInstrument,
+			rate: selectedStudent.tuition,
+			isTrial: isTrial,
+			trialConverted: false,
+			label_color: '',
+			attendance_code: 'P',
+			addendance_note: '',
+			student_id: selectedStudent._id,
+			teacher_id: selectedTeacher._id,
+		});
+		delete lesson._id;
+
+		fetches.postEvent(lesson)
+			.then((res) => console.log(res.data))
+			.then((data) => {
+				const invoice = new Invoice({
+					_id: '',
+					date: date,
+					account_id: user._id,
+					items: [data._id],
+					total_sale: data.rate,
+					balance: data.rate,
+				});
+				fetches.postInvoice(invoice).catch((err) => console.log(err));
+			})
+			.catch((err) => console.log(err));
+	};
 
 	const calendar_event_handle_click = (e) => {
 		const { instrument, rate } = e.extendedProps;
@@ -80,6 +103,7 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 		handleModal();
 		setCurrentEvent(v);
 	};
+
 	const handleTeacherFilter = (e) => {
 		if (e.target.value === '') {
 			setSelectedTeacher({});
@@ -99,7 +123,11 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 	};
 	const renderTeachers = () => {
 		return (
-			<select name="" id="" onChange={handleTeacherFilter}>
+			<select
+				name=""
+				id=""
+				onChange={(e) => handleTeacherFilter(e)}
+				value={selectedTeacher._id}>
 				<option value={''}>Select a Teacher:</option>
 				{teachers.map((t) => {
 					return (
@@ -149,28 +177,18 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 				defaultTimedEventDuration={{ minutes: 30 }}
 				height={'auto'}
 			/>
-			<Modal open={lessonModal} className={'modal'}>
-				<div className="modalWrapper">
-					<Header>
-						<h2>Book a Lesson</h2>
-						<Button name={'x'} fn={handleNewLessonModal} />
-					</Header>
-					<Form submitFn={submitNewLesson} id="bookingForm">
-						<InputGroup>
-							<label htmlFor="date">Date/Time:</label>
-							<p>{`${lessonModalValues.date}`}</p>
-						</InputGroup>
-						<InputGroup>
-							<label htmlFor="teacher">Teacher:</label>
-							<p>{`${
-								selectedTeacher.fname ||
-								'Please Select a Teacher'
-							} ${selectedTeacher.lname || ''}`}</p>
-						</InputGroup>
-					</Form>
-				</div>
-			</Modal>
-
+			<NewLessonModal
+				lessonModal={lessonModal}
+				setLessonModal={setLessonModal}
+				calendar_event_post={calendar_event_post}
+				selectedTeacher={selectedTeacher}
+				selectedStudent={selectedStudent}
+				setSelectedStudent={setSelectedStudent}
+				date={date}
+				students={students}
+				teachers={teachers}
+				user={user}
+			/>
 			<Modal open={open} className={'modal'}>
 				<div className={'modalWrapper'}>
 					<Header>
