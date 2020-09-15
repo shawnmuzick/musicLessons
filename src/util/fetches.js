@@ -100,11 +100,8 @@ const fetches = {
 		return axios.post(`/api/lessons`, { lesson });
 	},
 
-	putEvent: (e, stID) => {
-		return axios.put(`/api/lessons`, {
-			event: e,
-			stID,
-		});
+	putEvent: (lesson) => {
+		return axios.put(`/api/lessons`, { lesson });
 	},
 
 	//invoice functions

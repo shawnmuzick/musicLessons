@@ -44,23 +44,28 @@ export default function NewCalendar() {
 	const handleModal = () => {
 		setOpen(!open);
 	};
-	const calendar_event_put = (e, stID) => {
-		fetches.putEvent(e, stID).catch((err) => console.log(err));
-	};
 
-	const calender_event_format = (edit) => {
-		edit.event.rate = parseFloat(edit.event.extendedProps.rate);
-		return new Lesson(edit.event);
-	};
 	const newDrop = (edit) => {
+		if (!selectedTeacher.fname) return window.alert('Please Select a Teacher');
+
+		console.log(edit);
+
 		const api = calendarRef.current.getApi();
 		api.changeView('timeGridDay', edit.date);
-		const stID = edit.event.extendedProps._id;
-		const e = calender_event_format(edit);
 
-		if (selectedTeacher.checkAvailability(e) === false)
+		edit.event._id = edit.event._def.extendedProps._id;
+		edit.event.rate = parseFloat(edit.event.extendedProps.rate);
+
+		let obj = { ...edit.event, ...edit.event._def.extendedProps };
+		obj.title = edit.event._def.title;
+
+		const lesson = new Lesson(obj);
+		console.log(lesson);
+
+		if (selectedTeacher.checkAvailability(lesson) === false)
 			return window.alert(`Time is outside of ${selectedTeacher.fname}'s hours!`);
-		calendar_event_put(e, stID);
+
+		fetches.putEvent(lesson).catch((err) => console.log(err));
 	};
 	const dateClick = (e) => {
 		const api = calendarRef.current.getApi();
