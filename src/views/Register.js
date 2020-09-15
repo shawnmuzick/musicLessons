@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { Form, InputGroup } from '../forms';
 import { fetches } from '../util/';
+import { viewState } from '../atoms';
 
-export default function Register({ setView }) {
+export default function Register() {
+	const setView = useSetRecoilState(viewState);
 	const [values, setValues] = useState({});
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -12,7 +15,12 @@ export default function Register({ setView }) {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		fetches.postUserRegister(values.username, values.password, values.fname, values.lname)
+		fetches.postUserRegister(
+			values.username,
+			values.password,
+			values.fname,
+			values.lname
+		)
 			.then((data) => {
 				if (data.status === 200) {
 					setView('Login');
@@ -45,11 +53,21 @@ export default function Register({ setView }) {
 				</InputGroup>
 				<InputGroup>
 					<label htmlFor="fname">First Name:</label>
-					<input type="text" name="fname" value={values.fname} onChange={handleChange} />
+					<input
+						type="text"
+						name="fname"
+						value={values.fname}
+						onChange={handleChange}
+					/>
 				</InputGroup>
 				<InputGroup>
 					<label htmlFor="lname">Last Name:</label>
-					<input type="text" name="lname" value={values.lname} onChange={handleChange} />
+					<input
+						type="text"
+						name="lname"
+						value={values.lname}
+						onChange={handleChange}
+					/>
 				</InputGroup>
 			</Form>
 		</div>

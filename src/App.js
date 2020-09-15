@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Main, AppHeader } from './layout/';
 import { MainMenu, Footer } from './components';
-import { ThemeProvider, UserContext } from './contexts/Contexts';
+import { ThemeProvider } from './contexts/Contexts';
 import { fetches, User } from './util';
 import {
 	NewCalendar as Calendar,
@@ -16,14 +16,15 @@ import {
 	adminMenu,
 } from './views/';
 import './App.css';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { userState, teachersState, studentsState, lessonsState, viewState } from './atoms';
 
 export default function App() {
-	const [user, setUser] = useState({});
-	const [view, setView] = useState('Calendar');
-
-	const [teachers, setTeachers] = useState([]);
-	const [students, setStudents] = useState([]);
-	const [lessons, setLessons] = useState([]);
+	const view = useRecoilValue(viewState);
+	const setTeachers = useSetRecoilState(teachersState);
+	const setStudents = useSetRecoilState(studentsState);
+	const setLessons = useSetRecoilState(lessonsState);
+	const [user, setUser] = useRecoilState(userState);
 
 	useEffect(() => {
 		fetches.init()
@@ -42,7 +43,7 @@ export default function App() {
 				setLessons(res[2]);
 			})
 			.catch((err) => console.log(err));
-	}, [view]);
+	}, [view, setLessons, setStudents, setTeachers]);
 
 	useEffect(() => {
 		hide_menu();
@@ -55,54 +56,27 @@ export default function App() {
 
 	const renderMenu = () => {
 		if (!user || user.role !== 'admin') {
-			return <MainMenu view={view} setView={setView} menuItems={menu} />;
+			return <MainMenu menuItems={menu} />;
 		} else {
 			adminMenu[menu.indexOf('Login')] = 'Logout';
-			return <MainMenu view={view} setView={setView} menuItems={adminMenu} />;
+			return <MainMenu menuItems={adminMenu} />;
 		}
 	};
 	return (
 		<div className="App">
 			{renderMenu()}
 			<ThemeProvider>
-				<UserContext.Provider value={{ user, setUser }}>
-					<AppHeader />
-					<Main
-						view={view}
-						setView={setView}
-						Calendar={
-							<Calendar
-								teachers={teachers}
-								students={students}
-								lessons={lessons}
-								user={user}
-							/>
-						}
-						Register={<Register setView={setView} />}
-						Dashboard={
-							<Dashboard
-								teachers={teachers}
-								students={students}
-								lessons={lessons}
-							/>
-						}
-						Login={
-							<Login
-								setUser={setUser}
-								setView={setView}
-							/>
-						}
-						Roster={<StudentRoster students={students} />}
-						Users={<Users />}
-						Logout={
-							<Logout
-								setUser={setUser}
-								setView={setView}
-							/>
-						}
-						Preferences={<Preferences />}
-					/>
-				</UserContext.Provider>
+				<AppHeader />
+				<Main
+					Calendar={<Calendar />}
+					Register={<Register />}
+					Dashboard={<Dashboard />}
+					Login={<Login />}
+					Roster={<StudentRoster />}
+					Users={<Users />}
+					Logout={<Logout />}
+					Preferences={<Preferences />}
+				/>
 			</ThemeProvider>
 			<Footer />
 		</div>

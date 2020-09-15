@@ -6,18 +6,28 @@ import moment from 'moment';
 import { DeleteLesson } from '../../forms';
 import NewLessonModal from './NewLessonModal';
 import './calendar.css';
-export default function NewCalendar({ teachers, students, lessons, user }) {
+import { userState, teachersState, studentsState, lessonsState } from '../../atoms';
+import { useRecoilValue } from 'recoil';
+
+export default function NewCalendar() {
 	const calendarRef = React.createRef();
 	const [selectedTeacher, setSelectedTeacher] = useState({});
-	const [selectedStudent, setSelectedStudent] = useState({});
-	const [selectedInstrument, setSelectedInstrument] = useState('');
-	const [isTrial, setIsTrial] = useState(false);
 	const [date, setDate] = useState('');
 	const [events, setEvents] = useState([]);
 	const [businessHours, setBusinessHours] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [lessonModal, setLessonModal] = useState(false);
 	const [currentEvent, setCurrentEvent] = useState({});
+	const [formState, setFormState] = useState({
+		student: '',
+		instrument: '',
+		isTrial: false,
+	});
+
+	const teachers = useRecoilValue(teachersState);
+	const students = useRecoilValue(studentsState);
+	const lessons = useRecoilValue(lessonsState);
+	const user = useRecoilValue(userState);
 	//rerender if lessons changes
 	useEffect(() => {
 		setEvents(lessons);
@@ -63,17 +73,17 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 	const calendar_event_post = () => {
 		const lesson = new Lesson({
 			_id: '',
-			title: `${selectedStudent.fname} ${selectedStudent.lname}'s ${selectedInstrument} lesson`,
-			start: date,
+			title: `${formState.student.fname} ${formState.student.lname}'s ${formState.instrument} lesson`,
+			start: formState.date,
 			end: null,
-			instrument: selectedInstrument,
-			rate: selectedStudent.tuition,
-			isTrial: isTrial,
+			instrument: formState.instrument,
+			rate: formState.student.tuition,
+			isTrial: formState.isTrial,
 			trialConverted: false,
 			label_color: '',
 			attendance_code: 'P',
 			addendance_note: '',
-			student_id: selectedStudent._id,
+			student_id: formState.student._id,
 			teacher_id: selectedTeacher._id,
 		});
 		delete lesson._id;
@@ -83,7 +93,7 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 			.then((data) => {
 				const invoice = new Invoice({
 					_id: '',
-					date: date,
+					date: formState.date,
 					account_id: user._id,
 					items: [data._id],
 					total_sale: data.rate,
@@ -182,11 +192,10 @@ export default function NewCalendar({ teachers, students, lessons, user }) {
 				setLessonModal={setLessonModal}
 				calendar_event_post={calendar_event_post}
 				selectedTeacher={selectedTeacher}
-				selectedStudent={selectedStudent}
-				setSelectedStudent={setSelectedStudent}
+				formState={formState}
+				setFormState={setFormState}
 				date={date}
 				students={students}
-				teachers={teachers}
 				user={user}
 			/>
 			<Modal open={open} className={'modal'}>

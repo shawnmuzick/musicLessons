@@ -6,22 +6,27 @@ export default function NewLessonModal({
 	setLessonModal,
 	calendar_event_post,
 	selectedTeacher,
-	selectedStudent,
-	setSelectedStudent,
+	formState,
+	setFormState,
 	date,
 	students,
-	teachers,
 	user,
 }) {
 	const handleNewLessonModal = () => {
 		setLessonModal(!lessonModal);
 	};
 	const handleStudentFilter = (e) => {
-		if (e.target.value === '') setSelectedStudent({});
+		if (e.target.value === '') {
+			let obj = { ...formState };
+			obj.student = '';
+			setFormState(obj);
+		}
 
 		for (let i = 0; i < students.length; i++) {
-			if (teachers[i]._id === e.target.value) {
-				setSelectedStudent(teachers[i]);
+			if (students[i]._id === e.target.value) {
+				let obj = { ...formState };
+				obj.student = students[i];
+				setFormState(obj);
 			}
 		}
 	};
@@ -49,7 +54,7 @@ export default function NewLessonModal({
 						<select
 							name="student"
 							id="student"
-							value={selectedStudent._id}
+							value={formState.student._id}
 							onChange={handleStudentFilter}>
 							<option value="">Select a student</option>
 							{students

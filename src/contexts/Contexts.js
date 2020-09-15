@@ -3,7 +3,6 @@ import { theme_settings, cookie } from '../util/';
 
 export const ThemeContext = createContext();
 export const ThemeUpdateContext = createContext();
-export const UserContext = createContext({});
 
 export function useTheme() {
 	return useContext(ThemeContext);

@@ -10,7 +10,13 @@ import {
 } from '../../charts';
 import { Header, Modal } from '../../components/';
 import { fetches, filters } from '../../util/';
-export default function DashboardView({ teachers, students, lessons }) {
+import { useRecoilValue } from 'recoil';
+import { teachersState, studentsState, lessonsState } from '../../atoms';
+export default function DashboardView() {
+	const teachers = useRecoilValue(teachersState);
+	const students = useRecoilValue(studentsState);
+	const lessons = useRecoilValue(lessonsState);
+
 	const getTotalLessons = (lessons = []) => {
 		return lessons.length;
 	};

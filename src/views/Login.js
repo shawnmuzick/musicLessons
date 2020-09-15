@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Form, InputGroup } from '../forms';
 import { fetches } from '../util/';
 import { Notification } from '../components';
-export default function Login({ setUser, setView }) {
+import { viewState, userState } from '../atoms';
+import { useSetRecoilState } from 'recoil';
+
+export default function Login() {
+	const setView = useSetRecoilState(viewState);
+	const setUser = useSetRecoilState(userState);
+
 	const [values, setValues] = useState({});
 	const [messageType, setMessageType] = useState(null);
 	const [message, setMessage] = useState(null);

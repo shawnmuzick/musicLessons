@@ -6,7 +6,7 @@ import Users from './Users';
 import Preferences from './Preferences';
 import StudentRoster from './StudentRoster';
 import NewCalendar from './calendar/NewCalendar';
-const menu = ['Login', 'Calendar', 'Preferences', 'Register'];
+const menu = ['Login', 'Calendar', 'Dashboard', 'Preferences', 'Register'];
 const adminMenu = ['Login', 'Calendar', 'Dashboard', 'Users', 'Roster', 'Preferences'];
 export {
 	Dashboard,
