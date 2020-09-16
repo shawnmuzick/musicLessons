@@ -48,19 +48,15 @@ export default function NewCalendar() {
 	const newDrop = (edit) => {
 		if (!selectedTeacher.fname) return window.alert('Please Select a Teacher');
 
-		console.log(edit);
-
-		const api = calendarRef.current.getApi();
-		api.changeView('timeGridDay', edit.date);
-
 		edit.event._id = edit.event._def.extendedProps._id;
 		edit.event.rate = parseFloat(edit.event.extendedProps.rate);
-
-		let obj = { ...edit.event, ...edit.event._def.extendedProps };
+		let obj = {
+			...edit.event,
+			...edit.event._def.extendedProps,
+			...edit.event._instance.range,
+		};
 		obj.title = edit.event._def.title;
-
 		const lesson = new Lesson(obj);
-		console.log(lesson);
 
 		if (selectedTeacher.checkAvailability(lesson) === false)
 			return window.alert(`Time is outside of ${selectedTeacher.fname}'s hours!`);

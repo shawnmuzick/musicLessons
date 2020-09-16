@@ -49,7 +49,11 @@ const lessonsCtrl = {
 		try {
 			const { lesson } = req.body;
 			lessonModel
-				.findByIdAndUpdate({ _id: lesson._id }, { lesson })
+				.findByIdAndUpdate(
+					{ _id: lesson._id },
+					{ ...lesson },
+					{ overwrite: true, new: true }
+				)
 				.exec((err, success) => {
 					if (err) throw err;
 					fs.appendFile(
@@ -59,6 +63,7 @@ const lessonsCtrl = {
 							if (err) throw err;
 						}
 					);
+					console.log(success);
 					res.json(success);
 				});
 		} catch (err) {

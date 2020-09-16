@@ -59,17 +59,10 @@ class Teacher extends Person {
 		const time = moment.utc(eventObject.start).format('HH:mm');
 		const day = moment.utc(eventObject.start).day();
 		let isAvailable = false;
-		this.hours.forEach((h) => {
-			h.daysOfWeek.forEach((d) => {
-				d = Number(d);
-				if (d === day) {
-					if (time >= h.startTime && time < h.endTime) {
-						isAvailable = true;
-					} else {
-						isAvailable = false;
-					}
-				}
-			});
+		this.hours.forEach((obj) => {
+			if (obj.daysOfWeek.includes(`${day}`)) {
+				isAvailable = time >= obj.startTime && time < obj.endTime;
+			}
 		});
 		return isAvailable;
 	}
